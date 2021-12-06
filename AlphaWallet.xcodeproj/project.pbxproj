@@ -641,6 +641,17 @@
 		5E7C7FE8247F0E50BEF35D77 /* HowDoITransferETHIntoMyWalletInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7C7D4F7C566EDD30EF1C19 /* HowDoITransferETHIntoMyWalletInfoViewController.swift */; };
 		5F4D80A426A3F97B00BB1135 /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4D80A326A3F97B00BB1135 /* DeviceModel.swift */; };
 		5F4D80AA26A3F9C500BB1135 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4D80A926A3F9C500BB1135 /* UIDevice.swift */; };
+		5F54021227591263009C8D00 /* WaitSwapConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F54021027591263009C8D00 /* WaitSwapConfirmationViewController.swift */; };
+		5F54021327591263009C8D00 /* WaitSwapConfirmationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F54021127591263009C8D00 /* WaitSwapConfirmationViewController.xib */; };
+		5F7D150E2757A9350054D7DF /* SwapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7D150C2757A9350054D7DF /* SwapViewController.swift */; };
+		5F7D150F2757A9350054D7DF /* SwapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F7D150D2757A9350054D7DF /* SwapViewController.xib */; };
+		5F7D15112757B4A20054D7DF /* SwapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7D15102757B4A20054D7DF /* SwapViewModel.swift */; };
+		5F7D15132757CD810054D7DF /* SwapDropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7D15122757CD810054D7DF /* SwapDropDownView.swift */; };
+		5F7D15152757CD9F0054D7DF /* SwapDropDownView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F7D15142757CD9F0054D7DF /* SwapDropDownView.xib */; };
+		5F7D15192757CF6D0054D7DF /* SwapDropDownTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7D15172757CF6D0054D7DF /* SwapDropDownTableViewCell.swift */; };
+		5F7D151A2757CF6D0054D7DF /* SwapDropDownTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F7D15182757CF6D0054D7DF /* SwapDropDownTableViewCell.xib */; };
+		5F85FF1B2758D8A1004DBC5F /* ConfirmSwapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F85FF192758D8A1004DBC5F /* ConfirmSwapViewController.swift */; };
+		5F85FF1C2758D8A1004DBC5F /* ConfirmSwapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F85FF1A2758D8A1004DBC5F /* ConfirmSwapViewController.xib */; };
 		5FFEA4D0275233FB00662F2D /* SpaceText-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5FFEA4CB275233FB00662F2D /* SpaceText-Medium.otf */; };
 		5FFEA4D1275233FB00662F2D /* SpaceText-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5FFEA4CC275233FB00662F2D /* SpaceText-SemiBold.otf */; };
 		5FFEA4D2275233FB00662F2D /* SpaceText-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5FFEA4CD275233FB00662F2D /* SpaceText-Bold.otf */; };
@@ -1677,6 +1688,17 @@
 		5E7C7FF2EF77D5004A600DDB /* SuccessOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessOverlayView.swift; sourceTree = "<group>"; };
 		5F4D80A326A3F97B00BB1135 /* DeviceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModel.swift; sourceTree = "<group>"; };
 		5F4D80A926A3F9C500BB1135 /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
+		5F54021027591263009C8D00 /* WaitSwapConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitSwapConfirmationViewController.swift; sourceTree = "<group>"; };
+		5F54021127591263009C8D00 /* WaitSwapConfirmationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WaitSwapConfirmationViewController.xib; sourceTree = "<group>"; };
+		5F7D150C2757A9350054D7DF /* SwapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapViewController.swift; sourceTree = "<group>"; };
+		5F7D150D2757A9350054D7DF /* SwapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SwapViewController.xib; sourceTree = "<group>"; };
+		5F7D15102757B4A20054D7DF /* SwapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapViewModel.swift; sourceTree = "<group>"; };
+		5F7D15122757CD810054D7DF /* SwapDropDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapDropDownView.swift; sourceTree = "<group>"; };
+		5F7D15142757CD9F0054D7DF /* SwapDropDownView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SwapDropDownView.xib; sourceTree = "<group>"; };
+		5F7D15172757CF6D0054D7DF /* SwapDropDownTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapDropDownTableViewCell.swift; sourceTree = "<group>"; };
+		5F7D15182757CF6D0054D7DF /* SwapDropDownTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SwapDropDownTableViewCell.xib; sourceTree = "<group>"; };
+		5F85FF192758D8A1004DBC5F /* ConfirmSwapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmSwapViewController.swift; sourceTree = "<group>"; };
+		5F85FF1A2758D8A1004DBC5F /* ConfirmSwapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConfirmSwapViewController.xib; sourceTree = "<group>"; };
 		5FFEA4CB275233FB00662F2D /* SpaceText-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpaceText-Medium.otf"; sourceTree = "<group>"; };
 		5FFEA4CC275233FB00662F2D /* SpaceText-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpaceText-SemiBold.otf"; sourceTree = "<group>"; };
 		5FFEA4CD275233FB00662F2D /* SpaceText-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpaceText-Bold.otf"; sourceTree = "<group>"; };
@@ -2127,6 +2149,7 @@
 		2912CCF71F6A830700C6CBE3 /* AlphaWallet */ = {
 			isa = PBXGroup;
 			children = (
+				5F7D15082757A8D30054D7DF /* Swap */,
 				8712A37A26F314EF0009C376 /* Alerts */,
 				87BBF9682563DD7500FF4846 /* WalletConnect */,
 				878EE942255BC352000210DE /* Share */,
@@ -4043,6 +4066,56 @@
 			path = TokenScriptClient;
 			sourceTree = "<group>";
 		};
+		5F7D15082757A8D30054D7DF /* Swap */ = {
+			isa = PBXGroup;
+			children = (
+				5F7D15162757CF490054D7DF /* Cells */,
+				5F7D150B2757A91B0054D7DF /* Views */,
+				5F7D150A2757A8F80054D7DF /* ViewModels */,
+				5F7D15092757A8ED0054D7DF /* ViewControllers */,
+			);
+			path = Swap;
+			sourceTree = "<group>";
+		};
+		5F7D15092757A8ED0054D7DF /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				5F7D150C2757A9350054D7DF /* SwapViewController.swift */,
+				5F7D150D2757A9350054D7DF /* SwapViewController.xib */,
+				5F85FF192758D8A1004DBC5F /* ConfirmSwapViewController.swift */,
+				5F85FF1A2758D8A1004DBC5F /* ConfirmSwapViewController.xib */,
+				5F54021027591263009C8D00 /* WaitSwapConfirmationViewController.swift */,
+				5F54021127591263009C8D00 /* WaitSwapConfirmationViewController.xib */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		5F7D150A2757A8F80054D7DF /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				5F7D15102757B4A20054D7DF /* SwapViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		5F7D150B2757A91B0054D7DF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5F7D15122757CD810054D7DF /* SwapDropDownView.swift */,
+				5F7D15142757CD9F0054D7DF /* SwapDropDownView.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5F7D15162757CF490054D7DF /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				5F7D15172757CF6D0054D7DF /* SwapDropDownTableViewCell.swift */,
+				5F7D15182757CF6D0054D7DF /* SwapDropDownTableViewCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		5FFEA4CA275233FB00662F2D /* space-text */ = {
 			isa = PBXGroup;
 			children = (
@@ -5046,6 +5119,7 @@
 				87620024266E00F70059B05A /* known_contract.json in Resources */,
 				C876FF85204A79D300B7D0EA /* SourceSansPro-Semibold.otf in Resources */,
 				5FFEA4D4275233FB00662F2D /* SpaceText-Light.otf in Resources */,
+				5F7D15152757CD9F0054D7DF /* SwapDropDownView.xib in Resources */,
 				C880330E2054371500D73D6F /* non_asset_catalog_redemption_location@3x.png in Resources */,
 				C880332020551DF800D73D6F /* howDoIGetMyMoneyInfo.html in Resources */,
 				613D04891FDE15F8008DE72E /* COMODO ECC Domain Validation Secure Server CA 2.cer in Resources */,
@@ -5055,6 +5129,7 @@
 				771AA966200D5F1900D25403 /* WordCollectionViewCell.xib in Resources */,
 				87B93B112726C59D00F6EA73 /* BrowserStorageSubscription.js in Resources */,
 				5FFEA4D0275233FB00662F2D /* SpaceText-Medium.otf in Resources */,
+				5F7D151A2757CF6D0054D7DF /* SwapDropDownTableViewCell.xib in Resources */,
 				87B93B102726C59D00F6EA73 /* config.js in Resources */,
 				C88033122055034E00D73D6F /* sellInfo.html in Resources */,
 				C868C536205409160059672B /* redeemInfo.html in Resources */,
@@ -5069,13 +5144,16 @@
 				2912CD021F6A830700C6CBE3 /* Assets.xcassets in Resources */,
 				C880332220551DF800D73D6F /* whatIsEthereumInfo.html in Resources */,
 				C80DC77E22AB7FAD009CFA1C /* XDAI-bridge.tsml in Resources */,
+				5F54021327591263009C8D00 /* WaitSwapConfirmationViewController.xib in Resources */,
 				5E7C71D40F530871D95170C6 /* BookmarkViewCell.xib in Resources */,
 				5E7C73AB79C2C5FC6C76CDFF /* ERC20-TokenScript.tsml in Resources */,
 				5E7C7F906FE07C75F357569B /* DAI.tsml in Resources */,
 				5E7C7F808D0B0B19ECEA6623 /* ETH.tsml in Resources */,
 				5E7C706322B52C0D0CED8018 /* aETH.tsml in Resources */,
+				5F7D150F2757A9350054D7DF /* SwapViewController.xib in Resources */,
 				5E7C7CE29C74DF7FDDDB6A0D /* ERC721-TokenScript.tsml in Resources */,
 				5FFEA4D3275233FB00662F2D /* SpaceText-Regular.otf in Resources */,
+				5F85FF1C2758D8A1004DBC5F /* ConfirmSwapViewController.xib in Resources */,
 				5E7C7E1C2976FA57D53BC2CE /* ERC1155.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5592,6 +5670,7 @@
 				296AF9AB1F7380920058AF78 /* GetTransactionCountRequest.swift in Sources */,
 				294DFB9E1FE0CA59004CEB56 /* TransactionsViewModel.swift in Sources */,
 				73ED85A72034BFEF00593BF3 /* UITextFieldAdditions.swift in Sources */,
+				5F7D150E2757A9350054D7DF /* SwapViewController.swift in Sources */,
 				2923D9B51FDA4E07000CF3F8 /* PasswordGenerator.swift in Sources */,
 				298542F51FBD8E6A00CB5081 /* ConfigExplorer.swift in Sources */,
 				87E2555224F52E5700F025F7 /* SliderTableViewCellViewModel.swift in Sources */,
@@ -5632,6 +5711,7 @@
 				29BB94931F6FC380009B09CC /* BalanceViewModel.swift in Sources */,
 				8736214D264D3B0000AAF794 /* XYMarkerView.swift in Sources */,
 				29D03F1D1F712183006E548C /* Button.swift in Sources */,
+				5F7D15132757CD810054D7DF /* SwapDropDownView.swift in Sources */,
 				CCCD74FD1FD2D38D004A087D /* CheckDeviceCoordinator.swift in Sources */,
 				8762002E266E15310059B05A /* PopularTokenViewCellViewModel.swift in Sources */,
 				87D163A4242CD811002662D2 /* AddHideTokensCoordinator.swift in Sources */,
@@ -5662,6 +5742,7 @@
 				442FC81F38F80EEF54C69C5B /* TokenAdaptor.swift in Sources */,
 				879F184226E73BCF000602F2 /* SelectableTokenCardContainerTableViewCell.swift in Sources */,
 				442FC258BAEFDE2D64E48D0D /* TokensCardCoordinator.swift in Sources */,
+				5F7D15192757CF6D0054D7DF /* SwapDropDownTableViewCell.swift in Sources */,
 				8703F66B26136A500082EE25 /* RenameWalletViewController.swift in Sources */,
 				87BBF9912563DD7600FF4846 /* WalletConnectActionType.swift in Sources */,
 				76F1D91659771C9EEA7B48DC /* CreateRedeem.swift in Sources */,
@@ -5737,12 +5818,14 @@
 				5E7C774B5332AC0DC19C5B1B /* EthTokenViewCellViewModel.swift in Sources */,
 				5E7C75D46140FACBD12333BF /* EthTokenViewCell.swift in Sources */,
 				5E7C728CDF33FBDBA47F71A6 /* MarketplaceViewController.swift in Sources */,
+				5F85FF1B2758D8A1004DBC5F /* ConfirmSwapViewController.swift in Sources */,
 				8739BB7326CCEDA10045CFED /* TokensCardCollectionViewController.swift in Sources */,
 				5E7C71A7D2BD6FCE3980CC51 /* ImportWalletHelpBubbleViewViewModel.swift in Sources */,
 				5E7C7E04D4DDD7D8881A2AB1 /* UniversalLinkCoordinator.swift in Sources */,
 				8795994726049F0F006722B2 /* ActivityStateViewViewModel.swift in Sources */,
 				5E7C71A6B0BDF301747A49AE /* ScreenChecker.swift in Sources */,
 				5E7C72AF95DCE8BC65490BCA /* StatusViewController.swift in Sources */,
+				5F7D15112757B4A20054D7DF /* SwapViewModel.swift in Sources */,
 				5E7C783B4784DE76971EEBB4 /* StatusViewControllerViewModel.swift in Sources */,
 				5E7C776BE1B19F824954962D /* BaseTokenCardTableViewCell.swift in Sources */,
 				5E7C7C0FAC500A6651E663FD /* TransferTokensCardQuantitySelectionViewModel.swift in Sources */,
@@ -5933,6 +6016,7 @@
 				5E7C72CF145240C816BB12E2 /* DappsHomeViewControllerHeaderViewViewModel.swift in Sources */,
 				5E7C76B7DDF7BB124B12A738 /* DappButtonViewModel.swift in Sources */,
 				874D099225EE336E00A58EF2 /* TypedDataViewModel.swift in Sources */,
+				5F54021227591263009C8D00 /* WaitSwapConfirmationViewController.swift in Sources */,
 				87FBAE0124A1EE67005EF293 /* AddressOrEnsNameLabel.swift in Sources */,
 				8782035F2431FBC300792F12 /* ShowAddHideTokensViewModel.swift in Sources */,
 				8733474E24ED008A002D649D /* TransactionConfirmationRowInfoView.swift in Sources */,

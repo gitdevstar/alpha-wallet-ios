@@ -23,7 +23,7 @@ class TransactionInProgressViewController: UIViewController {
         view.addSubview(buttonsBar)
         return view
     }()
-    private lazy var buttonsBar = ButtonsBar(configuration: .green(buttons: 1))
+    private lazy var buttonsBar = ButtonsBar(configuration: .white(buttons: 1))
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -127,6 +127,9 @@ class TransactionInProgressViewController: UIViewController {
         let button = buttonsBar.buttons[0]
         button.setTitle(viewModel.okButtonTitle, for: .normal)
         button.addTarget(self, action: #selector(okButtonSelected), for: .touchUpInside)
+        buttonsBar.backgroundColor = Colors.clear
+        button.setBackgroundImage(nil, for: .normal)
+        button.setBackgroundImage(nil, for: .highlighted)
         configure(viewModel: viewModel)
     }
     

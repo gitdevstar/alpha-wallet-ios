@@ -63,7 +63,10 @@ struct NonFungibleTokenViewCellViewModel {
     }
 
     var titleAttributedString: NSAttributedString {
-        let title = token.shortTitleInPluralForm(withAssetDefinitionStore: assetDefinitionStore)
+        var title = token.shortTitleInPluralForm(withAssetDefinitionStore: assetDefinitionStore)
+        if !token.symbol.isEmpty {
+            title = "\(token.shortTitleInPluralForm(withAssetDefinitionStore: assetDefinitionStore)) (\(token.symbol))"
+        }
         return .init(string: title, attributes: [
             .font: Screen.TokenCard.Font.title,
             .foregroundColor: Screen.TokenCard.Color.title

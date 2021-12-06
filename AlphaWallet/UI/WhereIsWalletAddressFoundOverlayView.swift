@@ -23,17 +23,19 @@ class WhereIsWalletAddressFoundOverlayView: UIView {
         addSubview(blurView)
         blurView.alpha = 0.3
 
-        clipBottomRight()
+        //clipBottomRight()
 
         dialog.delegate = self
+        dialog.cornerRadius = 10
+        dialog.clipsToBounds = true
         dialog.translatesAutoresizingMaskIntoConstraints = false
         addSubview(dialog)
 
         NSLayoutConstraint.activate([
             blurView.anchorsConstraint(to: self),
 
-            dialog.rightAnchor.constraint(equalTo: rightAnchor, constant: -20),
-            dialog.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -120),
+            dialog.centerXAnchor.constraint(equalTo: centerXAnchor),
+            dialog.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
 
@@ -84,9 +86,13 @@ private protocol DialogDelegate: AnyObject {
 private class Dialog: UIView {
     private let titleLabel = UILabel()
     private let descriptionLabel = UILabel()
-    private let buttonsBar = ButtonsBar(configuration: .green(buttons: 1))
+    private let buttonsBar = ButtonsBar(configuration: .white(buttons: 1))
     private let closeButtonsBar = ButtonsBar(configuration: .green(buttons: 1))
-
+    private var closeButtonContainerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     weak var delegate: DialogDelegate?
 
     override init(frame: CGRect) {
@@ -94,21 +100,24 @@ private class Dialog: UIView {
 
         let stackView = [
             titleLabel,
-            UIView.spacer(height: 12),
+            UIView.spacer(height: 8),
             descriptionLabel,
-            UIView.spacer(height: 30),
-            buttonsBar
+            UIView.spacer(height: 14),
+            closeButtonContainerView
         ].asStackView(axis: .vertical)
+        buttonsBar.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(stackView)
-
+        closeButtonContainerView.addSubview(buttonsBar)
         NSLayoutConstraint.activate([
-            buttonsBar.heightAnchor.constraint(equalToConstant: ButtonsBar.buttonsHeight),
-
-            widthAnchor.constraint(equalToConstant: 300),
-            heightAnchor.constraint(equalToConstant: 250),
-
-            stackView.anchorsConstraint(to: self, edgeInsets: .init(top: 30, left: 20, bottom: 30, right: 20)),
+            closeButtonContainerView.heightAnchor.constraint(equalToConstant: 36),
+            widthAnchor.constraint(equalToConstant: 320),
+            heightAnchor.constraint(equalToConstant: 180),
+            stackView.anchorsConstraint(to: self, edgeInsets: .init(top: 20, left: 20, bottom: 30, right: 20)),
+            buttonsBar.centerXAnchor.constraint(equalTo: closeButtonContainerView.centerXAnchor),
+            buttonsBar.widthAnchor.constraint(equalToConstant: 120),
+            buttonsBar.topAnchor.constraint(equalTo: closeButtonContainerView.topAnchor),
+            buttonsBar.bottomAnchor.constraint(equalTo: closeButtonContainerView.bottomAnchor)
         ])
     }
 
@@ -119,21 +128,24 @@ private class Dialog: UIView {
     func configure() {
         backgroundColor = Colors.appWhite
 
-        titleLabel.font = Fonts.regular(size: 24)
-        titleLabel.textColor = .init(red: 33, green: 33, blue: 33)
+        titleLabel.font = Fonts.bold(size: 18)
+        titleLabel.textColor = Colors.headerThemeColor
         titleLabel.textAlignment = .center
         titleLabel.text = R.string.localizable.onboardingNewWalletBackupWalletTitle()
 
         descriptionLabel.numberOfLines = 0
-        descriptionLabel.font = Fonts.regular(size: 18)
-        descriptionLabel.textColor = .init(red: 102, green: 102, blue: 102)
+        descriptionLabel.font = Fonts.regular(size: 14)
+        descriptionLabel.textColor = UIColor(red: 0.502, green: 0.514, blue: 0.573, alpha: 1)
         descriptionLabel.textAlignment = .center
         descriptionLabel.text = R.string.localizable.onboardingNewWalletBackupWalletDescription()
 
         buttonsBar.configure()
         let continueButton = buttonsBar.buttons[0]
-        continueButton.setTitle(R.string.localizable.close().localizedUppercase, for: .normal)
+        continueButton.setTitle(R.string.localizable.close().localizedCapitalized, for: .normal)
         continueButton.addTarget(self, action: #selector(hide), for: .touchUpInside)
+        buttonsBar.backgroundColor = Colors.clear
+        continueButton.backgroundColor = Colors.clear
+        continueButton.titleLabel?.font = Fonts.bold(size: 14)
     }
 
     @objc private func hide() {

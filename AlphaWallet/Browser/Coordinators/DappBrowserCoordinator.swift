@@ -763,6 +763,8 @@ extension DappBrowserCoordinator: DappBrowserNavigationBarDelegate {
             } else if navigationController.topViewController is DappsHomeViewController {
                 browserNavBar?.clearDisplay()
             }
+        } else {
+            navigationController.topViewController?.dismiss(animated: true, completion: nil)
         }
     }
 

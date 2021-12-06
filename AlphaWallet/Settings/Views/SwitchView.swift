@@ -13,7 +13,7 @@ protocol SwitchViewDelegate: AnyObject {
 
 struct SwitchViewViewModel {
     var backgroundColor = Colors.appWhite
-    var textColor = R.color.black()
+    var textColor = Colors.headerThemeColor
     var font = Fonts.regular(size: 17)
 
     var text: String
@@ -61,7 +61,7 @@ class SwitchView: UIView {
     func configure(viewModel: SwitchViewViewModel) {
         backgroundColor = viewModel.backgroundColor
 
-        label.backgroundColor = viewModel.backgroundColor
+        label.backgroundColor = Colors.clear
         label.textColor = viewModel.textColor
         label.font = viewModel.font
         label.text = viewModel.text

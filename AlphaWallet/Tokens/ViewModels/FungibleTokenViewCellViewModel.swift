@@ -19,6 +19,9 @@ struct FungibleTokenViewCellViewModel {
     }
 
     private var title: String {
+        if !token.symbol.isEmpty {
+            return "\(token.shortTitleInPluralForm(withAssetDefinitionStore: assetDefinitionStore)) (\(token.symbol))"
+        }
         return token.shortTitleInPluralForm(withAssetDefinitionStore: assetDefinitionStore)
     }
 

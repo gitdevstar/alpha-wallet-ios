@@ -44,9 +44,9 @@ class TokensViewModel {
             sections = [.tokens]
         } else {
             if count == .zero {
-                sections = [.filters, .addHideToken, .tokens]
+                sections = [.addHideToken, .tokens]
             } else {
-                sections = [.filters, .addHideToken, .activeWalletSession(count: count), .tokens]
+                sections = [.addHideToken, .activeWalletSession(count: count), .tokens]
             }
         }
     }

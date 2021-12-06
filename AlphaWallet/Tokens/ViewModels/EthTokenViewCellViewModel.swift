@@ -30,7 +30,11 @@ struct EthTokenViewCellViewModel {
     }
 
     private var title: String {
-        return token.shortTitleInPluralForm(withAssetDefinitionStore: assetDefinitionStore)
+        if !token.symbol.isEmpty {
+            return "\(token.shortTitleInPluralForm(withAssetDefinitionStore: assetDefinitionStore)) (\(token.symbol))"
+        } else {
+            return token.shortTitleInPluralForm(withAssetDefinitionStore: assetDefinitionStore)
+        }
     }
 
     var backgroundColor: UIColor {

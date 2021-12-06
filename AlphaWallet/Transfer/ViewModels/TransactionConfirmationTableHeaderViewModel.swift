@@ -39,8 +39,8 @@ struct TransactionConfirmationHeaderViewModel {
         guard let title = title else { return nil }
 
         return NSAttributedString(string: title, attributes: [
-            .foregroundColor: Colors.black,
-            .font: Fonts.regular(size: 17)
+            .foregroundColor: Colors.headerThemeColor,
+            .font: Fonts.bold(size: 12)
         ])
     }
 
@@ -49,7 +49,7 @@ struct TransactionConfirmationHeaderViewModel {
 
         return NSAttributedString(string: name, attributes: [
             .foregroundColor: R.color.dove()!,
-            .font: Fonts.regular(size: 13)
+            .font: Fonts.spaceMedium(size: 12)
         ])
     }
 
@@ -58,7 +58,7 @@ struct TransactionConfirmationHeaderViewModel {
 
         return NSAttributedString(string: details, attributes: [
             .foregroundColor: R.color.dove()!,
-            .font: Fonts.regular(size: 15)
+            .font: Fonts.spaceMedium(size: 12)
         ])
     }
 

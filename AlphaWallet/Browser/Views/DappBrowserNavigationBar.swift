@@ -29,10 +29,9 @@ final class DappBrowserNavigationBar: UINavigationBar {
     private let stackView = UIStackView()
     private let moreButton: UIButton = {
         let moreButton = UIButton(type: .system)
-        moreButton.tintColor = Colors.black
+        moreButton.tintColor = Colors.appWhite
         moreButton.adjustsImageWhenHighlighted = true
         moreButton.setImage(R.image.toolbarMenu(), for: .normal)
-        moreButton.backgroundColor = Colors.appWhite
         return moreButton
     }()
 
@@ -50,7 +49,7 @@ final class DappBrowserNavigationBar: UINavigationBar {
     private let changeServerButton = UIButton(type: .system)
     private let cancelEditingButton: UIButton = {
         let cancelEditingButton = UIButton(type: .system)
-        cancelEditingButton.setTitleColor(Colors.navigationButtonTintColor, for: .normal)
+        cancelEditingButton.setTitleColor(Colors.appWhite, for: .normal)
         //compression and hugging priority required to make cancel button appear reliably yet not be too wide
         cancelEditingButton.setContentCompressionResistancePriority(.required, for: .horizontal)
         cancelEditingButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
@@ -62,7 +61,7 @@ final class DappBrowserNavigationBar: UINavigationBar {
     }()
     private let closeButton: UIButton = {
         let closeButton = UIButton(type: .system)
-        closeButton.tintColor = Colors.black
+        closeButton.tintColor = Colors.appWhite
         closeButton.isHidden = true
         closeButton.setTitle(R.string.localizable.done(), for: .normal)
         closeButton.setTitleColor(Colors.navigationButtonTintColor, for: .normal)
@@ -97,7 +96,7 @@ final class DappBrowserNavigationBar: UINavigationBar {
     private let domainNameLabel = UILabel()
     private let backButton: UIButton = {
         let backButton = UIButton(type: .system)
-        backButton.tintColor = Colors.black
+        backButton.tintColor = Colors.appWhite
         backButton.adjustsImageWhenHighlighted = true
         backButton.setImage(R.image.toolbarBack(), for: .normal)
 
@@ -105,7 +104,7 @@ final class DappBrowserNavigationBar: UINavigationBar {
     }()
     private let forwardButton: UIButton = {
         let forwardButton = UIButton(type: .system)
-        forwardButton.tintColor = Colors.black
+        forwardButton.tintColor = Colors.appWhite
         forwardButton.adjustsImageWhenHighlighted = true
         forwardButton.setImage(R.image.toolbarForward(), for: .normal)
 
@@ -218,7 +217,7 @@ final class DappBrowserNavigationBar: UINavigationBar {
     }
 
     func configure(server: RPCServer) {
-        let color = Colors.navigationButtonTintColor
+        let color = Colors.appWhite
         backButton.imageView?.tintColor = color
         forwardButton.imageView?.tintColor = color
         changeServerButton.tintColor = color

@@ -219,7 +219,7 @@ class TokensViewController: UIViewController {
         collectiblesCollectionViewFilterView.translatesAutoresizingMaskIntoConstraints = false
 
         consoleButton.addTarget(self, action: #selector(openConsole), for: .touchUpInside)
-
+        view.addSubview(tableViewFilterView)
         view.addSubview(tableView)
         view.addSubview(collectiblesCollectionView)
 
@@ -227,7 +227,11 @@ class TokensViewController: UIViewController {
         keyboardChecker.constraint = bottomConstraint
 
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableViewFilterView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableViewFilterView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableViewFilterView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableViewFilterView.heightAnchor.constraint(equalToConstant: TokensViewController.filterViewHeight),
+            tableView.topAnchor.constraint(equalTo: tableViewFilterView.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             bottomConstraint,
@@ -326,12 +330,15 @@ class TokensViewController: UIViewController {
     }
 
     private func getWalletBlockie() {
-        let generator = BlockiesGenerator()
-        generator.promise(address: account.address).done { [weak self] value in
-            self?.blockieImageView.image = value
-        }.catch { [weak self] _ in
-            self?.blockieImageView.image = nil
+        if let image = R.image.profileImagePlaceHolder() {
+            blockieImageView.image = BlockiesImage.image(image)
         }
+//        let generator = BlockiesGenerator()
+//        generator.promise(address: account.address).done { [weak self] value in
+//            self?.blockieImageView.image = value
+//        }.catch { [weak self] _ in
+//            self?.blockieImageView.image = nil
+//        }
     }
 
     @objc func pullToRefresh() {

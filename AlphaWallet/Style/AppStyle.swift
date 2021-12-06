@@ -30,7 +30,7 @@ func applyStyle() {
         tabAppearance.configureWithOpaqueBackground()
         tabAppearance.backgroundColor = Colors.appWhite
         UITabBar.appearance().standardAppearance = tabAppearance
-       // UITabBar.appearance().scrollEdgeAppearance = tabAppearance
+        UITabBar.appearance().scrollEdgeAppearance = tabAppearance
     } else {
         UITabBar.appearance().tintColor = Colors.appTint
         UINavigationBar.appearance().barTintColor = Colors.headerThemeColor
@@ -106,7 +106,7 @@ struct Colors {
     static let headerThemeColor = UIColor(hex: "152172")
     static let tabBarTextColorNormal = UIColor(hex: "898DB4")
     static let tabBarTextColorSelected = UIColor(hex: "152172")
-    static let appBackground = UIColor(hex: "F5F5F5")
+    static let appBackground = UIColor(hex: "E5E5E5")
     static let appTint = R.color.azure()!
     static let navigationTitleColor = UIColor.black
     static let navigationButtonTintColor = R.color.mine()!

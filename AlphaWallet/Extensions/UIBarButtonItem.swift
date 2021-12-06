@@ -34,7 +34,9 @@ extension UIBarButtonItem {
     }
 
     static func addBarButton(_ target: AnyObject, selector: Selector) -> UIBarButtonItem {
-        return .init(image: R.image.add_hide_tokens(), style: .plain, target: target, action: selector)
+        let buttonItem = UIBarButtonItem.init(image: R.image.add_hide_tokens(), style: .plain, target: target, action: selector)
+        buttonItem.tintColor = Colors.appWhite
+        return buttonItem
     }
 
     static func saveBarButton(_ target: AnyObject, selector: Selector) -> UIBarButtonItem {

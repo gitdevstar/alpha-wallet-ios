@@ -23,7 +23,7 @@ struct ConfirmationHeaderViewModel {
         return .init(string: title, attributes: [
             .font: Fonts.semibold(size: 17) as Any,
             .paragraphStyle: style,
-            .foregroundColor: Colors.black
+            .foregroundColor: Colors.headerThemeColor
         ])
     }
     var swipeIndicationHidden: Bool

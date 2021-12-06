@@ -161,7 +161,7 @@ class AddRPCServerViewController: UIViewController {
         symbolTextField.configureOnce()
         blockExplorerURLTextField.configureOnce()
         isTestNetworkView.configure(viewModel: viewModel.enableServersHeaderViewModel)
-
+        isTestNetworkView.backgroundColor = Colors.clear
         buttonsBar.buttons[0].addTarget(self, action: #selector(saveCustomRPC), for: .touchUpInside)
 
         configure(viewModel: viewModel)
