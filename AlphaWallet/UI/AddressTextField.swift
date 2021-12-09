@@ -259,8 +259,8 @@ class AddressTextField: UIControl {
         statusLabel.textColor = DataEntry.Color.textFieldStatus
         statusLabel.textAlignment = .left
 
-        textField.textColor = DataEntry.Color.text
-        textField.font = DataEntry.Font.textField
+        textField.textColor = Colors.headerThemeColor
+        textField.font = Fonts.regular(size: 14)
 
         textField.layer.borderWidth = DataEntry.Metric.borderThickness
         textField.backgroundColor = .clear

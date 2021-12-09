@@ -203,8 +203,8 @@ extension ActivitiesView: UITableViewDataSource {
         let title = UILabel()
         title.text = viewModel.titleForHeader(in: section)
         title.sizeToFit()
-        title.textColor = viewModel.headerTitleTextColor
-        title.font = viewModel.headerTitleFont
+        title.textColor = Colors.headerThemeColor
+        title.font = Fonts.regular(size: 12)
         container.addSubview(title)
         title.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

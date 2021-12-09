@@ -140,6 +140,7 @@ final class EtherNumberFormatter {
 
         return "\(integerString)\(decimalSeparator)\(fractionalString)"
     }
+    
 
     private func integerString(from: BigInt) -> String {
         var string = from.description

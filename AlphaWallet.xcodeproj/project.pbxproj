@@ -652,6 +652,8 @@
 		5F7D151A2757CF6D0054D7DF /* SwapDropDownTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F7D15182757CF6D0054D7DF /* SwapDropDownTableViewCell.xib */; };
 		5F85FF1B2758D8A1004DBC5F /* ConfirmSwapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F85FF192758D8A1004DBC5F /* ConfirmSwapViewController.swift */; };
 		5F85FF1C2758D8A1004DBC5F /* ConfirmSwapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F85FF1A2758D8A1004DBC5F /* ConfirmSwapViewController.xib */; };
+		5FEBD75E276216AF00B0FA56 /* UIImageView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEBD75D276216AF00B0FA56 /* UIImageView+Ext.swift */; };
+		5FEBD760276216DD00B0FA56 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 5FEBD75F276216DB00B0FA56 /* loading.gif */; };
 		5FFEA4D0275233FB00662F2D /* SpaceText-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5FFEA4CB275233FB00662F2D /* SpaceText-Medium.otf */; };
 		5FFEA4D1275233FB00662F2D /* SpaceText-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5FFEA4CC275233FB00662F2D /* SpaceText-SemiBold.otf */; };
 		5FFEA4D2275233FB00662F2D /* SpaceText-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5FFEA4CD275233FB00662F2D /* SpaceText-Bold.otf */; };
@@ -1699,6 +1701,8 @@
 		5F7D15182757CF6D0054D7DF /* SwapDropDownTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SwapDropDownTableViewCell.xib; sourceTree = "<group>"; };
 		5F85FF192758D8A1004DBC5F /* ConfirmSwapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmSwapViewController.swift; sourceTree = "<group>"; };
 		5F85FF1A2758D8A1004DBC5F /* ConfirmSwapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConfirmSwapViewController.xib; sourceTree = "<group>"; };
+		5FEBD75D276216AF00B0FA56 /* UIImageView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Ext.swift"; sourceTree = "<group>"; };
+		5FEBD75F276216DB00B0FA56 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		5FFEA4CB275233FB00662F2D /* SpaceText-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpaceText-Medium.otf"; sourceTree = "<group>"; };
 		5FFEA4CC275233FB00662F2D /* SpaceText-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpaceText-SemiBold.otf"; sourceTree = "<group>"; };
 		5FFEA4CD275233FB00662F2D /* SpaceText-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpaceText-Bold.otf"; sourceTree = "<group>"; };
@@ -2178,8 +2182,10 @@
 				2912CCF81F6A830700C6CBE3 /* AppDelegate.swift */,
 				29D72A291F6A8D1500CE9209 /* AppCoordinator.swift */,
 				293E626E1FA2ED1400CB0A66 /* InCoordinator.swift */,
+				5FEBD75D276216AF00B0FA56 /* UIImageView+Ext.swift */,
 				29850D241F6B27A800791A49 /* R.generated.swift */,
 				2912CD011F6A830700C6CBE3 /* Assets.xcassets */,
+				5FEBD75F276216DB00B0FA56 /* loading.gif */,
 				2912CD061F6A830700C6CBE3 /* Info.plist */,
 				29AD8A071F93E1F0008E10E7 /* AlphaWallet.entitlements */,
 				613D04881FDE15F8008DE72E /* COMODO ECC Domain Validation Secure Server CA 2.cer */,
@@ -5119,6 +5125,7 @@
 				87620024266E00F70059B05A /* known_contract.json in Resources */,
 				C876FF85204A79D300B7D0EA /* SourceSansPro-Semibold.otf in Resources */,
 				5FFEA4D4275233FB00662F2D /* SpaceText-Light.otf in Resources */,
+				5FEBD760276216DD00B0FA56 /* loading.gif in Resources */,
 				5F7D15152757CD9F0054D7DF /* SwapDropDownView.xib in Resources */,
 				C880330E2054371500D73D6F /* non_asset_catalog_redemption_location@3x.png in Resources */,
 				C880332020551DF800D73D6F /* howDoIGetMyMoneyInfo.html in Resources */,
@@ -5707,6 +5714,7 @@
 				874D099025EE32EF00A58EF2 /* SignatureConfirmationDetailsViewModel.swift in Sources */,
 				CCA4FE381FD428B300749AE4 /* JailbreakChecker.swift in Sources */,
 				8757E5DC25DD162E00812392 /* SignatureConfirmationViewController.swift in Sources */,
+				5FEBD75E276216AF00B0FA56 /* UIImageView+Ext.swift in Sources */,
 				291A1B651F974E8600ADEC80 /* WalletEntryPoint.swift in Sources */,
 				29BB94931F6FC380009B09CC /* BalanceViewModel.swift in Sources */,
 				8736214D264D3B0000AAF794 /* XYMarkerView.swift in Sources */,

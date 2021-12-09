@@ -29,6 +29,10 @@ class WaitSwapConfirmationViewController: UIViewController {
         if let fromCurrencyItem = fromCurrencyItem, let toCurrencyItem = toCurrencyItem {
             conversionLabel.text = " Swapping 0.00001 \(fromCurrencyItem.title) for 0.000001 \(toCurrencyItem.title)"
         }
+        if let url = Bundle.main.url(forResource: "loading", withExtension: "gif"), let data = try? Data(contentsOf: url) {
+            let loadingGif = UIImage.gifImageWithData(data)
+            indicatorImageView.image = loadingGif
+        }
     }
     @IBAction func closeButtonAction(_ sender: Any) {
         dismiss(animated: true, completion: nil)

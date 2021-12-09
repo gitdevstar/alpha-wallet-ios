@@ -100,6 +100,15 @@ class AmountTextField: UIControl {
                 return Constants.Currency.usd
             }
         }
+        
+        var symbolAndNetwork: String {
+            switch left {
+            case .cryptoCurrency(let tokenObject):
+                return "\(tokenObject.name) (\(tokenObject.symbol))"
+            case .usd:
+                return Constants.Currency.usd
+            }
+        }
 
         var icon: Subscribable<TokenImage> {
             switch left {
@@ -113,8 +122,8 @@ class AmountTextField: UIControl {
 
     private lazy var textField: UITextField = {
         let textField = UITextField()
-        textField.attributedPlaceholder = NSAttributedString(string: "0", attributes: [
-            .font: DataEntry.Font.amountTextField, .foregroundColor: Colors.headerThemeColor
+        textField.attributedPlaceholder = NSAttributedString(string: "0.000", attributes: [
+            .font: Fonts.bold(size: 14), .foregroundColor: Colors.headerThemeColor
         ])
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.adjustsFontSizeToFitWidth = true
@@ -123,7 +132,7 @@ class AmountTextField: UIControl {
         textField.leftViewMode = .always
         textField.inputAccessoryView = UIToolbar.doneToolbarButton(#selector(closeKeyboard), self)
         textField.textColor = Colors.headerThemeColor
-        textField.font = DataEntry.Font.amountTextField
+        textField.font = Fonts.bold(size: 14)
         textField.textAlignment = .right
 
         return textField
@@ -133,8 +142,8 @@ class AmountTextField: UIControl {
         let button = Button(size: .normal, style: .borderless)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(R.string.localizable.sendAllFunds(), for: .normal)
-        button.titleLabel?.font = DataEntry.Font.regularButton
-        button.setTitleColor(DataEntry.Color.pasteColor, for: .normal)
+        button.titleLabel?.font = Fonts.spaceMedium(size: 10)
+        button.setTitleColor(UIColor(hex: "4C79CB"), for: .normal)
         button.setBackgroundColor(Colors.clear, forState: .normal)
         button.contentHorizontalAlignment = .right
         button.heightConstraint.flatMap { NSLayoutConstraint.deactivate([$0]) }
@@ -311,8 +320,8 @@ class AmountTextField: UIControl {
             statusLabel.font = errorState.statusLabelFont
             textField.textColor = errorState.textFieldTextColor
 
-            textField.attributedPlaceholder = NSAttributedString(string: "0", attributes: [
-                .font: DataEntry.Font.amountTextField, .foregroundColor: errorState.textFieldPlaceholderTextColor
+            textField.attributedPlaceholder = NSAttributedString(string: "0.000", attributes: [
+                .font: Fonts.bold(size: 14), .foregroundColor: errorState.textFieldPlaceholderTextColor
             ])
         }
     }
@@ -457,7 +466,7 @@ class AmountTextField: UIControl {
     }
 
     private func update(selectCurrencyButton button: SelectCurrencyButton) {
-        button.text = currentPair.symbol
+        button.text = currentPair.symbolAndNetwork
         button.tokenIcon = currentPair.icon
     }
 

@@ -59,7 +59,7 @@ class SendViewSectionHeader: UIView {
     }
 
     func configure(viewModel: SendViewSectionHeaderViewModel) {
-        textLabel.text = viewModel.text
+        textLabel.text = viewModel.text.capitalized
         textLabel.textColor = viewModel.textColor
         textLabel.font = viewModel.font
         backgroundColor = viewModel.backgroundColor

@@ -208,13 +208,13 @@ struct ActivitiesViewModel {
     func titleForHeader(in section: Int) -> String {
         let date = filteredItems[section].date.date
         if NSCalendar.current.isDateInToday(date) {
-            return R.string.localizable.today().localizedUppercase
+            return R.string.localizable.today().localizedCapitalized
         }
         if NSCalendar.current.isDateInYesterday(date) {
-            return R.string.localizable.yesterday().localizedUppercase
+            return R.string.localizable.yesterday().localizedCapitalized
         }
 
-        return filteredItems[section].date.stringValue.localizedUppercase
+        return filteredItems[section].date.stringValue.localizedCapitalized
     }
 
     private func splitIntoExactlyTwoKeywords(_ string: String) -> (String, String)? {

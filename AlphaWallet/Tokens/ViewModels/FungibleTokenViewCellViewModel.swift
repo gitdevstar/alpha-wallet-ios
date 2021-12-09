@@ -25,8 +25,22 @@ struct FungibleTokenViewCellViewModel {
         return token.shortTitleInPluralForm(withAssetDefinitionStore: assetDefinitionStore)
     }
 
+    private var amount_USD: String {
+        let string = shortFormatter.string(from: BigInt(token.value) ?? BigInt(), decimals: token.decimals)
+        if let floatValue = Double(string), let value = EthCurrencyHelper(ticker: ticker).marketPrice {
+            let nummber = floatValue * value
+            return NumberFormatter.usd(format: .withTrailingCurrency).string(from: nummber) ?? "_"
+        }
+        return string
+    }
+    
     private var amount: String {
-        return shortFormatter.string(from: BigInt(token.value) ?? BigInt(), decimals: token.decimals)
+        let string = shortFormatter.string(from: BigInt(token.value) ?? BigInt(), decimals: token.decimals)
+        if let floatValue = Double(string), let value = EthCurrencyHelper(ticker: ticker).marketPrice {
+            let nummber = floatValue * value
+            return NumberFormatter.usd(format: .fiatFormat).string(from: nummber) ?? "_"
+        }
+        return string
     }
 
     var backgroundColor: UIColor {
@@ -45,7 +59,7 @@ struct FungibleTokenViewCellViewModel {
     }
 
     var cryptoValueAttributedString: NSAttributedString {
-        return NSAttributedString(string: amount + " " + token.symbolInPluralForm(withAssetDefinitionStore: assetDefinitionStore), attributes: [
+        return NSAttributedString(string: amount_USD, attributes: [
             .foregroundColor: Screen.TokenCard.Color.subtitle,
             .font: Fonts.regular(size: 9)
         ])
@@ -100,8 +114,16 @@ struct FungibleTokenViewCellViewModel {
         }
     }
 
+    private var marketPriceValue: String {
+        if let value = EthCurrencyHelper(ticker: ticker).marketPrice {
+            return NumberFormatter.usd.string(from: value) ?? "-"
+        } else {
+            return "-"
+        }
+    }
+    
     var priceChangeUSDValueAttributedString: NSAttributedString {
-        return NSAttributedString(string: priceChangeUSDValue, attributes: [
+        return NSAttributedString(string: marketPriceValue, attributes: [
             .foregroundColor: valuePercentageChangeColor,
             .font: Fonts.regular(size: 9)
         ])
@@ -116,7 +138,7 @@ struct FungibleTokenViewCellViewModel {
     }
 
     var fiatValueAttributedString: NSAttributedString {
-        return NSAttributedString(string: fiatValue, attributes: [
+        return NSAttributedString(string: amount.replacingOccurrences(of: "$", with: ""), attributes: [
             .foregroundColor: Screen.TokenCard.Color.title,
             .font: Fonts.bold(size: 14)
         ])

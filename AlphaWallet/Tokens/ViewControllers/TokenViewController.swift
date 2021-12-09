@@ -27,6 +27,8 @@ class TokenViewController: UIViewController {
     private let transactionType: TransactionType
     private let analyticsCoordinator: AnalyticsCoordinator
     private let buttonsBar = ButtonsBar(configuration: .combined(buttons: 2))
+    private let activityButtonsBar = ButtonsBar(configuration: .combined(buttons: 2))
+
     private lazy var tokenScriptFileStatusHandler = XMLHandler(token: tokenObject, assetDefinitionStore: assetDefinitionStore)
     weak var delegate: TokenViewControllerDelegate?
 
@@ -43,7 +45,7 @@ class TokenViewController: UIViewController {
     private var alertsSubscriptionKey: Subscribable<[PriceAlert]>.SubscribableKey?
     private let alertService: PriceAlertServiceType
     private lazy var alertsSubscribable = alertService.alertsSubscribable(strategy: .token(tokenObject))
-
+    private var segmentIndex = 0
     init(session: WalletSession, assetDefinition: AssetDefinitionStore, transactionType: TransactionType, analyticsCoordinator: AnalyticsCoordinator, token: TokenObject, viewModel: TokenViewControllerViewModel, activitiesService: ActivitiesServiceType, alertService: PriceAlertServiceType) {
         self.tokenObject = token
         self.viewModel = viewModel
@@ -53,8 +55,8 @@ class TokenViewController: UIViewController {
         self.analyticsCoordinator = analyticsCoordinator
         self.activitiesService = activitiesService
         self.alertService = alertService
-
-        activitiesPageView = ActivitiesPageView(viewModel: .init(activitiesViewModel: .init()), sessions: activitiesService.sessions)
+        let activitiesFooterBar = ButtonsBarBackgroundView(buttonsBar: activityButtonsBar)
+        activitiesPageView = ActivitiesPageView(viewModel: .init(activitiesViewModel: .init()), sessions: activitiesService.sessions, footerBar: activitiesFooterBar)
         alertsPageView = PriceAlertsPageView(viewModel: .init(alerts: []))
 
         super.init(nibName: nil, bundle: nil)
@@ -73,7 +75,7 @@ class TokenViewController: UIViewController {
         }
 
         let containerView = PagesContainerView(pages: pages)
-
+        containerView.delegate = self
         view.addSubview(containerView)
         NSLayoutConstraint.activate([containerView.anchorsConstraint(to: view)])
 
@@ -83,6 +85,7 @@ class TokenViewController: UIViewController {
             guard let view = activitiesPageView else { return }
 
             view.configure(viewModel: .init(activitiesViewModel: viewModel ?? .init(activities: [])))
+            view.configure(viewModel: self.viewModel)
         }
 
         alertsSubscriptionKey = alertsSubscribable.subscribe { [weak alertsPageView] alerts in
@@ -132,12 +135,16 @@ class TokenViewController: UIViewController {
 
         tokenInfoPageView.configure(viewModel: viewModel2)
         alertsPageView.configure(viewModel: .init(alerts: alertsSubscribable.value ?? []))
+        setUpButtonBars(sender: buttonsBar)
+        setUpButtonBars(sender: activityButtonsBar)
 
+    }
+
+    private func setUpButtonBars(sender: ButtonsBar) {
         let actions = viewModel.actions
-        buttonsBar.configure(.combined(buttons: viewModel.actions.count))
-        buttonsBar.viewController = self
-
-        for (action, button) in zip(actions, buttonsBar.buttons) {
+        sender.configure(.combined(buttons: viewModel.actions.count))
+        sender.viewController = self
+        for (action, button) in zip(actions, sender.buttons) {
             button.setTitle(action.name, for: .normal)
             button.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
             switch session.account.type {
@@ -151,6 +158,8 @@ class TokenViewController: UIViewController {
                 button.isEnabled = false
             }
         }
+        sender.buttons[1].backgroundColor = Colors.clear
+        sender.backgroundColor = Colors.clear
     }
 
     private func refreshTokenViewControllerUponAssetDefinitionChanges(forTransactionType transactionType: TransactionType) {
@@ -231,7 +240,8 @@ class TokenViewController: UIViewController {
 
     @objc private func actionButtonTapped(sender: UIButton) {
         let actions = viewModel.actions
-        for (action, button) in zip(actions, buttonsBar.buttons) where button == sender {
+        let buttons = segmentIndex == 0 ? buttonsBar.buttons : activityButtonsBar.buttons
+        for (action, button) in zip(actions, buttons) where button == sender {
             switch action.type {
             case .swap(let service):
                 delegate?.didTapSwap(forTransactionType: transactionType, service: service, inViewController: self)
@@ -349,5 +359,11 @@ extension TokenViewController: ActivitiesPageViewDelegate {
 extension TokenViewController {
     private func logStartOnRamp(name: String) {
         analyticsCoordinator.log(navigation: Analytics.Navigation.onRamp, properties: [Analytics.Properties.name.rawValue: name])
+    }
+}
+
+extension TokenViewController: PagesContainerViewDelegate {
+    func containerView(_ containerView: PagesContainerView, didSelectPage index: Int) {
+        segmentIndex = index
     }
 }

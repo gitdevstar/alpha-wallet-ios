@@ -49,7 +49,7 @@ class TokensCardCollectionViewController: UIViewController {
         self.eventsDataStore = eventsDataStore
         self.analyticsCoordinator = analyticsCoordinator
         self.activitiesService = activitiesService
-        self.activitiesPageView = ActivitiesPageView(viewModel: .init(activitiesViewModel: .init()), sessions: activitiesService.sessions)
+        self.activitiesPageView = ActivitiesPageView(viewModel: .init(activitiesViewModel: .init()), sessions: activitiesService.sessions, footerBar: nil)
         self.assetsPageView = AssetsPageView(tokenObject: tokenObject, assetDefinitionStore: assetDefinitionStore, analyticsCoordinator: analyticsCoordinator, server: session.server, viewModel: .init(tokenHolders: viewModel.tokenHolders))
 
         let footerBar = ButtonsBarBackgroundView(buttonsBar: buttonsBar)

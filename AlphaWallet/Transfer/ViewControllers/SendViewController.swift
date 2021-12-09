@@ -35,6 +35,22 @@ class SendViewController: UIViewController {
 
         return targetAddressTextField
     }()
+    
+    lazy var networkContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(hex: "4C79CB")
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.cornerRadius = 3
+        return view
+    }()
+    
+    lazy var networkNameLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = Fonts.regular(size: 8)
+        label.textColor = Colors.appWhite
+        return label
+    }()
 
     lazy var amountTextField: AmountTextField = {
         let amountTextField = AmountTextField(tokenObject: transactionType.tokenObject)
@@ -79,24 +95,31 @@ class SendViewController: UIViewController {
 
         containerView.stackView.addArrangedSubviews([
             amountHeader,
-            .spacer(height: ScreenChecker().isNarrowScreen ? 7 : 27),
+            .spacer(height: 7),
             amountTextField.defaultLayout(edgeInsets: .init(top: 16, left: 16, bottom: 16, right: 16)),
-            .spacer(height: ScreenChecker().isNarrowScreen ? 7: 14),
+            .spacer(height: 2),
             recipientHeader,
-            .spacer(height: ScreenChecker().isNarrowScreen ? 7: 16),
+            .spacer(height: 0),
             targetAddressTextField.defaultLayout(edgeInsets: .init(top: 0, left: 16, bottom: 0, right: 16))
         ])
 
         let footerBar = ButtonsBarBackgroundView(buttonsBar: buttonsBar, separatorHeight: 0)
         view.addSubview(footerBar)
         view.addSubview(containerView)
-
+        networkContainerView.addSubview(networkNameLabel)
+        view.addSubview(networkContainerView)
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             containerView.topAnchor.constraint(equalTo: view.topAnchor),
             containerView.bottomAnchor.constraint(equalTo: footerBar.topAnchor),
-
+            networkNameLabel.topAnchor.constraint(equalTo: networkContainerView.topAnchor, constant: 3),
+            networkNameLabel.bottomAnchor.constraint(equalTo: networkContainerView.bottomAnchor, constant: -3),
+            networkNameLabel.leadingAnchor.constraint(equalTo: networkContainerView.leadingAnchor, constant: 6),
+            networkNameLabel.trailingAnchor.constraint(equalTo: networkContainerView.trailingAnchor, constant: -6),
+            
+            networkContainerView.topAnchor.constraint(equalTo: amountTextField.topAnchor, constant: -40),
+            networkContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             footerBar.anchorsConstraint(to: view),
         ])
 
@@ -170,7 +193,7 @@ class SendViewController: UIViewController {
 
         buttonsBar.configure()
         let nextButton = buttonsBar.buttons[0]
-        nextButton.setTitle(R.string.localizable.send(), for: .normal)
+        nextButton.setTitle(R.string.localizable.next(), for: .normal)
         nextButton.addTarget(self, action: #selector(send), for: .touchUpInside)
 
         amountTextField.allFundsButton.addTarget(self, action: #selector(allFundsSelected), for: .touchUpInside)
@@ -178,7 +201,8 @@ class SendViewController: UIViewController {
     }
 
     private func updateNavigationTitle() {
-        title = "\(R.string.localizable.send()) \(transactionType.symbol)"
+        networkNameLabel.text = transactionType.tokenObject.name
+        title = "\(R.string.localizable.send()) \(transactionType.tokenObject.name)"
     }
 
     @objc func allFundsSelected() {

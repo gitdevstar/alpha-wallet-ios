@@ -14,8 +14,8 @@ class SelectCurrencyButton: UIControl {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentHuggingPriority(.required, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
-        label.font = DataEntry.Font.amountTextField
-
+        label.textColor = Colors.headerThemeColor
+        label.font = Fonts.bold(size: 14)
         return label
     }()
 
@@ -83,7 +83,7 @@ class SelectCurrencyButton: UIControl {
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .clear
 
-        let stackView = [currencyIconImageView, .spacerWidth(7), textLabel, .spacerWidth(10), expandImageView].asStackView(axis: .horizontal)
+        let stackView = [currencyIconImageView, .spacerWidth(7), textLabel].asStackView(axis: .horizontal)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(stackView)
         addSubview(actionButton)

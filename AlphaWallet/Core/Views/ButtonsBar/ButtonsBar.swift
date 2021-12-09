@@ -267,7 +267,7 @@ class ButtonsBar: UIView, ButtonsBarViewType {
             view.childView.setContentHuggingPriority(.required, for: .horizontal)
             view.childView.setContentCompressionResistancePriority(.required, for: .horizontal)
 
-            view.childView.setBackgroundImage(R.image.more(), for: .normal)
+            view.childView.setImage(R.image.more(), for: .normal)
             view.childView.addTarget(self, action: #selector(optionsButtonTapped), for: .touchUpInside)
 
             NSLayoutConstraint.activate([
@@ -379,7 +379,7 @@ struct ButtonsBarViewModel {
 
     static let moreButton = ButtonsBarViewModel()
 
-    var buttonBackgroundColor: UIColor = Colors.appWhite
+    var buttonBackgroundColor: UIColor = Colors.clear
     var highlightedButtonBackgroundColor: UIColor?
     var disabledButtonBackgroundColor: UIColor = Colors.disabledActionButton
     var disabledButtonBorderColor: UIColor = Colors.disabledActionButton
