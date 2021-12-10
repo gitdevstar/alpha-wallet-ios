@@ -36,10 +36,6 @@ struct EthTokenViewCellViewModel {
     
     private var amount: String {
         let string = shortFormatter.string(from: BigInt(token.value) ?? BigInt(), decimals: token.decimals)
-        if let floatValue = Double(string), let value = EthCurrencyHelper(ticker: ticker).marketPrice {
-            let nummber = floatValue * value
-            return NumberFormatter.usd(format: .fiatFormat).string(from: nummber) ?? "_"
-        }
         return string
     }
 
@@ -51,6 +47,10 @@ struct EthTokenViewCellViewModel {
         }
     }
 
+    private var networkName: String {
+        return token.server.getShortName()
+    }
+    
     var backgroundColor: UIColor {
         return Colors.appBackground
     }
@@ -60,9 +60,16 @@ struct EthTokenViewCellViewModel {
     }
 
     var titleAttributedString: NSAttributedString {
-        return NSAttributedString(string: title, attributes: [
+        let string = NSMutableAttributedString(string: title, attributes: [
             .foregroundColor: Colors.headerThemeColor,
-            .font: Fonts.bold(size: 14)
+            .font: Fonts.bold(size: 14)])
+        return string
+    }
+    
+    var networkNameAttributedString: NSAttributedString {
+        return NSAttributedString(string: "(\(networkName))", attributes: [
+            .foregroundColor: Colors.headerThemeColor,
+            .font: Fonts.bold(size: 12)
         ])
     }
     

@@ -896,4 +896,20 @@ extension RPCServer {
 
         return nil
     }
+    
+    func getShortName() -> String {
+        if let range = self.name.range(of: " (Test)") {
+            let index = self.name.distance(from: self.name.startIndex, to: range.lowerBound)
+            if (index > 0) {
+                return (self.name as NSString).substring(with: NSRange(location: 0, length: index))
+            } else if self.name.count > 10 {
+                return self.symbol
+            } else {
+                return self.name
+            }
+        } else {
+            return name
+        }
+    }
+    
 }

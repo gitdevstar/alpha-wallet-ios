@@ -44,11 +44,21 @@ class ConfirmSwapViewController: UIViewController {
     
     var fromCurrencyItem: SwapDropDownModel?
     var toCurrencyItem: SwapDropDownModel?
+    var fromValue: String?
+    var toValue: String?
     weak var delegate: ConfirmSwapDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        toCurrencyTextField.text = toValue
+        fromCurrencyTextField.text = fromValue
+        fromCurrencyTextField.addTarget(self, action: #selector(textDidChange(_:)), for: .editingChanged)
+        toCurrencyTextField.addTarget(self, action: #selector(textDidChange(_:)), for: .editingChanged)
         configureUI()
+    }
+    
+    @objc func textDidChange(_ sender: UITextField) {
+        self.configureUI()
     }
     
     func configureUI() {
@@ -59,9 +69,15 @@ class ConfirmSwapViewController: UIViewController {
         if let item = toCurrencyItem {
             self.toCurrencyLabel.text = item.title
         }
-        if let from = fromCurrencyLabel.text, let to = toCurrencyLabel.text, !from.isEmpty, !to.isEmpty {
-            priceValueLabel.text = "1 \(from) - 1 \(to)"
+        
+        if let from = fromCurrencyLabel.text, let to = toCurrencyLabel.text, let fromValue = fromCurrencyTextField.text, let toValue = toCurrencyTextField.text, !from.isEmpty, !to.isEmpty, !fromValue.isEmpty, !toValue.isEmpty {
+            if fromCurrencyItem?.title == toCurrencyItem?.title {
+                priceValueLabel.text = "\(fromValue) \(from) - \(fromValue) \(to)"
+            } else {
+                priceValueLabel.text = "\(fromValue) \(from) - \(toValue) \(to)"
+            }
         }
+
     }
 
     @IBAction func closeButtonAction(_ sender: Any) {
@@ -72,6 +88,11 @@ class ConfirmSwapViewController: UIViewController {
         let swapModel = fromCurrencyItem
         fromCurrencyItem = toCurrencyItem
         toCurrencyItem = swapModel
+        
+        let fValue = fromCurrencyTextField.text
+        fromCurrencyTextField.text = toCurrencyTextField.text
+        toCurrencyTextField.text = fValue
+        
         configureUI()
     }
     

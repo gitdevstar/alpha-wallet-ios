@@ -41,6 +41,8 @@ class SwapViewController: UIViewController {
         currencyConversionView.isHidden = true
         fromCurrencyItem = viewModel.object(at: 0)
         toCurrencyItem = viewModel.object(at: 1)
+        exchangeFromCurrencyTextField.addTarget(self, action: #selector(textDidChange(_:)), for: .editingChanged)
+        exchangeToCurrencyTextField.addTarget(self, action: #selector(textDidChange(_:)), for: .editingChanged)
         configureUI()
     }
     
@@ -48,7 +50,15 @@ class SwapViewController: UIViewController {
         let swapModel = fromCurrencyItem
         fromCurrencyItem = toCurrencyItem
         toCurrencyItem = swapModel
+        
+        let fromValue = exchangeFromCurrencyTextField.text
+        exchangeFromCurrencyTextField.text = exchangeToCurrencyTextField.text
+        exchangeToCurrencyTextField.text = fromValue
         configureUI()
+    }
+    
+    @objc func textDidChange(_ sender: UITextField) {
+        self.configureUI()
     }
     
     @IBAction func exchangeFromDropDownButtonAction(_ sender: UIButton) {
@@ -97,6 +107,8 @@ class SwapViewController: UIViewController {
             controller.modalPresentationStyle = .overCurrentContext
             controller.fromCurrencyItem = fromCurrencyItem
             controller.toCurrencyItem = toCurrencyItem
+            controller.fromValue = exchangeFromCurrencyTextField.text
+            controller.toValue = exchangeToCurrencyTextField.text
             controller.delegate = self
             controller.modalTransitionStyle = .crossDissolve
             tabBarController?.present(controller, animated: true, completion: nil)
@@ -113,8 +125,14 @@ class SwapViewController: UIViewController {
             self.exchangeToCurrencyLabel.text = item.title
             self.exchangeToCurrencyImageVIew.image = item.image
         }
-        if let from = exchangeFromCurrencyLabel.text, let to = exchangeToCurrencyLabel.text, !from.isEmpty, !to.isEmpty {
-            currencyConversionLabel.text = "1 \(from) - 1 \(to)"
+        currencyConversionView.isHidden = true
+        if let from = exchangeFromCurrencyLabel.text, let to = exchangeToCurrencyLabel.text, let fromValue = exchangeFromCurrencyTextField.text, let toValue = exchangeToCurrencyTextField.text, !from.isEmpty, !to.isEmpty, !fromValue.isEmpty, !toValue.isEmpty {
+            currencyConversionView.isHidden = false
+            if fromCurrencyItem?.title == toCurrencyItem?.title {
+                currencyConversionLabel.text = "\(fromValue) \(from) - \(fromValue) \(to)"
+            } else {
+                currencyConversionLabel.text = "\(fromValue) \(from) - \(toValue) \(to)"
+            }
         }
         self.removeDropDrowView()
         self.isSwapButon()
@@ -124,10 +142,8 @@ class SwapViewController: UIViewController {
     private func isSwapButon() -> Bool {
         if fromCurrencyItem != nil && toCurrencyItem != nil {
             enterAmountButton.setTitle(viewModel.swapButtonTitle(isSwap: true), for: .normal)
-            currencyConversionView.isHidden = false
             return true
         }
-        currencyConversionView.isHidden = true
         enterAmountButton.setTitle(viewModel.swapButtonTitle(isSwap: false), for: .normal)
         return false
     }

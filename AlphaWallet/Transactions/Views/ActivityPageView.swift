@@ -98,6 +98,7 @@ class ActivitiesPageView: UIView, PageViewType {
         let row1 = [cryptoValueLabel, UIView.spacerWidth(flexible: true), changeValueContainer, blockChainTagLabel].asStackView(spacing: 5, alignment: .center)
         let col1 = [
             [titleLabel, UIView.spacerWidth(flexible: true), fiatValueLabel].asStackView(spacing: 5),
+            UIView.spacer(height: 5),
             row1
         ].asStackView(axis: .vertical)
         let stackView = [col0, col1].asStackView(spacing: 12, alignment: .center)
@@ -135,8 +136,8 @@ class ActivitiesPageView: UIView, PageViewType {
         activitiesView.configure(viewModel: viewModel.activitiesViewModel)
         activitiesView.applySearch(keyword: nil)
         activitiesView.endLoading()
-        containerView.isHidden = !activitiesView.hasContent()
-        self.footerView?.isHidden = !activitiesView.hasContent()
+//        containerView.isHidden = !activitiesView.hasContent()
+//        self.footerView?.isHidden = !activitiesView.hasContent()
     }
     
     func configure(viewModel: TokenViewControllerViewModel) {

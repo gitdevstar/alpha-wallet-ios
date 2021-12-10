@@ -54,7 +54,7 @@ enum ButtonsBarConfiguration {
         case .custom:
             return false
         case .combined(let buttons):
-            return buttons > ButtonsBarConfiguration.maxCombinedButtons
+            return true //buttons > ButtonsBarConfiguration.maxCombinedButtons
         case .empty:
             return false
         }

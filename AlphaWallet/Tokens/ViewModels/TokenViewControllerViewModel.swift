@@ -157,6 +157,7 @@ struct TokenViewControllerViewModel {
                 let nummber = floatValue * value
                 return NumberFormatter.usd(format: .withTrailingCurrency).string(from: nummber) ?? "_"
             }
+            return string
         }
         return "-"
     }
@@ -164,10 +165,7 @@ struct TokenViewControllerViewModel {
     private var amount: String {
         if let token = token {
             let string = shortFormatter.string(from: BigInt(token.value) ?? BigInt(), decimals: token.decimals)
-            if let floatValue = Double(string), let value = EthCurrencyHelper(ticker: ticker).marketPrice {
-                let nummber = floatValue * value
-                return NumberFormatter.usd(format: .fiatFormat).string(from: nummber) ?? "_"
-            }
+            return string
         }
         return "-"
     }

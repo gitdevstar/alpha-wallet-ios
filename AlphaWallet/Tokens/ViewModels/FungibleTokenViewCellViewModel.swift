@@ -36,11 +36,11 @@ struct FungibleTokenViewCellViewModel {
     
     private var amount: String {
         let string = shortFormatter.string(from: BigInt(token.value) ?? BigInt(), decimals: token.decimals)
-        if let floatValue = Double(string), let value = EthCurrencyHelper(ticker: ticker).marketPrice {
-            let nummber = floatValue * value
-            return NumberFormatter.usd(format: .fiatFormat).string(from: nummber) ?? "_"
-        }
         return string
+    }
+    
+    private var networkName: String {
+        return token.server.getShortName()
     }
 
     var backgroundColor: UIColor {
@@ -55,6 +55,13 @@ struct FungibleTokenViewCellViewModel {
         return NSAttributedString(string: title, attributes: [
             .foregroundColor: Screen.TokenCard.Color.title,
             .font: Fonts.bold(size: 14)
+        ])
+    }
+    
+    var networkNameAttributedString: NSAttributedString {
+        return NSAttributedString(string: "(\(networkName))", attributes: [
+            .foregroundColor: Colors.headerThemeColor,
+            .font: Fonts.bold(size: 12)
         ])
     }
 

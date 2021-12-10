@@ -7,6 +7,7 @@ import Kingfisher
 class FungibleTokenViewCell: UITableViewCell {
     private let background = UIView()
     private let titleLabel = UILabel()
+    private let networkNameLabel = UILabel()
     private let apprecation24hoursView = ApprecationView()
     private let priceChangeLabel = UILabel()
     private let fiatValueLabel = UILabel()
@@ -39,6 +40,8 @@ class FungibleTokenViewCell: UITableViewCell {
         let row1 = [cryptoValueLabel, UIView.spacerWidth(flexible: true), changeValueContainer, blockChainTagLabel].asStackView(spacing: 5, alignment: .center)
         let col1 = [
             [titleLabel, UIView.spacerWidth(flexible: true), fiatValueLabel].asStackView(spacing: 5),
+            UIView.spacer(height: 2),
+            networkNameLabel,
             row1
         ].asStackView(axis: .vertical)
         let stackView = [col0, col1].asStackView(spacing: 12, alignment: .center)
@@ -73,6 +76,8 @@ class FungibleTokenViewCell: UITableViewCell {
         
         titleLabel.attributedText = viewModel.titleAttributedString
         titleLabel.baselineAdjustment = .alignCenters
+        networkNameLabel.attributedText = viewModel.networkNameAttributedString
+        networkNameLabel.baselineAdjustment = .alignCenters
 
         cryptoValueLabel.attributedText = viewModel.cryptoValueAttributedString
         cryptoValueLabel.baselineAdjustment = .alignCenters
