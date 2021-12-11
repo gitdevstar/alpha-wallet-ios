@@ -26,7 +26,7 @@ class TokensViewModel {
     //Must be computed because localization can be overridden by user dynamically
     static var segmentedControlTitles: [String] { WalletFilter.orderedTabs.map { $0.title } }
 
-    private let filterTokensCoordinator: FilterTokensCoordinator
+    let filterTokensCoordinator: FilterTokensCoordinator
     var tokens: [TokenObject]
 
     var isSearchActive: Bool = false

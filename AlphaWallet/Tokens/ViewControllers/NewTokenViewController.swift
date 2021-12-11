@@ -209,7 +209,7 @@ class NewTokenViewController: UIViewController {
         updateChangeServer(title: server.name)
 
         addressTextField.label.text = viewModel.addressLabel
-        addressTextField.value = "0xCA1262E77FB25C0A4112CFC9BAD3FF54F617F2E6"
+        //addressTextField.value = "0xCA1262E77FB25C0A4112CFC9BAD3FF54F617F2E6"
         addressTextField.configureOnce()
         symbolTextField.configureOnce()
         decimalsTextField.configureOnce()

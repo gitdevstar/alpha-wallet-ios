@@ -120,7 +120,7 @@ class TokensViewController: UIViewController {
     private lazy var keyboardChecker = KeyboardChecker(self, resetHeightDefaultValue: 0, ignoreBottomSafeArea: true)
     private let config: Config
     private let walletConnectCoordinator: WalletConnectCoordinator
-
+    let server: RPCServer = .binance_smart_chain
     var isConsoleButtonHidden: Bool {
         get {
             return consoleButton.isHidden
@@ -193,7 +193,8 @@ class TokensViewController: UIViewController {
          filterTokensCoordinator: FilterTokensCoordinator,
          config: Config,
          walletConnectCoordinator: WalletConnectCoordinator,
-         walletBalanceCoordinator: WalletBalanceCoordinatorType
+         walletBalanceCoordinator: WalletBalanceCoordinatorType,
+         singleChainTokenCoordinators: [SingleChainTokenCoordinator]
     ) {
         self.sessions = sessions
         self.account = account
@@ -203,7 +204,7 @@ class TokensViewController: UIViewController {
         self.config = config
         self.walletConnectCoordinator = walletConnectCoordinator
         walletSummarySubscription = walletBalanceCoordinator.subscribableWalletBalance(wallet: account)
-
+        filterTokensCoordinator.singleChainTokenCoordinators = singleChainTokenCoordinators
         viewModel = TokensViewModel(filterTokensCoordinator: filterTokensCoordinator, tokens: [])
         searchController = UISearchController(searchResultsController: nil)
 
@@ -352,6 +353,7 @@ class TokensViewController: UIViewController {
     }
 
     func fetch() {
+        viewModel.filterTokensCoordinator.didAddAddress(viewController: self)
         startLoading()
         tokenCollection.fetch()
     }
@@ -441,6 +443,38 @@ class TokensViewController: UIViewController {
     private func reloadWalletSummaryView(with balance: WalletBalance?) {
         let summary = balance.map { WalletSummary(balances: [$0]) }
         title = WalletSummaryViewModel(summary: summary).balanceAttributedString.string
+    }
+    
+    public func updateSymbolValue(_ symbol: String) {
+        //symbolTextField.value = symbol
+    }
+
+    public func updateNameValue(_ name: String) {
+        //nameTextField.value = name
+    }
+
+    public func updateDecimalsValue(_ decimals: UInt8) {
+        //decimalsTextField.value = String(decimals)
+    }
+
+    //int is 64 bits, if this proves not enough later we can convert to BigUInt
+    public func updateBalanceValue(_ balance: [String], tokenType: TokenType) {
+        //TODO this happens to work for CryptoKitty now because of how isNonZeroBalance() is implemented. But should fix
+//        let filteredTokens = balance.filter { isNonZeroBalance($0, tokenType: tokenType) }
+//        viewModel.ERC875TokenBalance = filteredTokens
+//        balanceTextField.value = viewModel.ERC875TokenBalanceAmount.description
+    }
+
+    public func updateForm(forTokenType tokenType: TokenType) {
+//        self.tokenType = tokenType
+//        switch tokenType {
+//        case .nativeCryptocurrency, .erc20:
+//            decimalsViews.makeEach(isHidden: false)
+//            balanceViews.makeEach(isHidden: true)
+//        case .erc721, .erc875, .erc721ForTickets, .erc1155:
+//            decimalsViews.makeEach(isHidden: true)
+//            balanceViews.makeEach(isHidden: false)
+//        }
     }
     
 }

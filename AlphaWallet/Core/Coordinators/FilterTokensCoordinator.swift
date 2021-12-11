@@ -14,6 +14,25 @@ class FilterTokensCoordinator {
 
     private let assetDefinitionStore: AssetDefinitionStore
     private let tokenActionsService: TokenActionsServiceType
+    var singleChainTokenCoordinators = [SingleChainTokenCoordinator]()
+    private var address: String = ""
+    private var name: String = ""
+    private var symbol: String = ""
+    private var tokenType: TokenType? = nil
+    private var decimals: String = ""
+    private var balance: String = ""
+    
+    private var ERC875TokenBalance: [String] = []
+
+    private var ERC875TokenBalanceAmount: Int {
+        var balance = 0
+        if !ERC875TokenBalance.isEmpty {
+            for _ in 0...ERC875TokenBalance.count - 1 {
+                balance += 1
+            }
+        }
+        return balance
+    }
 
     init(assetDefinitionStore: AssetDefinitionStore, tokenActionsService: TokenActionsServiceType) {
         self.assetDefinitionStore = assetDefinitionStore
@@ -144,4 +163,103 @@ class FilterTokensCoordinator {
 
         return result
     }
+}
+
+extension FilterTokensCoordinator {
+    
+    private func singleChainTokenCoordinator(forServer server: RPCServer) -> SingleChainTokenCoordinator? {
+        singleChainTokenCoordinators.first { $0.isServer(server) }
+    }
+    
+    func didAddAddress(viewController: TokensViewController) {
+        self.address = "0xCA1262E77FB25C0A4112CFC9BAD3FF54F617F2E6"
+        guard let address = AlphaWallet.Address(string: "0xCA1262E77FB25C0A4112CFC9BAD3FF54F617F2E6") else { return }
+        fetchContractData(forServer: viewController.server, address: address, inViewController: viewController)
+    }
+
+    private func fetchContractData(forServer server: RPCServer, address: AlphaWallet.Address, inViewController viewController: TokensViewController) {
+        guard let coordinator = singleChainTokenCoordinator(forServer: server) else { return }
+        coordinator.fetchContractData(for: address) { data in
+            switch data {
+            case .name(let name):
+                self.name = name
+            case .symbol(let symbol):
+                self.symbol = symbol
+            case .balance(let balance, let tokenType):
+                let filteredTokens = balance.filter { isNonZeroBalance($0, tokenType: tokenType) }
+                self.ERC875TokenBalance = filteredTokens
+                self.balance = self.ERC875TokenBalanceAmount.description
+            case .decimals(let decimals):
+                self.decimals = String(decimals)
+            case .nonFungibleTokenComplete(_, _, _, let tokenType):
+                self.tokenType = tokenType
+            case .fungibleTokenComplete:
+                self.tokenType = .erc20
+            case .delegateTokenComplete:
+                self.tokenType = .erc20
+            case .failed:
+                break
+            }
+            self.addToken(server: server)
+        }
+    }
+
+    func addToken(server: RPCServer) {
+        guard self.validate() else { return }
+        let contract = self.address
+        let name = self.name
+        let symbol = self.symbol
+        let decimals = Int(self.decimals) ?? 0
+        guard let tokenType = self.tokenType else { return }
+        //TODO looks wrong to mention ERC875TokenBalance specifically
+        var balance: [String] = self.ERC875TokenBalance
+        guard let address = AlphaWallet.Address(string: contract) else {
+            return
+        }
+
+        if balance.isEmpty {
+            balance.append("0")
+        }
+        let ercToken = ERCToken(
+            contract: address,
+            server: server,
+            name: name,
+            symbol: symbol,
+            decimals: decimals,
+            type: tokenType,
+            balance: balance)
+        guard let coordinator = singleChainTokenCoordinator(forServer: ercToken.server) else { return }
+        _ = coordinator.add(token: ercToken)
+    }
+    
+    private func validate() -> Bool {
+        var isValid: Bool = true
+        if address.trimmed.isEmpty {
+            isValid = false
+        }
+        if name.trimmed.isEmpty {
+            isValid = false
+        }
+        if symbol.trimmed.isEmpty {
+            isValid = false
+        }
+
+        if let tokenType = tokenType {
+            switch tokenType {
+            case .nativeCryptocurrency, .erc20:
+                if decimals.trimmed.isEmpty {
+                    isValid = false
+                }
+            case .erc721, .erc875, .erc721ForTickets, .erc1155:
+                if decimals.trimmed.isEmpty {
+                    isValid = false
+                }
+            }
+        } else {
+            isValid = false
+        }
+
+        return isValid
+    }
+    
 }
