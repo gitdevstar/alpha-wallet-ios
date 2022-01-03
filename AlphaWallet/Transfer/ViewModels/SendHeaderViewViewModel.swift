@@ -181,7 +181,7 @@ struct TokenInfoPageViewModel {
     var titleAttributedString: NSAttributedString {
         return NSAttributedString(string: title, attributes: [
             .font: Fonts.regular(size: ScreenChecker().isNarrowScreen ? 26 : 36),
-            .foregroundColor: Colors.black
+            .foregroundColor: Colors.appText
         ])
     }
 

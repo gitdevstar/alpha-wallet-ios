@@ -20,7 +20,7 @@ struct TickerFieldValueViewModel {
     var attributedTitle: NSAttributedString {
         return .init(string: title, attributes: [
             .font: Fonts.regular(size: 15),
-            .foregroundColor: R.color.dove()!
+            .foregroundColor: Colors.appText
         ])
     }
 }

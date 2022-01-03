@@ -13,11 +13,11 @@ protocol TokenHistoryPeriodSelectorViewDelegate: class {
 
 struct TokenHistoryPeriodSelectorViewModel {
     var titles: [String]
-    var selectedStateBackgroundColor: UIColor = Colors.darkGray
+    var selectedStateBackgroundColor: UIColor = Colors.appText
     var normalStateBackgroundColor: UIColor = .white
 
     var selectedStateTextColor: UIColor = .white
-    var normalStateTextColor: UIColor = Colors.darkGray
+    var normalStateTextColor: UIColor = Colors.appText
 }
 
 class TokenHistoryPeriodSelectorView: UIView {

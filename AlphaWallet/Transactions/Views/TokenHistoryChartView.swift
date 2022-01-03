@@ -38,7 +38,7 @@ class TokenHistoryChartView: UIView {
         let chartView = LineChartView()
 
         chartView.translatesAutoresizingMaskIntoConstraints = false
-        chartView.backgroundColor = .white
+        chartView.backgroundColor = Colors.appBackground
         chartView.drawGridBackgroundEnabled = false
         chartView.drawBordersEnabled = false
 
