@@ -41,7 +41,7 @@ struct ServerViewModel: ServerTableViewCellViewModelType {
     var backgroundColor: UIColor = Colors.appBackground
 
     var serverFont: UIFont = Fonts.regular(size: 17)
-    var serverColor: UIColor = Colors.black
+    var serverColor: UIColor = Colors.appText
     var serverName: String {
         return server.displayName
     }

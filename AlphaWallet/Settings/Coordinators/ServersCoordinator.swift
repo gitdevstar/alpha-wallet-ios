@@ -13,31 +13,31 @@ class ServersCoordinator: Coordinator {
     static var serversOrdered: [RPCServer] {
         let all: [RPCServer] = [
             .main,
-            .xDai,
-            .classic,
-            .poa,
+//            .xDai,
+//            .classic,
+//            .poa,
             .ropsten,
-            .goerli,
+//            .goerli,
             .kovan,
             .rinkeby,
-            .sokol,
+//            .sokol,
             .binance_smart_chain,
             .binance_smart_chain_testnet,
-            .callisto,
-            .heco,
-            .heco_testnet,
-            .artis_sigma1,
-            .artis_tau1,
-            .fantom,
-            .fantom_testnet,
+//            .callisto,
+//            .heco,
+//            .heco_testnet,
+//            .artis_sigma1,
+//            .artis_tau1,
+//            .fantom,
+//            .fantom_testnet,
             .avalanche,
             .avalanche_testnet,
             .polygon,
-            .mumbai_testnet,
-            .optimistic,
-            .optimisticKovan,
-            .cronosTestnet,
-            .arbitrum,
+//            .mumbai_testnet,
+//            .optimistic,
+//            .optimisticKovan,
+//            .cronosTestnet,
+//            .arbitrum,
         ] + RPCServer.customServers
         if Features.isPalmEnabled {
             return all + [.palm, .palmTestnet]
@@ -62,7 +62,7 @@ class ServersCoordinator: Coordinator {
 
     init(defaultServer: RPCServerOrAuto, config: Config, navigationController: UINavigationController) {
         self.navigationController = navigationController
-        let serverChoices = ServersCoordinator.serverChoices(includeAny: true, config: config)
+        let serverChoices = ServersCoordinator.serverChoices(includeAny: false, config: config)
 
         self.viewModel = ServersViewModel(servers: serverChoices, selectedServer: defaultServer)
     }

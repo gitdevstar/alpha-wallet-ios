@@ -36,6 +36,7 @@ class ServerTableViewCell: UITableViewCell {
     func configure(viewModel: ServerTableViewCellViewModelType) {
         selectionStyle = viewModel.selectionStyle
         backgroundColor = viewModel.backgroundColor
+        tintColor = Colors.appText
 
         accessoryType = viewModel.accessoryType
         topSeparator.isHidden = viewModel.isTopSeparatorHidden
