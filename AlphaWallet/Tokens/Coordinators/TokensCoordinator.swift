@@ -4,7 +4,7 @@ import Foundation
 import UIKit
 import PromiseKit
 
-protocol TokensCoordinatorDelegate: class, CanOpenURL {
+protocol TokensCoordinatorDelegate: CanOpenURL, SendTransactionDelegate {
     func didTapSwap(forTransactionType transactionType: TransactionType, service: SwapTokenURLProviderType, in coordinator: TokensCoordinator)
     func shouldOpen(url: URL, shouldSwitchServer: Bool, forTransactionType transactionType: TransactionType, in coordinator: TokensCoordinator)
     func didPress(for type: PaymentFlow, server: RPCServer, inViewController viewController: UIViewController?, in coordinator: TokensCoordinator)
@@ -13,6 +13,9 @@ protocol TokensCoordinatorDelegate: class, CanOpenURL {
     func openConsole(inCoordinator coordinator: TokensCoordinator)
     func didPostTokenScriptTransaction(_ transaction: SentTransaction, in coordinator: TokensCoordinator)
     func blockieSelected(in coordinator: TokensCoordinator)
+    func openFiatOnRamp(wallet: Wallet, server: RPCServer, inCoordinator coordinator: TokensCoordinator, viewController: UIViewController, source: Analytics.FiatOnRampSource)
+
+    func whereAreMyTokensSelected(in coordinator: TokensCoordinator)
 }
 
 private struct NoContractDetailsDetected: Error {
@@ -53,7 +56,8 @@ class TokensCoordinator: Coordinator {
         return queue
     }()
     private let activitiesService: ActivitiesServiceType
-    private lazy var tokensViewController: TokensViewController = {
+    //NOTE: private (set) - `For test purposes only`
+    private (set) lazy var tokensViewController: TokensViewController = {
         let controller = TokensViewController(
             sessions: sessions,
             account: sessions.anyValue.account,
@@ -71,7 +75,7 @@ class TokensCoordinator: Coordinator {
     }()
 
     private var addressToAutoDetectServerFor: AlphaWallet.Address?
-    private var sendToAddressState: SendToAddressState = .none
+    private var sendToAddress: AlphaWallet.Address? = .none
     private var singleChainTokenCoordinators: [SingleChainTokenCoordinator] {
         return coordinators.compactMap { $0 as? SingleChainTokenCoordinator }
     }
@@ -128,6 +132,37 @@ class TokensCoordinator: Coordinator {
         self.walletBalanceCoordinator = walletBalanceCoordinator
         promptBackupCoordinator.prominentPromptDelegate = self
         setupSingleChainTokenCoordinators()
+
+        let moreBarButton = UIBarButtonItem.moreBarButton(self, selector: #selector(moreButtonSelected))
+        let qrCodeBarButton = UIBarButtonItem.qrCodeBarButton(self, selector: #selector(scanQRCodeButtonSelected))
+        moreBarButton.imageInsets = .init(top: 0, left: 0, bottom: 0, right: 0)
+        qrCodeBarButton.imageInsets = .init(top: 0, left: 15, bottom: 0, right: -15)
+
+        tokensViewController.navigationItem.rightBarButtonItems = [
+            moreBarButton,
+            qrCodeBarButton
+        ]
+        tokensViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: tokensViewController.blockieImageView)
+        tokensViewController.blockieImageView.addTarget(self, action: #selector(blockieButtonSelected), for: .touchUpInside)
+    }
+
+    @objc private func blockieButtonSelected(_ sender: UIButton) {
+        delegate?.blockieSelected(in: self)
+    }
+
+    @objc private func scanQRCodeButtonSelected(_ sender: UIBarButtonItem) {
+        if config.shouldReadClipboardForWalletConnectUrl {
+            if let s = UIPasteboard.general.string ?? UIPasteboard.general.url?.absoluteString, let url = WalletConnectURL(s) {
+                walletConnectCoordinator.openSession(url: url)
+            }
+        } else {
+            launchUniversalScanner(fromSource: .walletScreen)
+        }
+    }
+
+    @objc private func moreButtonSelected(_ sender: UIBarButtonItem) {
+        let alertViewController = makeMoreAlertSheet(sender: sender)
+        tokensViewController.present(alertViewController, animated: true)
     }
 
     func start() {
@@ -160,7 +195,7 @@ class TokensCoordinator: Coordinator {
         coordinator.addImportedToken(forContract: contract)
     }
 
-    func addUefaTokenIfAny() {
+    private func addUefaTokenIfAny() {
         let server = Constants.uefaRpcServer
         guard let coordinator = singleChainTokenCoordinator(forServer: server) else { return }
         coordinator.addImportedToken(forContract: Constants.uefaMainnet, onlyIfThereIsABalance: true)
@@ -189,19 +224,80 @@ class TokensCoordinator: Coordinator {
 
 extension TokensCoordinator: TokensViewControllerDelegate {
 
-    func myQRCodeButtonSelected(in viewController: UIViewController) {
-        delegate?.didPress(for: .request, server: config.anyEnabledServer(), inViewController: .none, in: self)
+    func whereAreMyTokensSelected(in viewController: UIViewController) {
+        delegate?.whereAreMyTokensSelected(in: self)
+    }
+    
+    private func getWalletName() {
+        let viewModel = tokensViewController.viewModel
+
+        tokensViewController.title = viewModel.walletDefaultTitle
+
+        firstly {
+            GetWalletNameCoordinator(config: config).getName(forAddress: sessions.anyValue.account.address)
+        }.done { [weak self] name in
+            self?.tokensViewController.navigationItem.title = name ?? viewModel.walletDefaultTitle
+        }.cauterize()
     }
 
-    func blockieSelected(in viewController: UIViewController) {
-        delegate?.blockieSelected(in: self)
+    private func getWalletBlockie() {
+        let generator = BlockiesGenerator()
+        generator.promise(address: sessions.anyValue.account.address).done { [weak self] value in
+            self?.tokensViewController.blockieImageView.image = value
+        }.catch { [weak self] _ in
+            self?.tokensViewController.blockieImageView.image = nil
+        }
+    }
+
+    func viewWillAppear(in viewController: UIViewController) {
+        getWalletName()
+        getWalletBlockie()
+    }
+
+    private func makeMoreAlertSheet(sender: UIBarButtonItem) -> UIAlertController {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alertController.popoverPresentationController?.barButtonItem = sender
+
+        let copyAddressAction = UIAlertAction(title: R.string.localizable.copyAddress(), style: .default) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            UIPasteboard.general.string = strongSelf.sessions.anyValue.account.address.eip55String
+            strongSelf.tokensViewController.view.showCopiedToClipboard(title: R.string.localizable.copiedToClipboard())
+        }
+        alertController.addAction(copyAddressAction)
+
+        let showMyWalletAddressAction = UIAlertAction(title: R.string.localizable.settingsShowMyWalletTitle(), style: .default) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.didPress(for: .request, server: strongSelf.config.anyEnabledServer(), inViewController: .none, in: strongSelf)
+        }
+        alertController.addAction(showMyWalletAddressAction)
+
+        if config.enabledServers.contains(.main) {
+            let buyAction = UIAlertAction(title: R.string.localizable.buyCryptoTitle(), style: .default) { [weak self] _ in
+                guard let strongSelf = self else { return }
+                let server = RPCServer.main
+                let account = strongSelf.sessions.anyValue.account
+                strongSelf.delegate?.openFiatOnRamp(wallet: account, server: server, inCoordinator: strongSelf, viewController: strongSelf.tokensViewController, source: .walletTab)
+            }
+            alertController.addAction(buyAction)
+        }
+
+        let addHideTokensAction = UIAlertAction(title: R.string.localizable.walletsAddHideTokensTitle(), style: .default) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            strongSelf.didPressAddHideTokens(viewModel: strongSelf.rootViewController.viewModel)
+        }
+        alertController.addAction(addHideTokensAction)
+
+        let cancelAction = UIAlertAction(title: R.string.localizable.cancel(), style: .cancel) { _ in }
+        alertController.addAction(cancelAction)
+
+        return alertController
     }
 
     func walletConnectSelected(in viewController: UIViewController) {
         walletConnectCoordinator.showSessionDetails(in: navigationController)
     }
 
-    func didPressAddHideTokens(viewModel: TokensViewModel) {
+    private func didPressAddHideTokens(viewModel: TokensViewModel) {
         let coordinator: AddHideTokensCoordinator = .init(
             tokens: viewModel.tokens,
             assetDefinitionStore: assetDefinitionStore,
@@ -227,11 +323,11 @@ extension TokensCoordinator: TokensViewControllerDelegate {
         case .erc20:
             coordinator.show(fungibleToken: token, transactionType: .erc20Token(token, destination: nil, amount: nil), navigationController: navigationController)
         case .erc721:
-            coordinator.showTokenList(for: .send(type: .erc721Token(token)), token: token, navigationController: navigationController)
+            coordinator.showTokenList(for: .send(type: .transaction(.erc721Token(token, tokenHolders: []))), token: token, navigationController: navigationController)
         case .erc875, .erc721ForTickets:
-            coordinator.showTokenList(for: .send(type: .erc875Token(token)), token: token, navigationController: navigationController)
+            coordinator.showTokenList(for: .send(type: .transaction(.erc875Token(token, tokenHolders: []))), token: token, navigationController: navigationController)
         case .erc1155:
-            coordinator.showTokenList(for: .send(type: .erc1155Token(token)), token: token, navigationController: navigationController)
+            coordinator.showTokenList(for: .send(type: .transaction(.erc1155Token(token, transferType: .singleTransfer, tokenHolders: []))), token: token, navigationController: navigationController)
         }
     }
 
@@ -247,16 +343,6 @@ extension TokensCoordinator: TokensViewControllerDelegate {
     func didTapOpenConsole(in viewController: UIViewController) {
         delegate?.openConsole(inCoordinator: self)
     }
-
-    func scanQRCodeSelected(in viewController: UIViewController) {
-        if config.shouldReadClipboardForWalletConnectUrl {
-            if let s = UIPasteboard.general.string ?? UIPasteboard.general.url?.absoluteString, let url = WalletConnectURL(s) {
-                walletConnectCoordinator.openSession(url: url)
-            }
-        } else {
-            launchUniversalScanner(fromSource: .walletScreen)
-        }
-    }
 }
 
 extension TokensCoordinator: SelectTokenCoordinatorDelegate {
@@ -264,14 +350,15 @@ extension TokensCoordinator: SelectTokenCoordinatorDelegate {
     func coordinator(_ coordinator: SelectTokenCoordinator, didSelectToken token: TokenObject) {
         removeCoordinator(coordinator)
 
-        switch sendToAddressState {
-        case .pending(let address):
-            let paymentFlow = PaymentFlow.send(type: .init(token: token, recipient: .address(address), amount: nil))
+        switch sendToAddress {
+        case .some(let address):
+            let paymentFlow = PaymentFlow.send(type: .transaction(.init(token: token, recipient: .address(address), amount: nil)))
 
             delegate?.didPress(for: paymentFlow, server: token.server, inViewController: .none, in: self)
         case .none:
             break
         }
+        sendToAddress = .none
     }
 
     func selectAssetDidCancel(in coordinator: SelectTokenCoordinator) {
@@ -300,7 +387,7 @@ extension TokensCoordinator: QRCodeResolutionCoordinatorDelegate {
     func coordinator(_ coordinator: QRCodeResolutionCoordinator, didResolveTransactionType transactionType: TransactionType, token: TokenObject) {
         removeCoordinator(coordinator)
 
-        let paymentFlow = PaymentFlow.send(type: transactionType)
+        let paymentFlow = PaymentFlow.send(type: .transaction(transactionType))
 
         delegate?.didPress(for: paymentFlow, server: token.server, inViewController: .none, in: self)
     }
@@ -342,7 +429,7 @@ extension TokensCoordinator: QRCodeResolutionCoordinatorDelegate {
     }
 
     private func handleSendToAddress(_ address: AlphaWallet.Address) {
-        sendToAddressState = .pending(address: address)
+        sendToAddress = address
 
         let coordinator = SelectTokenCoordinator(
             assetDefinitionStore: assetDefinitionStore,
@@ -422,6 +509,10 @@ extension TokensCoordinator: EditPriceAlertCoordinatorDelegate {
 }
 
 extension TokensCoordinator: SingleChainTokenCoordinatorDelegate {
+    
+    func didSendTransaction(_ transaction: SentTransaction, inCoordinator coordinator: TransactionConfirmationCoordinator) {
+        delegate?.didSendTransaction(transaction, inCoordinator: coordinator)
+    }
 
     func didTapAddAlert(for tokenObject: TokenObject, in cordinator: SingleChainTokenCoordinator) {
         let coordinatorToAdd = EditPriceAlertCoordinator(navigationController: navigationController, configuration: .create, tokenObject: tokenObject, session: cordinator.session, alertService: alertService)
@@ -463,6 +554,10 @@ extension TokensCoordinator: SingleChainTokenCoordinatorDelegate {
 
     func didPostTokenScriptTransaction(_ transaction: SentTransaction, in coordinator: SingleChainTokenCoordinator) {
         delegate?.didPostTokenScriptTransaction(transaction, in: self)
+    }
+
+    func openFiatOnRamp(wallet: Wallet, server: RPCServer, inCoordinator coordinator: SingleChainTokenCoordinator, viewController: UIViewController, source: Analytics.FiatOnRampSource) {
+        delegate?.openFiatOnRamp(wallet: wallet, server: server, inCoordinator: self, viewController: viewController, source: source)
     }
 }
 

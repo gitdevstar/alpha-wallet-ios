@@ -95,3 +95,6 @@ AlphaWalletTests/Snapshots/FailureDiffs
 
 # Additions
 .idea/
+/.bundle
+/vendor
+.ruby-version

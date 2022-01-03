@@ -18,7 +18,7 @@ target 'AlphaWallet' do
   pod 'RealmSwift', '5.5.1'
   pod 'Moya', '~> 10.0.1'
   pod 'JavaScriptKit'
-  pod 'CryptoSwift', '1.3.2'
+  pod 'CryptoSwift', '~> 1.4'
   pod 'Kingfisher', '5.15.7'
   pod 'AlphaWalletWeb3Provider', :git=>'https://github.com/AlphaWallet/AlphaWallet-web3-provider', :commit => '9a4496d02b7ddb2f6307fd0510d8d7c9fcef9870'
   pod 'TrezorCrypto', :git=>'https://github.com/AlphaWallet/trezor-crypto-ios.git', :commit => '50c16ba5527e269bbc838e80aee5bac0fe304cc7'
@@ -29,19 +29,20 @@ target 'AlphaWallet' do
   pod 'PromiseKit/CorePromise'
   pod 'PromiseKit/Alamofire'
   pod "Kanna", :git => 'https://github.com/tid-kijyun/Kanna.git', :commit => '06a04bc28783ccbb40efba355dee845a024033e8'
-  pod 'TrustWalletCore', '2.3.3'
+  pod 'TrustWalletCore', '2.6.34'
   pod 'AWSSNS', '2.18.0'
   pod 'Mixpanel-swift', '2.8.0'
   pod 'UnstoppableDomainsResolution', '0.1.6'
   pod 'BlockiesSwift'
   pod 'PaperTrailLumberjack/Swift'
-  pod 'WalletConnectSwift', :git => 'https://github.com/WalletConnect/WalletConnectSwift.git', :commit => 'c86938785303b99ff09d90e32e553ce38eee0aa6'
+  pod 'WalletConnectSwift', :git => 'https://github.com/WalletConnect/WalletConnectSwift.git'
   pod 'AssistantKit'
   # pod 'AWSCognito'
   pod 'Charts'
   pod 'CocoaLumberjack', '3.7.0'
   pod 'AlphaWalletAddress', :path => 'modules/AlphaWalletAddress'
-  
+  pod 'Apollo'
+
   target 'AlphaWalletTests' do
       inherit! :search_paths
       # Pods for testing
@@ -52,7 +53,12 @@ end
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
-    
+    target.build_configurations.each do |config|
+      #config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+      config.build_settings['ONLY_ACTIVE_ARCH'] = 'YES'
+      config.build_settings["ARCHS[sdk=iphonesimulator*]"] = "x86_64"
+    end
+
     if ['TrustKeystore'].include? target.name
       target.build_configurations.each do |config|
         config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-Owholemodule'

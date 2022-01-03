@@ -10,6 +10,10 @@ protocol AnalyticsAction {
     var rawValue: String { get }
 }
 
+protocol AnalyticsError {
+    var rawValue: String { get }
+}
+
 protocol AnalyticsUserProperty {
     var rawValue: String { get }
 }
@@ -37,6 +41,7 @@ enum Analytics {
         case github = "Screen: Github"
         case explorer = "Screen: Explorer"
         case openShortcut = "Screen: Shortcut"
+        case openHelpUrl = "Screen: Help URL"
     }
 
     enum Action: String, AnalyticsAction {
@@ -58,6 +63,7 @@ enum Analytics {
         case walletConnectConnectionTimeout = "WalletConnect Connection Timeout"
         case walletConnectConnectionFailed = "WalletConnect Connection Failed"
         case clearBrowserCache = "Clear Browser Cache"
+        case pingInfura = "Ping Infura"
         case rectifySendTransactionErrorInActionSheet = "Rectify Send Txn Error"
         case nameWallet = "Name Wallet"
         case firstWalletAction = "First Wallet Action"
@@ -65,6 +71,11 @@ enum Analytics {
         case editCustomChain = "Edit Custom Chain"
         case subscribeToEmailNewsletter = "Subscribe Email Newsletter"
         case tapSafariExtensionRewrittenUrl = "Tap Safari Extension Rewritten URL"
+    }
+
+    //Include "Error" at the end of the String value so it's easier to filter in analytics dashboard
+    enum Error: String, AnalyticsError {
+        case sendTransactionNonceTooLow = "Send Transaction Nonce Too Low Error"
     }
 
     enum Properties: String {
@@ -178,5 +189,17 @@ enum Analytics {
 
     enum ShortcutType: String {
         case walletQrCode
+    }
+
+    enum HelpUrl: String {
+        case insufficientFunds
+    }
+
+    enum FiatOnRampSource: String {
+        case token
+        case transactionActionSheetInsufficientFunds
+        case speedupTransactionInsufficientFunds
+        case cancelTransactionInsufficientFunds
+        case walletTab
     }
 }

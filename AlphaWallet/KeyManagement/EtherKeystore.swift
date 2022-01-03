@@ -245,7 +245,7 @@ open class EtherKeystore: NSObject, Keystore {
             let mnemonicString = mnemonic.joined(separator: " ")
             let mnemonicIsGood = doesSeedMatchWalletAddress(mnemonic: mnemonicString)
             guard mnemonicIsGood else { return .failure(.failedToCreateWallet) }
-            let wallet = HDWallet(mnemonic: mnemonicString, passphrase: emptyPassphrase)
+            guard let wallet = HDWallet(mnemonic: mnemonicString, passphrase: emptyPassphrase) else { return .failure(.failedToCreateWallet) }
             let privateKey = derivePrivateKeyOfAccount0(fromHdWallet: wallet)
             let address = AlphaWallet.Address(fromPrivateKey: privateKey)
             guard !isAddressAlreadyInWalletsList(address: address) else {
@@ -310,16 +310,17 @@ open class EtherKeystore: NSObject, Keystore {
     }
 
     private func generateMnemonic() -> String {
-        let strength = Int32(128)
-        var newHdWallet: HDWallet
+        let seedPhraseCount: HDWallet.SeedPhraseCount = .word12
         repeat {
-            newHdWallet = HDWallet(strength: strength, passphrase: emptyPassphrase)
-            let mnemonicIsGood = doesSeedMatchWalletAddress(mnemonic: newHdWallet.mnemonic)
-            if mnemonicIsGood {
-                break
+            if let newHdWallet = HDWallet(strength: seedPhraseCount.strength, passphrase: emptyPassphrase) {
+                let mnemonicIsGood = doesSeedMatchWalletAddress(mnemonic: newHdWallet.mnemonic)
+                if mnemonicIsGood {
+                    return newHdWallet.mnemonic
+                }
+            } else {
+                continue
             }
         } while true
-        return newHdWallet.mnemonic
     }
 
     func createAccount() -> Result<AlphaWallet.Address, KeystoreError> {
@@ -338,10 +339,10 @@ open class EtherKeystore: NSObject, Keystore {
 
     //Defensive check. Make sure mnemonic is OK and signs data correctly
     private func doesSeedMatchWalletAddress(mnemonic: String) -> Bool {
-        let wallet = HDWallet(mnemonic: mnemonic, passphrase: emptyPassphrase)
+        guard let wallet = HDWallet(mnemonic: mnemonic, passphrase: emptyPassphrase) else { return false }
         guard wallet.mnemonic == mnemonic else { return false }
         let seed = HDWallet.computeSeedWithChecksum(fromSeedPhrase: mnemonic)
-        let walletWhenImported = HDWallet(seed: seed, passphrase: emptyPassphrase)
+        guard let walletWhenImported = HDWallet(entropy: wallet.entropy, passphrase: emptyPassphrase) else { return false }
         //If seed phrase has a typo, the typo will be dropped and "abandon" added as the first word, deriving a different mnemonic silently. We don't want that to happen!
         guard walletWhenImported.mnemonic == mnemonic else { return false }
         let privateKey = derivePrivateKeyOfAccount0(fromHdWallet: walletWhenImported)
@@ -359,7 +360,7 @@ open class EtherKeystore: NSObject, Keystore {
         let firstAccountIndex = UInt32(0)
         let externalChangeConstant = UInt32(0)
         let addressIndex = UInt32(0)
-        let privateKey = wallet.getKeyBIP44(coin: .ethereum, account: firstAccountIndex, change: externalChangeConstant, address: addressIndex)
+        let privateKey = wallet.getDerivedKey(coin: .ethereum, account: firstAccountIndex, change: externalChangeConstant, address: addressIndex)
         return privateKey.data
     }
 
@@ -368,13 +369,40 @@ open class EtherKeystore: NSObject, Keystore {
         switch getPrivateKeyFromNonHdWallet(forAccount: account, prompt: R.string.localizable.keystoreAccessKeyNonHdBackup(), withUserPresence: isUserPresenceCheckPossible) {
         case .seed, .seedPhrase:
             //Not possible
-            return completion(.failure(.failedToExportPrivateKey))
+            completion(.failure(.failedToExportPrivateKey))
+            return
         case .key(let k):
             key = k
         case .userCancelled:
-            return completion(.failure(.userCancelled))
+            completion(.failure(.userCancelled))
+            return
         case .notFound, .otherFailure:
-            return completion(.failure(.accountMayNeedImportingAgainOrEnablePasscode))
+            completion(.failure(.accountMayNeedImportingAgainOrEnablePasscode))
+            return
+        }
+        //Careful to not replace the if-let with a flatMap(). Because the value is a Result and it has flatMap() defined to "resolve" only when it's .success
+        if let result = (try? LegacyFileBasedKeystore(analyticsCoordinator: analyticsCoordinator))?.export(privateKey: key, newPassword: newPassword) {
+            completion(result)
+        } else {
+            completion(.failure(.failedToExportPrivateKey))
+        }
+    }
+
+    func exportRawPrivateKeyFromHdWallet0thAddressForBackup(forAccount account: AlphaWallet.Address, newPassword: String, completion: @escaping (Result<String, KeystoreError>) -> Void) {
+        let key: Data
+        switch getPrivateKeyFromHdWallet0thAddress(forAccount: account, prompt: R.string.localizable.keystoreAccessKeyNonHdBackup(), withUserPresence: isUserPresenceCheckPossible) {
+        case .seed, .seedPhrase:
+            //Not possible
+            completion(.failure(.failedToExportPrivateKey))
+            return
+        case .key(let k):
+            key = k
+        case .userCancelled:
+            completion(.failure(.userCancelled))
+            return
+        case .notFound, .otherFailure:
+            completion(.failure(.accountMayNeedImportingAgainOrEnablePasscode))
+            return
         }
         //Careful to not replace the if-let with a flatMap(). Because the value is a Result and it has flatMap() defined to "resolve" only when it's .success
         if let result = (try? LegacyFileBasedKeystore(analyticsCoordinator: analyticsCoordinator))?.export(privateKey: key, newPassword: newPassword) {
@@ -620,20 +648,31 @@ open class EtherKeystore: NSObject, Keystore {
     private func getPrivateKeyForSigning(forAccount account: AlphaWallet.Address) -> WalletSeedOrKey {
         let prompt = R.string.localizable.keystoreAccessKeySign()
         if isHdWallet(account: account) {
-            let seed = getSeedForHdWallet(forAccount: account, prompt: prompt, context: createContext(), withUserPresence: isUserPresenceCheckPossible)
-            switch seed {
-            case .seed(let seed):
-                let wallet = HDWallet(seed: seed, passphrase: emptyPassphrase)
-                let privateKey = derivePrivateKeyOfAccount0(fromHdWallet: wallet)
-                return .key(privateKey)
-            case .key, .seedPhrase:
-                //Not possible
-                return seed
-            case .userCancelled, .notFound, .otherFailure:
-                return seed
-            }
+            return getPrivateKeyFromHdWallet0thAddress(forAccount: account, prompt: prompt, withUserPresence: isUserPresenceCheckPossible)
         } else {
             return getPrivateKeyFromNonHdWallet(forAccount: account, prompt: prompt, withUserPresence: isUserPresenceCheckPossible)
+        }
+    }
+
+    private func getPrivateKeyFromHdWallet0thAddress(forAccount account: AlphaWallet.Address, prompt: String, withUserPresence: Bool) -> WalletSeedOrKey {
+        guard isHdWallet(account: account) else {
+            assertImpossibleCodePath()
+            return .otherFailure
+        }
+        let seedResult = getSeedForHdWallet(forAccount: account, prompt: prompt, context: createContext(), withUserPresence: withUserPresence)
+        switch seedResult {
+        case .seed(let seed):
+            if let wallet = HDWallet(seed: seed, passphrase: emptyPassphrase) {
+                let privateKey = derivePrivateKeyOfAccount0(fromHdWallet: wallet)
+                return .key(privateKey)
+            } else {
+                return .otherFailure
+            }
+        case .userCancelled, .notFound, .otherFailure:
+            return seedResult
+        case .key, .seedPhrase:
+            //Not possible
+            return .otherFailure
         }
     }
 
@@ -679,7 +718,11 @@ open class EtherKeystore: NSObject, Keystore {
         let seedOrKey = getSeedForHdWallet(forAccount: account, prompt: prompt, context: context, withUserPresence: withUserPresence)
         switch seedOrKey {
         case .seed(let seed):
-            return .seedPhrase(HDWallet(seed: seed, passphrase: emptyPassphrase).mnemonic)
+            if let wallet = HDWallet(seed: seed, passphrase: emptyPassphrase) {
+                return .seedPhrase(wallet.mnemonic)
+            } else {
+                return .otherFailure
+            }
         case .seedPhrase, .key:
             //Not possible
             return seedOrKey

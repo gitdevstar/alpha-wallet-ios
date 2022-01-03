@@ -49,6 +49,11 @@ class SaveCustomRpcViewController: UIViewController {
         keyboardChecker.viewWillDisappear()
     }
 
+    func handleRpcUrlFailure() {
+        editView.rpcEndPointTextField.status = .error(R.string.localizable.addrpcServerRpcUrlError())
+        editView.rpcEndPointTextField.becomeFirstResponder()
+    }
+    
     private func configure() {
         editView.chainNameTextField.value = viewModel.chainName
         editView.chainNameTextField.delegate = self
@@ -138,6 +143,12 @@ extension SaveCustomRpcViewController: TextFieldDelegate {
             editView.gotoNextResponder()
         }
         return true
+    }
+
+    func didBeginEditing(in textField: TextField) {
+        DispatchQueue.main.async {
+            self.editView.unobscure(textField: textField)
+        }
     }
 
     func doneButtonTapped(for textField: TextField) {

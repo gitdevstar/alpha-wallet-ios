@@ -8,6 +8,7 @@ protocol SendCoordinatorDelegate: class, CanOpenURL {
     func didSendTransaction(_ transaction: SentTransaction, inCoordinator coordinator: SendCoordinator)
     func didFinish(_ result: ConfirmResult, in coordinator: SendCoordinator)
     func didCancel(in coordinator: SendCoordinator)
+    func openFiatOnRamp(wallet: Wallet, server: RPCServer, inCoordinator coordinator: SendCoordinator, viewController: UIViewController, source: Analytics.FiatOnRampSource)
 }
 
 class SendCoordinator: Coordinator {
@@ -18,7 +19,7 @@ class SendCoordinator: Coordinator {
     private let ethPrice: Subscribable<Double>
     private let assetDefinitionStore: AssetDefinitionStore
     private let analyticsCoordinator: AnalyticsCoordinator
-    private var transactionConfirmationResult: TransactionConfirmationResult = .noData
+    private var transactionConfirmationResult: ConfirmResult? = .none
 
     lazy var sendViewController: SendViewController = {
         return makeSendViewController()
@@ -101,12 +102,6 @@ extension SendCoordinator: ScanQRCodeCoordinatorDelegate {
     }
 }
 
-struct FungiblesTransactionAmount {
-    var value: String
-    var shortValue: String?
-    var isAllFunds: Bool = false
-}
-
 extension SendCoordinator: SendViewControllerDelegate {
     func openQRCode(in controller: SendViewController) {
         guard navigationController.ensureHasDeviceAuthorization() else { return }
@@ -152,7 +147,7 @@ extension SendCoordinator: TransactionConfirmationCoordinatorDelegate {
 
             strongSelf.removeCoordinator(coordinator)
 
-            strongSelf.transactionConfirmationResult = .confirmationResult(result)
+            strongSelf.transactionConfirmationResult = result
 
             let coordinator = TransactionInProgressCoordinator(presentingViewController: strongSelf.navigationController)
             coordinator.delegate = strongSelf
@@ -165,15 +160,19 @@ extension SendCoordinator: TransactionConfirmationCoordinatorDelegate {
     func didClose(in coordinator: TransactionConfirmationCoordinator) {
         removeCoordinator(coordinator)
     }
+
+    func openFiatOnRamp(wallet: Wallet, server: RPCServer, inCoordinator coordinator: TransactionConfirmationCoordinator, viewController: UIViewController) {
+        delegate?.openFiatOnRamp(wallet: wallet, server: server, inCoordinator: self, viewController: viewController, source: .transactionActionSheetInsufficientFunds)
+    }
 }
 
 extension SendCoordinator: TransactionInProgressCoordinatorDelegate {
 
     func transactionInProgressDidDismiss(in coordinator: TransactionInProgressCoordinator) {
         switch transactionConfirmationResult {
-        case .confirmationResult(let result):
+        case .some(let result):
             delegate?.didFinish(result, in: self)
-        case .noData:
+        case .none:
             break
         }
     }

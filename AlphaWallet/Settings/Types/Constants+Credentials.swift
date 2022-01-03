@@ -13,5 +13,7 @@ extension Constants {
         static let mailChimpListSpecificKey = ""
         static let openseaKey = "958aceb8dfc64d72a74cebd37c1c1095"
         static let rampApiKey = "j5wr7oqktym7z69yyf84bb8a6cqb7qfu5ynmeyvn"
+        static let enjinUserName = "vlad_shepitko@outlook.com"
+        static let enjinUserPassword: String = "wf@qJPz75CL9Tw$"
     }
 }

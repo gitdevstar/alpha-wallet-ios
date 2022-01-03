@@ -15,6 +15,8 @@ protocol AdvancedSettingsViewControllerDelegate: AnyObject {
     func advancedSettingsViewControllerChangeCurrencySelected(in controller: AdvancedSettingsViewController)
     func advancedSettingsViewControllerAnalyticsSelected(in controller: AdvancedSettingsViewController)
     func advancedSettingsViewControllerUsePrivateNetworkSelected(in controller: AdvancedSettingsViewController)
+    func advancedSettingsViewControllerPingInfuraSelected(in controller: AdvancedSettingsViewController)
+    func advancedSettingsViewControllerExportJSONKeystoreSelected(in controller: AdvancedSettingsViewController)
 }
 
 class AdvancedSettingsViewController: UIViewController {
@@ -34,12 +36,18 @@ class AdvancedSettingsViewController: UIViewController {
     }()
     private let roundedBackground = RoundedBackground()
     private var config: Config
+    private let keystore: Keystore
     weak var delegate: AdvancedSettingsViewControllerDelegate?
 
-    init(config: Config) {
+    init(keystore: Keystore, config: Config) {
         self.config = config
+        self.keystore = keystore
         super.init(nibName: nil, bundle: nil)
 
+        if Features.isExportJsonKeystoreEnabled && keystore.currentWallet.isReal() {
+            viewModel.rows.append(.exportJSONKeystore)
+        }
+        
         roundedBackground.backgroundColor = GroupedTable.Color.background
 
         view.addSubview(roundedBackground)
@@ -78,10 +86,9 @@ extension AdvancedSettingsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = viewModel.rows[indexPath.row]
         switch row {
-        case .analytics, .changeCurrency, .changeLanguage, .clearBrowserCache, .console, .tokenScript:
+        case .analytics, .changeCurrency, .changeLanguage, .clearBrowserCache, .console, .tokenScript, .exportJSONKeystore, .pingInfura:
             let cell: SettingTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.configure(viewModel: .init(titleText: row.title, subTitleText: nil, icon: row.icon))
-
             return cell
         case .usePrivateNetwork:
             let cell: SettingTableViewCell = tableView.dequeueReusableCell(for: indexPath)
@@ -132,6 +139,16 @@ extension AdvancedSettingsViewController: UITableViewDelegate {
             delegate?.advancedSettingsViewControllerAnalyticsSelected(in: self)
         case .usePrivateNetwork:
             delegate?.advancedSettingsViewControllerUsePrivateNetworkSelected(in: self)
+        case .pingInfura:
+            delegate?.advancedSettingsViewControllerPingInfuraSelected(in: self)
+        case .exportJSONKeystore:
+            delegate?.advancedSettingsViewControllerExportJSONKeystoreSelected(in: self)
         }
+    }
+}
+
+fileprivate extension Wallet {
+    func isReal() -> Bool {
+        return type == .real(address)
     }
 }

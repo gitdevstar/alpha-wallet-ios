@@ -15,7 +15,7 @@ enum TransactionConfirmationConfiguration {
     case dappTransaction(confirmType: ConfirmType, keystore: Keystore, ethPrice: Subscribable<Double>)
     case walletConnect(confirmType: ConfirmType, keystore: Keystore, ethPrice: Subscribable<Double>, walletConnectSession: WalletConnectSessionMappedToServer)
     case sendFungiblesTransaction(confirmType: ConfirmType, keystore: Keystore, assetDefinitionStore: AssetDefinitionStore, amount: FungiblesTransactionAmount, ethPrice: Subscribable<Double>)
-    case sendNftTransaction(confirmType: ConfirmType, keystore: Keystore, ethPrice: Subscribable<Double>, tokenInstanceName: String?)
+    case sendNftTransaction(confirmType: ConfirmType, keystore: Keystore, ethPrice: Subscribable<Double>, tokenInstanceNames: [TokenId: String])
     case claimPaidErc875MagicLink(confirmType: ConfirmType, keystore: Keystore, price: BigUInt, ethPrice: Subscribable<Double>, numberOfTokens: UInt)
     case speedupTransaction(keystore: Keystore, ethPrice: Subscribable<Double>)
     case cancelTransaction(keystore: Keystore, ethPrice: Subscribable<Double>)
@@ -44,11 +44,6 @@ enum TransactionConfirmationConfiguration {
     }
 }
 
-enum TransactionConfirmationResult {
-    case confirmationResult(ConfirmResult)
-    case noData
-}
-
 enum ConfirmType {
     case sign
     case signThenSend
@@ -60,8 +55,7 @@ enum ConfirmResult {
     case sentRawTransaction(id: String, original: String)
 }
 
-protocol TransactionConfirmationCoordinatorDelegate: class, CanOpenURL {
-    func didSendTransaction(_ transaction: SentTransaction, inCoordinator coordinator: TransactionConfirmationCoordinator)
+protocol TransactionConfirmationCoordinatorDelegate: CanOpenURL, SendTransactionDelegate, FiatOnRampDelegate {
     func didFinish(_ result: ConfirmResult, in coordinator: TransactionConfirmationCoordinator)
     func coordinator(_ coordinator: TransactionConfirmationCoordinator, didFailTransaction error: AnyError)
     func didClose(in coordinator: TransactionConfirmationCoordinator)
@@ -103,7 +97,7 @@ class TransactionConfirmationCoordinator: Coordinator {
     }
 
     func start(fromSource source: Analytics.TransactionConfirmationSource) {
-        guard let keyWindow = UIApplication.shared.keyWindow else { return }
+        guard let keyWindow = UIApplication.shared.firstKeyWindow else { return }
 
         if let controller = keyWindow.rootViewController?.presentedViewController {
             controller.present(navigationController, animated: false)
@@ -141,13 +135,7 @@ class TransactionConfirmationCoordinator: Coordinator {
         analyticsCoordinator.log(action: Analytics.Action.rectifySendTransactionErrorInActionSheet, properties: [Analytics.Properties.type.rawValue: error.analyticsName])
         switch error {
         case .insufficientFunds:
-            let ramp = Ramp(account: configurator.session.account)
-            if let url = ramp.url(token: TokenActionsServiceKey(tokenObject: TokensDataStore.etherToken(forServer: server))) {
-                delegate?.didPressOpenWebPage(url, in: confirmationViewController)
-            } else {
-                let fallbackUrl = URL(string: "https://alphawallet.com/browser-item-category/utilities/")!
-                delegate?.didPressOpenWebPage(fallbackUrl, in: confirmationViewController)
-            }
+            delegate?.openFiatOnRamp(wallet: configurator.session.account, server: server, inCoordinator: self, viewController: confirmationViewController)
         case .nonceTooLow:
             showConfigureTransactionViewController(configurator, recoveryMode: .invalidNonce)
         case .gasPriceTooLow:
@@ -183,8 +171,8 @@ extension TransactionConfirmationCoordinator: TransactionConfirmationViewControl
         sender.isEnabled = false
         confirmationViewController.canBeDismissed = false
         confirmationViewController.set(state: .pending)
-        firstly {
-            sendTransaction()
+        firstly { () -> Promise<ConfirmResult> in
+            return sendTransaction()
         }.done { result in
             self.handleSendTransactionSuccessfully(result: result)
             self.logCompleteActionSheetForTransactionConfirmationSuccessfully()
@@ -204,7 +192,7 @@ extension TransactionConfirmationCoordinator: TransactionConfirmationViewControl
     }
 
     private func sendTransaction() -> Promise<ConfirmResult> {
-        let coordinator = SendTransactionCoordinator(session: configurator.session, keystore: configuration.keystore, confirmType: configuration.confirmType, config: configurator.session.config)
+        let coordinator = SendTransactionCoordinator(session: configurator.session, keystore: configuration.keystore, confirmType: configuration.confirmType, config: configurator.session.config, analyticsCoordinator: analyticsCoordinator)
         let transaction = configurator.formUnsignedTransaction()
         return coordinator.send(transaction: transaction)
     }
@@ -226,7 +214,7 @@ extension TransactionConfirmationCoordinator: TransactionConfirmationViewControl
     private func handleSendTransactionError(_ error: Error) {
         switch error {
         case let e as SendTransactionNotRetryableError:
-            let errorViewController = SendTransactionErrorViewController(server: server, error: e)
+            let errorViewController = SendTransactionErrorViewController(server: server, analyticsCoordinator: analyticsCoordinator, error: e)
             errorViewController.delegate = self
             let controller = UINavigationController(rootViewController: errorViewController)
             controller.modalPresentationStyle = .overFullScreen
@@ -309,6 +297,10 @@ extension TransactionConfirmationCoordinator {
         let transactionType: Analytics.TransactionType
         if let functionCallMetaData = DecodedFunctionCall(data: configurator.currentConfiguration.data) {
             switch functionCallMetaData.type {
+            case .erc1155SafeTransfer:
+                transactionType = .unknown
+            case .erc1155SafeBatchTransfer:
+                transactionType = .unknown
             case .erc20Approve:
                 transactionType = .erc20Approve
             case .erc20Transfer:

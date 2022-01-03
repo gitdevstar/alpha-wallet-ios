@@ -7,7 +7,9 @@ func applyStyle() {
     UIBarButtonItem.appearance(whenContainedInInstancesOf: [UIDocumentBrowserViewController.self]).tintColor = Colors.navigationButtonTintColor
     UIWindow.appearance().tintColor = Colors.appTint
     UITabBar.appearance().tintColor = Colors.appTint
-    UINavigationBar.appearance().barTintColor = Colors.appBackground
+    UITabBar.appearance().shadowImage = UIImage(color: Style.TabBar.Separator.color, size: CGSize(width: 0.25, height: 0.25))
+    UITabBar.appearance().backgroundImage = UIImage(color: Style.TabBar.Background.color)
+    UINavigationBar.appearance().barTintColor = R.color.white()!
     UINavigationBar.appearance().backIndicatorImage = R.image.backWhite()
     UINavigationBar.appearance().backIndicatorTransitionMaskImage = R.image.backWhite()
     UINavigationBar.appearance().titleTextAttributes = [
@@ -18,19 +20,19 @@ func applyStyle() {
         .foregroundColor: Colors.navigationTitleColor,
         .font: Fonts.bold(size: 36) as Any,
     ]
-
+    UINavigationBar.appearance().shadowImage = UIImage(color: Style.NavigationBar.Separator.color, size: CGSize(width: 0.25, height: 0.25))
     // NOTE: Fixes iOS 15 navigation bar black background
     if #available(iOS 15.0, *) {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = Colors.appBackground
+        appearance.backgroundColor = R.color.white()!
         appearance.setBackIndicatorImage(R.image.backWhite(), transitionMaskImage: R.image.backWhite())
         appearance.titleTextAttributes = [
-            .foregroundColor: Colors.navigationTitleColor,
+            .foregroundColor: R.color.black()!,
             .font: Fonts.semibold(size: 17) as Any
         ]
         appearance.largeTitleTextAttributes = [
-            .foregroundColor: Colors.navigationTitleColor,
+            .foregroundColor: R.color.black()!,
             .font: Fonts.bold(size: 36) as Any,
         ]
         UINavigationBar.appearance().standardAppearance = appearance
@@ -68,6 +70,8 @@ func applyStyle() {
     UIRefreshControl.appearance().tintColor = Colors.navigationTitleColor
 
     UISwitch.appearance().onTintColor = Colors.appTint
+
+    UITableView.appearance().separatorColor = Style.TableView.Separator.color
 }
 
 func applyStyle(viewController: UIViewController) {
@@ -115,6 +119,9 @@ struct Fonts {
     static func light(size: CGFloat) -> UIFont {
         return UIFont(resource: R.font.sourceSansProLight, size: size)!
     }
+    static func italic(size: CGFloat) -> UIFont {
+        return UIFont(resource: R.font.sourceSansProItalic, size: size)!
+    }
     static func regular(size: CGFloat) -> UIFont {
         return UIFont(resource: R.font.sourceSansProRegular, size: size)!
     }
@@ -140,6 +147,7 @@ enum Metrics {
         static let box = CGFloat(2)
         static let textbox = CGFloat(5)
         static let button = CGFloat(4)
+        static let nftBox = CGFloat(8)
     }
 
     enum DappsHome {
@@ -329,5 +337,68 @@ enum Screen {
             let topBottomInset: CGFloat = ScreenChecker().isNarrowScreen ? 5 : 8
             return .init(top: 0, left: leftRightInset, bottom: topBottomInset, right: leftRightInset)
         }
+    }
+}
+
+enum Style {
+    enum Wallet {
+        enum Header {
+            static let height = 60.0
+        }
+        enum Row {
+            static let height = 80.0
+            static let collectiblePairsHeight = 250.0
+        }
+    }
+    enum SelectionIndicator {
+        static let height = 8.0
+        static let width = 8.0
+        static let leadingOffset = 8.0
+        static let color = R.color.azure()
+    }
+    enum AccessoryView {
+        static var chevron: UIImageView {
+            let imageView = UIImageView(image: R.image.iconsSystemArrowRight())
+            NSLayoutConstraint.activate([
+                imageView.widthAnchor.constraint(equalToConstant: 24.0),
+                imageView.heightAnchor.constraint(equalToConstant: 24.0)
+            ])
+            return imageView
+        }
+    }
+    enum TableView {
+        enum Separator {
+            static let color: UIColor = R.color.mercury()!
+        }
+    }
+    enum TabBar {
+        enum Background {
+            static let color: UIColor = {
+                if #available(iOS 13.0, *) {
+                    return UIColor.systemBackground
+                } else {
+                    return R.color.white()!
+                }
+            }()
+        }
+        enum Separator {
+            static let color: UIColor = R.color.mercury()!
+        }
+    }
+    enum SegmentedControl {
+        enum Separator {
+            static let color: UIColor = R.color.mercury()!
+        }
+    }
+    enum NavigationBar {
+        enum Separator {
+            static let color: UIColor = R.color.mercury()!
+        }
+    }
+    enum ScrollableSegmentedControl {
+        static let configuration = ScrollableSegmentedControlConfiguration(lineConfiguration: ScrollableSegmentedControlHighlightableLineViewConfiguration(lineHeight: 1.0, highlightHeight: 3.0, lineColor: R.color.mercury()!, highLightColor: R.color.azure()!), isProportionalWidth: true, cellSpacing: 0.0, alignmentWhenNotScrollable: .filled, animationDuration: 0.25, animationCurve: .easeInOut)
+    }
+    enum ScrollableSegmentedControlCell {
+        static let configuration = ScrollableSegmentedControlCellConfiguration(backgroundColor: .white, highlightedTextColor: R.color.azure()!, nonHighlightedTextColor: R.color.dove()!, highlightedFont: R.font.sourceSansProSemibold(size: 15.0)!, nonHighlightedFont: R.font.sourceSansProRegular(size: 15.0)!, cellPadding: 8.0, textBottomPadding: 12.0)
     }
 }

@@ -8,6 +8,9 @@
 import UIKit
 
 extension UIBarButtonItem {
+    static func selectBarButton(_ target: AnyObject, selector: Selector) -> UIBarButtonItem {
+        return .init(title: R.string.localizable.aWalletTokenSelectTokens(), style: .plain, target: target, action: selector)
+    }
 
     static func cancelBarButton(_ target: AnyObject, selector: Selector) -> UIBarButtonItem {
         return .init(barButtonSystemItem: .cancel, target: target, action: selector)
@@ -31,6 +34,10 @@ extension UIBarButtonItem {
 
     static func myqrCodeBarButton(_ target: AnyObject, selector: Selector) -> UIBarButtonItem {
         return .init(image: R.image.qrRounded(), style: .plain, target: target, action: selector)
+    }
+
+    static func moreBarButton(_ target: AnyObject, selector: Selector) -> UIBarButtonItem {
+        return .init(image: R.image.toolbarMenu(), style: .plain, target: target, action: selector)
     }
 
     static func addBarButton(_ target: AnyObject, selector: Selector) -> UIBarButtonItem {

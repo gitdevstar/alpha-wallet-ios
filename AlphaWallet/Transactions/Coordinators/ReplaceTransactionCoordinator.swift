@@ -7,6 +7,7 @@ import Result
 protocol ReplaceTransactionCoordinatorDelegate: class, CanOpenURL {
     func didSendTransaction(_ transaction: SentTransaction, inCoordinator coordinator: ReplaceTransactionCoordinator)
     func didFinish(_ result: ConfirmResult, in coordinator: ReplaceTransactionCoordinator)
+    func openFiatOnRamp(wallet: Wallet, server: RPCServer, inCoordinator coordinator: ReplaceTransactionCoordinator, viewController: UIViewController, source: Analytics.FiatOnRampSource)
 }
 
 class ReplaceTransactionCoordinator: Coordinator {
@@ -24,7 +25,7 @@ class ReplaceTransactionCoordinator: Coordinator {
     private let session: WalletSession
     private let transaction: TransactionInstance
     private let mode: Mode
-    private var transactionConfirmationResult: TransactionConfirmationResult = .noData
+    private var transactionConfirmationResult: ConfirmResult? = .none
 
     private var recipient: AlphaWallet.Address? {
         switch transactionType {
@@ -133,7 +134,7 @@ extension ReplaceTransactionCoordinator: TransactionConfirmationCoordinatorDeleg
             guard let strongSelf = self else { return }
 
             strongSelf.removeCoordinator(coordinator)
-            strongSelf.transactionConfirmationResult = .confirmationResult(result)
+            strongSelf.transactionConfirmationResult = result
 
             let coordinator = TransactionInProgressCoordinator(presentingViewController: strongSelf.presentingViewController)
             coordinator.delegate = strongSelf
@@ -146,14 +147,25 @@ extension ReplaceTransactionCoordinator: TransactionConfirmationCoordinatorDeleg
     func didClose(in coordinator: TransactionConfirmationCoordinator) {
         removeCoordinator(coordinator)
     }
+
+    func openFiatOnRamp(wallet: Wallet, server: RPCServer, inCoordinator coordinator: TransactionConfirmationCoordinator, viewController: UIViewController) {
+        let source: Analytics.FiatOnRampSource
+        switch mode {
+        case .speedup:
+            source = .speedupTransactionInsufficientFunds
+        case .cancel:
+            source = .cancelTransactionInsufficientFunds
+        }
+        delegate?.openFiatOnRamp(wallet: wallet, server: server, inCoordinator: self, viewController: viewController, source: source)
+    }
 }
 
 extension ReplaceTransactionCoordinator: TransactionInProgressCoordinatorDelegate {
     func transactionInProgressDidDismiss(in coordinator: TransactionInProgressCoordinator) {
         switch transactionConfirmationResult {
-        case .confirmationResult(let result):
+        case .some(let result):
             delegate?.didFinish(result, in: self)
-        case .noData:
+        case .none:
             break
         }
     }

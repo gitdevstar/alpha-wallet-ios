@@ -14,10 +14,10 @@ import BigInt
 
 protocol TokensCardCoordinatorDelegate: class, CanOpenURL {
     func didCancel(in coordinator: TokensCardCoordinator)
-    func didPostTokenScriptTransaction(_ transaction: SentTransaction, in coordinator: TokensCardCoordinator)
+    func openFiatOnRamp(wallet: Wallet, server: RPCServer, inCoordinator coordinator: TokensCardCoordinator, viewController: UIViewController, source: Analytics.FiatOnRampSource)
+    func didPress(for type: PaymentFlow, inViewController viewController: UIViewController, in coordinator: TokensCardCoordinator)
 }
 
-// swiftlint:disable type_body_length
 class TokensCardCoordinator: NSObject, Coordinator {
     private let keystore: Keystore
     private let token: TokenObject
@@ -267,14 +267,6 @@ class TokensCardCoordinator: NSObject, Coordinator {
         return controller
     }
 
-    private func makeTransferTokensCardViaWalletAddressViewController(token: TokenObject, for tokenHolder: TokenHolder, paymentFlow: PaymentFlow) -> TransferTokensCardViaWalletAddressViewController {
-        let viewModel = TransferTokensCardViaWalletAddressViewControllerViewModel(token: token, tokenHolder: tokenHolder, assetDefinitionStore: assetDefinitionStore)
-        let controller = TransferTokensCardViaWalletAddressViewController(analyticsCoordinator: analyticsCoordinator, token: token, tokenHolder: tokenHolder, paymentFlow: paymentFlow, viewModel: viewModel, assetDefinitionStore: assetDefinitionStore)
-        controller.configure()
-        controller.delegate = self
-        return controller
-    }
-
     private func makeEnterSellTokensCardExpiryDateViewController(token: TokenObject, for tokenHolder: TokenHolder, ethCost: Ether, paymentFlow: PaymentFlow) -> SetSellTokensCardExpiryDateViewController {
         let viewModel = SetSellTokensCardExpiryDateViewControllerViewModel(token: token, tokenHolder: tokenHolder, ethCost: ethCost, server: session.server, assetDefinitionStore: assetDefinitionStore)
         let controller = SetSellTokensCardExpiryDateViewController(analyticsCoordinator: analyticsCoordinator, storage: tokensStorage, paymentFlow: paymentFlow, tokenHolder: tokenHolder, ethCost: ethCost, viewModel: viewModel, assetDefinitionStore: assetDefinitionStore)
@@ -429,15 +421,9 @@ class TokensCardCoordinator: NSObject, Coordinator {
     }
 
     private func showTokenInstanceActionView(forAction action: TokenInstanceAction, tokenHolder: TokenHolder, viewController: UIViewController) {
-        let vc = TokenInstanceActionViewController(analyticsCoordinator: analyticsCoordinator, tokenObject: token, tokenHolder: tokenHolder, tokensStorage: tokensStorage, assetDefinitionStore: assetDefinitionStore, action: action, session: session, keystore: keystore)
-        vc.delegate = self
-        vc.configure()
-        vc.navigationItem.largeTitleDisplayMode = .never
-
-        viewController.navigationController?.pushViewController(vc, animated: true)
+        delegate?.didPress(for: .send(type: .tokenScript(action: action, tokenObject: token, tokenHolder: tokenHolder)), inViewController: viewController, in: self)
     }
 }
-// swiftlint:enable type_body_length
 
 extension TokensCardCoordinator: TokensCardViewControllerDelegate {
     func didPressRedeem(token: TokenObject, tokenHolder: TokenHolder, in viewController: TokensCardViewController) {
@@ -448,13 +434,10 @@ extension TokensCardCoordinator: TokensCardViewControllerDelegate {
         showEnterPriceQuantityViewController(tokenHolder: tokenHolder, forPaymentFlow: paymentFlow, in: viewController)
     }
 
-    func didPressTransfer(token: TokenObject, tokenHolder: TokenHolder, for type: PaymentFlow, tokenHolders: [TokenHolder], in viewController: TokensCardViewController) {
+    func didPressTransfer(token: TokenObject, tokenHolder: TokenHolder, for type: PaymentFlow, in viewController: TokensCardViewController) {
         switch token.type {
         case .erc721:
-            let vc = makeTransferTokensCardViaWalletAddressViewController(token: token, for: tokenHolder, paymentFlow: type)
-            transferTokensViewController = vc
-            vc.navigationItem.largeTitleDisplayMode = .never
-            viewController.navigationController?.pushViewController(vc, animated: true)
+            delegate?.didPress(for: type, inViewController: viewController, in: self)
         case .erc875, .erc721ForTickets:
             showEnterQuantityViewControllerForTransfer(token: token, for: tokenHolder, forPaymentFlow: type, in: viewController)
         case .nativeCryptocurrency, .erc20, .erc1155:
@@ -504,10 +487,7 @@ extension TokensCardCoordinator: TokenInstanceViewControllerDelegate {
     func didPressTransfer(token: TokenObject, tokenHolder: TokenHolder, forPaymentFlow paymentFlow: PaymentFlow, in viewController: TokenInstanceViewController) {
         switch token.type {
         case .erc721:
-            let vc = makeTransferTokensCardViaWalletAddressViewController(token: token, for: tokenHolder, paymentFlow: paymentFlow)
-            transferTokensViewController = vc
-            vc.navigationItem.largeTitleDisplayMode = .never
-            viewController.navigationController?.pushViewController(vc, animated: true)
+            delegate?.didPress(for: paymentFlow, inViewController: viewController, in: self)
         case .erc875, .erc721ForTickets:
             showEnterQuantityViewControllerForTransfer(token: token, for: tokenHolder, forPaymentFlow: paymentFlow, in: viewController)
         case .nativeCryptocurrency, .erc20, .erc1155:
@@ -571,25 +551,6 @@ extension TokensCardCoordinator: SetSellTokensCardExpiryDateViewControllerDelega
     }
 }
 
-extension TokensCardCoordinator: TransferNFTCoordinatorDelegate {
-    func didClose(in coordinator: TransferNFTCoordinator) {
-        removeCoordinator(coordinator)
-    }
-
-    func didCompleteTransfer(withTransactionConfirmationCoordinator transactionConfirmationCoordinator: TransactionConfirmationCoordinator, result: TransactionConfirmationResult, inCoordinator coordinator: TransferNFTCoordinator) {
-        transactionConfirmationCoordinator.close { [weak self] in
-            guard let strongSelf = self else { return }
-            strongSelf.removeCoordinator(coordinator)
-
-            let coordinator = TransactionInProgressCoordinator(presentingViewController: strongSelf.navigationController)
-            coordinator.delegate = strongSelf
-            strongSelf.addCoordinator(coordinator)
-
-            coordinator.start()
-        }
-    }
-}
-
 extension TokensCardCoordinator: GenerateSellMagicLinkViewControllerDelegate {
     func didPressShare(in viewController: GenerateSellMagicLinkViewController, sender: UIView) {
         sellViaActivitySheet(tokenHolder: viewController.tokenHolder, linkExpiryDate: viewController.linkExpiryDate, ethCost: viewController.ethCost, paymentFlow: viewController.paymentFlow, in: viewController, sender: sender)
@@ -608,10 +569,8 @@ extension TokensCardCoordinator: ChooseTokenCardTransferModeViewControllerDelega
     }
 
     func didChooseTransferNow(token: TokenObject, tokenHolder: TokenHolder, in viewController: ChooseTokenCardTransferModeViewController) {
-        let vc = makeTransferTokensCardViaWalletAddressViewController(token: token, for: tokenHolder, paymentFlow: viewController.paymentFlow)
-        transferTokensViewController = vc
-        vc.navigationItem.largeTitleDisplayMode = .never
-        viewController.navigationController?.pushViewController(vc, animated: true)
+        let transactionType: TransactionType = .init(token: token, tokenHolders: [tokenHolder])
+        delegate?.didPress(for: .send(type: .transaction(transactionType)), inViewController: viewController, in: self)
     }
 
     func didPressViewInfo(in viewController: ChooseTokenCardTransferModeViewController) {
@@ -639,52 +598,6 @@ extension TokensCardCoordinator: GenerateTransferMagicLinkViewControllerDelegate
     }
 }
 
-extension TokensCardCoordinator: ScanQRCodeCoordinatorDelegate {
-    func didCancel(in coordinator: ScanQRCodeCoordinator) {
-        removeCoordinator(coordinator)
-    }
-
-    func didScan(result: String, in coordinator: ScanQRCodeCoordinator) {
-        removeCoordinator(coordinator)
-        transferTokensViewController?.didScanQRCode(result)
-    }
-}
-
-extension TokensCardCoordinator: TransferTokensCardViaWalletAddressViewControllerDelegate {
-
-    func openQRCode(in controller: TransferTokensCardViaWalletAddressViewController) {
-        guard navigationController.ensureHasDeviceAuthorization() else { return }
-
-        let coordinator = ScanQRCodeCoordinator(analyticsCoordinator: analyticsCoordinator, navigationController: navigationController, account: session.account)
-        coordinator.delegate = self
-        addCoordinator(coordinator)
-        coordinator.start(fromSource: .addressTextField)
-    }
-
-    func didEnterWalletAddress(tokenHolder: TokenHolder, to recipient: AlphaWallet.Address, paymentFlow: PaymentFlow, in viewController: TransferTokensCardViaWalletAddressViewController) {
-        switch session.account.type {
-        case .real:
-            switch paymentFlow {
-            case .send:
-                if case .send(let transactionType) = paymentFlow {
-                    let coordinator = TransferNFTCoordinator(navigationController: navigationController, transactionType: transactionType, tokenHolder: tokenHolder, recipient: recipient, keystore: keystore, session: session, ethPrice: ethPrice, analyticsCoordinator: analyticsCoordinator)
-                    addCoordinator(coordinator)
-                    coordinator.delegate = self
-                    coordinator.start()
-                }
-            case .request:
-                return
-            }
-        case .watch:
-            break
-        }
-    }
-
-    func didPressViewInfo(in viewController: TransferTokensCardViaWalletAddressViewController) {
-        showViewEthereumInfo(in: viewController)
-    }
-}
-
 extension TokensCardCoordinator: TokenCardRedemptionViewControllerDelegate {
 }
 
@@ -703,61 +616,4 @@ extension TokensCardCoordinator: CanOpenURL {
 }
 
 extension TokensCardCoordinator: StaticHTMLViewControllerDelegate {
-}
-
-extension TokensCardCoordinator: TokenInstanceActionViewControllerDelegate {
-    func confirmTransactionSelected(in viewController: TokenInstanceActionViewController, tokenObject: TokenObject, contract: AlphaWallet.Address, tokenId: TokenId, values: [AttributeId: AssetInternalValue], localRefs: [AttributeId: AssetInternalValue], server: RPCServer, session: WalletSession, keystore: Keystore, transactionFunction: FunctionOrigin) {
-        switch transactionFunction.makeUnConfirmedTransaction(withTokenObject: tokenObject, tokenId: tokenId, attributeAndValues: values, localRefs: localRefs, server: server, session: session) {
-        case .success((let transaction, let functionCallMetaData)):
-            let coordinator = TransactionConfirmationCoordinator(presentingViewController: navigationController, session: session, transaction: transaction, configuration: .tokenScriptTransaction(confirmType: .signThenSend, contract: contract, keystore: keystore, functionCallMetaData: functionCallMetaData, ethPrice: ethPrice), analyticsCoordinator: analyticsCoordinator)
-            coordinator.delegate = self
-            addCoordinator(coordinator)
-            coordinator.start(fromSource: .tokenScript)
-        case .failure:
-            //TODO throw an error
-            break
-        }
-    }
-
-    func didPressViewRedemptionInfo(in viewController: TokenInstanceActionViewController) {
-        showViewRedemptionInfo(in: viewController)
-    }
-
-    func shouldCloseFlow(inViewController viewController: TokenInstanceActionViewController) {
-        viewController.navigationController?.popViewController(animated: true)
-    }
-}
-
-extension TokensCardCoordinator: TransactionConfirmationCoordinatorDelegate {
-    func coordinator(_ coordinator: TransactionConfirmationCoordinator, didFailTransaction error: AnyError) {
-        //TODO improve error message. Several of this delegate func
-        coordinator.navigationController.displayError(message: error.localizedDescription)
-    }
-
-    func didClose(in coordinator: TransactionConfirmationCoordinator) {
-        removeCoordinator(coordinator)
-    }
-
-    func didSendTransaction(_ transaction: SentTransaction, inCoordinator coordinator: TransactionConfirmationCoordinator) {
-        // no-op
-    }
-
-    func didFinish(_ result: ConfirmResult, in coordinator: TransactionConfirmationCoordinator) {
-        coordinator.close { [weak self] in
-            guard let strongSelf = self else { return }
-            strongSelf.removeCoordinator(coordinator)
-
-            let coordinator = TransactionInProgressCoordinator(presentingViewController: strongSelf.navigationController)
-            coordinator.delegate = strongSelf
-            strongSelf.addCoordinator(coordinator)
-
-            coordinator.start()
-        }
-    }
-}
-
-extension TokensCardCoordinator: TransactionInProgressCoordinatorDelegate {
-    func transactionInProgressDidDismiss(in coordinator: TransactionInProgressCoordinator) {
-        removeCoordinator(coordinator)
-    }
 }

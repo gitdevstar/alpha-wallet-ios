@@ -36,9 +36,8 @@ struct WalletConnectSessionViewModel {
 
 typealias WalletConnectSessionMappedToServer = (session: WalletConnectSession, server: RPCServer)
 
-protocol WalletConnectCoordinatorDelegate: class, CanOpenURL {
+protocol WalletConnectCoordinatorDelegate: CanOpenURL, SendTransactionAndFiatOnRampDelegate {
     func universalScannerSelected(in coordinator: WalletConnectCoordinator)
-    func didSendTransaction(_ transaction: SentTransaction, inCoordinator coordinator: WalletConnectCoordinator)
 }
 
 class WalletConnectCoordinator: NSObject, Coordinator {
@@ -289,10 +288,7 @@ extension WalletConnectCoordinator: WalletConnectServerDelegate {
         let configuration: TransactionConfirmationConfiguration = .walletConnect(confirmType: type, keystore: keystore, ethPrice: ethPrice, walletConnectSession: walletConnectSession)
         info("WalletConnect executeTransaction: \(transaction) type: \(type)")
         return firstly {
-            TransactionConfirmationCoordinator.promise(navigationController, session: session, coordinator: self, transaction: transaction, configuration: configuration, analyticsCoordinator: analyticsCoordinator, source: .walletConnect, didSendTransactionClosure: { [weak self] tx in
-                guard let strongSelf = self else { return }
-                strongSelf.delegate?.didSendTransaction(tx, inCoordinator: strongSelf)
-            })
+            TransactionConfirmationCoordinator.promise(navigationController, session: session, coordinator: self, transaction: transaction, configuration: configuration, analyticsCoordinator: analyticsCoordinator, source: .walletConnect, delegate: self.delegate)
         }.map { data -> WalletConnectServer.Callback in
             switch data {
             case .signedTransaction(let data):
@@ -326,7 +322,7 @@ extension WalletConnectCoordinator: WalletConnectServerDelegate {
     }
 
     private var presentationViewController: UIViewController {
-        guard let keyWindow = UIApplication.shared.keyWindow else { return navigationController }
+        guard let keyWindow = UIApplication.shared.firstKeyWindow else { return navigationController }
 
         if let controller = keyWindow.rootViewController?.presentedViewController {
             return controller
@@ -372,7 +368,7 @@ extension WalletConnectCoordinator: WalletConnectServerDelegate {
         }.then { shouldSend -> Promise<ConfirmResult> in
             guard shouldSend else { return .init(error: DAppError.cancelled) }
 
-            let coordinator = SendTransactionCoordinator(session: session, keystore: self.keystore, confirmType: .sign, config: self.config)
+            let coordinator = SendTransactionCoordinator(session: session, keystore: self.keystore, confirmType: .sign, config: self.config, analyticsCoordinator: self.analyticsCoordinator)
             return coordinator.send(rawTransaction: rawTransaction)
         }.map { data in
             switch data {

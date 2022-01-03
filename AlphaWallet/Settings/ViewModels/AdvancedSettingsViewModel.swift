@@ -12,9 +12,9 @@ struct AdvancedSettingsViewModel {
     var rows: [AdvancedSettingsRow] = {
         let privateNerworkRow: [AdvancedSettingsRow] = Features.isUsingPrivateNetwork ? [.usePrivateNetwork] : []
         if Features.isLanguageSwitcherDisabled {
-            return [.console, .clearBrowserCache, .tokenScript] + privateNerworkRow
+            return [.console, .clearBrowserCache, .tokenScript, .pingInfura] + privateNerworkRow
         } else {
-            return [.console, .clearBrowserCache, .tokenScript, .changeLanguage] + privateNerworkRow
+            return [.console, .clearBrowserCache, .tokenScript, .changeLanguage, .pingInfura] + privateNerworkRow
         }
     }()
 
@@ -31,6 +31,8 @@ enum AdvancedSettingsRow: CaseIterable {
     case changeCurrency
     case analytics
     case usePrivateNetwork
+    case pingInfura
+    case exportJSONKeystore
 
     var title: String {
         switch self {
@@ -48,6 +50,10 @@ enum AdvancedSettingsRow: CaseIterable {
             return R.string.localizable.settingsAnalitycsTitle()
         case .usePrivateNetwork:
             return R.string.localizable.settingsChooseSendPrivateTransactionsProviderButtonTitle()
+        case .pingInfura:
+            return R.string.localizable.settingsPingInfuraTitle()
+        case .exportJSONKeystore:
+            return R.string.localizable.settingsAdvancedExportJSONKeystoreTitle()
         }
     }
 
@@ -67,6 +73,11 @@ enum AdvancedSettingsRow: CaseIterable {
             return R.image.settings_analytics()!
         case .usePrivateNetwork:
             return R.image.iconsSettingsEthermine()!
+        case .pingInfura:
+            //TODO need a more appropriate icon, maybe represent diagnostic or (to a lesser degree Infura)
+            return R.image.settings_analytics()!
+        case .exportJSONKeystore:
+            return R.image.iconsSettingsJson()!
         }
     }
 }

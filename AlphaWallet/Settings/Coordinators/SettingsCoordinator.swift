@@ -172,7 +172,7 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
     }
 
     func settingsViewControllerAdvancedSettingsSelected(in controller: SettingsViewController) {
-        let controller = AdvancedSettingsViewController(config: config)
+        let controller = AdvancedSettingsViewController(keystore: keystore, config: config)
         controller.delegate = self
         controller.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(controller, animated: true)
@@ -277,6 +277,7 @@ extension SettingsCoordinator: AdvancedSettingsViewControllerDelegate {
 
     func advancedSettingsViewControllerClearBrowserCacheSelected(in controller: AdvancedSettingsViewController) {
         let coordinator = ClearDappBrowserCacheCoordinator(inViewController: rootViewController, analyticsCoordinator: analyticsCoordinator)
+        coordinator.delegate = self
         coordinator.start()
         addCoordinator(coordinator)
     }
@@ -310,10 +311,50 @@ extension SettingsCoordinator: AdvancedSettingsViewControllerDelegate {
         controller.delegate = self
         navigationController.pushViewController(controller, animated: true)
     }
+
+    func advancedSettingsViewControllerPingInfuraSelected(in controller: AdvancedSettingsViewController) {
+        let coordinator = PingInfuraCoordinator(inViewController: rootViewController, analyticsCoordinator: analyticsCoordinator)
+        coordinator.delegate = self
+        coordinator.start()
+        addCoordinator(coordinator)
+    }
+
+    func advancedSettingsViewControllerExportJSONKeystoreSelected(in controller: AdvancedSettingsViewController) {
+        let coordinator = ExportJsonKeystoreCoordinator(keystore: keystore, navigationController: navigationController)
+        addCoordinator(coordinator)
+        coordinator.delegate = self
+        coordinator.start()
+    }
 }
 
 extension SettingsCoordinator: ChooseSendPrivateTransactionsProviderViewControllerDelegate {
     func privateTransactionProviderSelected(provider: SendPrivateTransactionsProvider?, inController viewController: ChooseSendPrivateTransactionsProviderViewController) {
         advancedSettingsViewController?.configure()
+    }
+}
+
+extension SettingsCoordinator: PingInfuraCoordinatorDelegate {
+    func didPing(in coordinator: PingInfuraCoordinator) {
+        removeCoordinator(self)
+    }
+
+    func didCancel(in coordinator: PingInfuraCoordinator) {
+        removeCoordinator(self)
+    }
+}
+
+extension SettingsCoordinator: ExportJsonKeystoreCoordinatorDelegate {
+    func didComplete(coordinator: ExportJsonKeystoreCoordinator) {
+        removeCoordinator(coordinator)
+    }
+}
+
+extension SettingsCoordinator: ClearDappBrowserCacheCoordinatorDelegate {
+    func done(in coordinator: ClearDappBrowserCacheCoordinator) {
+        removeCoordinator(self)
+    }
+
+    func didCancel(in coordinator: ClearDappBrowserCacheCoordinator) {
+        removeCoordinator(self)
     }
 }

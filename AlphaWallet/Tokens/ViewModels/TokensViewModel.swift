@@ -7,6 +7,15 @@ enum TokenObjectOrRpcServerPair {
     case tokenObject(TokenObject)
     case rpcServer(RPCServer)
 
+    var tokenObject: TokenObject? {
+        switch self {
+        case .rpcServer:
+            return nil
+        case .tokenObject(let token):
+            return token
+        }
+    }
+
     var canDelete: Bool {
         switch self {
         case .rpcServer:
@@ -21,6 +30,18 @@ enum TokenObjectOrRpcServerPair {
     }
 }
 
+struct CollectiblePairs: Hashable {
+    let left: TokenObject
+    let right: TokenObject?
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(left.hash)
+        if let value = right {
+            hasher.combine(value.hash)
+        }
+    }
+}
+
 //Must be a class, and not a struct, otherwise changing `filter` will silently create a copy of TokensViewModel when user taps to change the filter in the UI and break filtering
 class TokensViewModel {
     //Must be computed because localization can be overridden by user dynamically
@@ -28,7 +49,7 @@ class TokensViewModel {
 
     private let filterTokensCoordinator: FilterTokensCoordinator
     var tokens: [TokenObject]
-
+    let config: Config
     var isSearchActive: Bool = false
     var filter: WalletFilter = .all {
         didSet {
@@ -38,15 +59,50 @@ class TokensViewModel {
     }
     var walletConnectSessions: Int = 0
     private (set) var sections: [TokensViewController.Section] = []
+    private var tokenListSection: TokensViewController.Section = .tokens
 
     private func refreshSections(walletConnectSessions count: Int) {
+        let varyTokenOrCollectiblePeirsSection: TokensViewController.Section = {
+            switch filter {
+            case .all, .currencyOnly, .keyword, .assetsOnly, .type:
+                return .tokens
+            case .collectiblesOnly:
+                return .collectiblePairs
+            }
+        }()
+
         if isSearchActive {
-            sections = [.tokens]
+            sections = [varyTokenOrCollectiblePeirsSection]
         } else {
-            if count == .zero {
-                sections = [.walletSummary, .filters, .addHideToken, .tokens]
+            let initialSections: [TokensViewController.Section]
+            let testnetHeaderSections: [TokensViewController.Section]
+
+            if config.enabledServers.allSatisfy({ $0.isTestnet }) {
+                testnetHeaderSections = [.testnetTokens]
             } else {
-                sections = [.walletSummary, .filters, .addHideToken, .activeWalletSession(count: count), .tokens]
+                testnetHeaderSections = []
+            }
+
+            if count == .zero {
+                initialSections = [.walletSummary, .filters, .search]
+            } else {
+                initialSections = [.walletSummary, .filters, .search, .activeWalletSession(count: count)]
+            }
+            sections = initialSections + testnetHeaderSections + [varyTokenOrCollectiblePeirsSection]
+        }
+        tokenListSection = varyTokenOrCollectiblePeirsSection
+    }
+
+    //NOTE: For case with empty tokens list we want
+    func isBottomSeparatorLineHiddenForTestnetHeader(section: Int) -> Bool {
+        switch sections[section] {
+        case .walletSummary, .filters, .activeWalletSession, .search, .tokens, .collectiblePairs:
+            return true
+        case .testnetTokens:
+            if let index = sections.firstIndex(where: { $0 == tokenListSection }) {
+                return numberOfItems(for: Int(index)) == 0
+            } else {
+                return true
             }
         }
     }
@@ -75,8 +131,12 @@ class TokensViewModel {
         case .assetsOnly, .collectiblesOnly, .type:
             return false
         }
-    }
+    } 
 
+    var hasContent: Bool {
+        return !collectiblePairs.isEmpty
+    }
+    
     var shouldShowCollectiblesCollectionView: Bool {
         switch filter {
         case .all, .currencyOnly, .assetsOnly, .keyword, .type:
@@ -86,12 +146,28 @@ class TokensViewModel {
         }
     }
 
-    var hasContent: Bool {
-        return !filteredTokens.isEmpty
+    func numberOfItems(for section: Int) -> Int {
+        switch sections[section] {
+        case .search, .testnetTokens, .walletSummary, .filters, .activeWalletSession:
+            return 0
+        case .tokens, .collectiblePairs:
+            switch filter {
+            case .all, .currencyOnly, .keyword, .assetsOnly, .type:
+                return filteredTokens.count
+            case .collectiblesOnly:
+                return collectiblePairs.count
+            }
+        }
     }
 
-    func numberOfItems() -> Int {
-        return filteredTokens.count
+    var collectiblePairs: [CollectiblePairs] {
+        let tokens = filteredTokens.compactMap { $0.tokenObject }
+        return tokens.chunked(into: 2).compactMap { elems -> CollectiblePairs? in
+            guard let left = elems.first else { return nil }
+
+            let right = (elems.last?.contractAddress.sameContract(as: left.contractAddress) ?? false) ? nil : elems.last
+            return .init(left: left, right: right)
+        }
     }
 
     func item(for row: Int, section: Int) -> TokenObjectOrRpcServerPair {
@@ -102,9 +178,10 @@ class TokensViewModel {
         return item(for: row, section: section).canDelete
     }
 
-    init(filterTokensCoordinator: FilterTokensCoordinator, tokens: [TokenObject]) {
+    init(filterTokensCoordinator: FilterTokensCoordinator, tokens: [TokenObject], config: Config) {
         self.filterTokensCoordinator = filterTokensCoordinator
         self.tokens = TokensViewModel.functional.filterAwaySpuriousTokens(tokens)
+        self.config = config
     }
 
     func markTokenHidden(token: TokenObject) -> Bool {
@@ -116,6 +193,22 @@ class TokensViewModel {
         }
 
         return false
+    }
+
+    func cellHeight(for indexPath: IndexPath) -> CGFloat {
+        switch sections[indexPath.section] {
+        case .tokens, .testnetTokens:
+            switch item(for: indexPath.row, section: indexPath.section) {
+            case .rpcServer:
+                return Style.Wallet.Header.height
+            case .tokenObject:
+                return Style.Wallet.Row.height
+            }
+        case .search, .walletSummary, .filters, .activeWalletSession:
+            return Style.Wallet.Row.height
+        case .collectiblePairs:
+            return Style.Wallet.Row.collectiblePairsHeight
+        }
     }
 
     private func filteredAndSortedTokens() -> [TokenObjectOrRpcServerPair] {
