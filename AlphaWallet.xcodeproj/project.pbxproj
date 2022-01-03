@@ -6878,7 +6878,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.stormbird.alphawallet.AlphaWalletSafariExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jaxwallet.AlphaWalletSafariExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -6915,7 +6915,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.stormbird.alphawallet.AlphaWalletSafariExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jaxwallet.AlphaWalletSafariExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -6944,7 +6944,7 @@
 				MARKETING_VERSION = 3.12;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.stormbird.alphawallet.AlphaWalletShare;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jaxwallet.AlphaWalletShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -6972,7 +6972,7 @@
 				);
 				MARKETING_VERSION = 3.12;
 				MTL_FAST_MATH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.stormbird.alphawallet.AlphaWalletShare;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jaxwallet.AlphaWalletShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
