@@ -107,7 +107,7 @@ struct Colors {
     static let tabBarTextColorNormal = UIColor(hex: "898DB4")
     static let tabBarTextColorSelected = UIColor(hex: "152172")
     static let appBackground = UIColor(hex: "F5F5F5")
-    static let appTint = R.color.azure()!
+    static let appTint = UIColor(red: 21, green: 33, blue: 114)
     static let navigationTitleColor = UIColor.black
     static let navigationButtonTintColor = R.color.mine()!
     static let appWhite = UIColor.white

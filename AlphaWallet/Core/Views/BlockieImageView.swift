@@ -72,7 +72,8 @@ class BlockieImageView: UIView {
     func setBlockieImage(image: BlockiesImage?) {
         switch image {
         case .image(let image):
-            imageView.image = image
+            imageView.image = R.image.profileImagePlaceHolder()
+            
         case .url(let url):
             imageView.url = url
         case .none:

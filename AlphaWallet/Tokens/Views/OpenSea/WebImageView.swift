@@ -41,6 +41,7 @@ class WebImageView: UIView {
     var image: UIImage? {
         didSet {
             imageView.image = image
+            imageView.tintColor = Colors.appTint
             setIsLoadingImageFromURL(false)
             webView.loadHTMLString("", baseURL: nil)
         }
@@ -62,7 +63,7 @@ class WebImageView: UIView {
 
         addSubview(webView)
         addSubview(imageView)
-
+        imageView.tintColor = Colors.appTint
         NSLayoutConstraint.activate([
             webView.anchorsConstraint(to: self),
             imageView.anchorsConstraint(to: self)

@@ -26,7 +26,7 @@ class AccountViewCell: UITableViewCell {
         
         let menuButton = UIButton(type: .custom)
         menuButton.setImage(R.image.toolbarMenu(), for: .normal)
-        menuButton.tintColor = Colors.headerThemeColor
+        menuButton.tintColor = Colors.appTint
         
         let vwImgStatus = UIImageView()
         vwImgStatus.image = R.image.blueTick()

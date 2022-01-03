@@ -53,7 +53,7 @@ struct AccountViewModel {
     func balanceAttributedString(for value: String?) -> NSAttributedString {
         return .init(string: value ?? "--", attributes: [
             .font: Fonts.bold(size: 15),
-            .foregroundColor: Colors.black,
+            .foregroundColor: Colors.appText,
         ])
     }
 
