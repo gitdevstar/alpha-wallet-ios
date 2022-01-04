@@ -114,20 +114,24 @@ class NewTokenViewController: UIViewController {
         addressTextField.returnKeyType = .next
         addressTextField.value = initialState.addressStringValue
         symbolTextField.delegate = self
+        symbolTextField.isUserInteractionEnabled = false
         symbolTextField.returnKeyType = .next
 
         decimalsTextField.delegate = self
         decimalsTextField.inputAccessoryButtonType = .next
         decimalsTextField.keyboardType = .decimalPad
+        decimalsTextField.isUserInteractionEnabled = false
         decimalsTextField.returnKeyType = .next
 
         balanceTextField.delegate = self
         balanceTextField.inputAccessoryButtonType = .next
         balanceTextField.keyboardType = .numbersAndPunctuation
+        balanceTextField.isUserInteractionEnabled = false
         balanceViews.makeEach(isHidden: true)
 
         nameTextField.delegate = self
         nameTextField.returnKeyType = .done
+        nameTextField.isUserInteractionEnabled = false
 
         let stackView = (
             [.spacer(height: 30)] +

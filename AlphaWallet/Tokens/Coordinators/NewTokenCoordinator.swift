@@ -19,7 +19,7 @@ protocol NewTokenCoordinatorDelegate: AnyObject {
 
 class NewTokenCoordinator: Coordinator {
 
-    private var serverToAddCustomTokenOn: RPCServerOrAuto = .server(.binance_smart_chain) {
+    private var serverToAddCustomTokenOn: RPCServerOrAuto = .auto {
         didSet {
             switch serverToAddCustomTokenOn {
             case .auto:
