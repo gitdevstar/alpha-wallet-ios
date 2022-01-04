@@ -54,7 +54,16 @@ struct TransactionViewModel {
 
     func amountAttributedString(for value: TransactionValue) -> NSAttributedString {
         
-        //let status = direction == .incoming ? R.string.localizable.receive : R.string.localizable.send
+        let status = direction == .incoming ? R.string.localizable.receive() : R.string.localizable.send()
+        
+        let dir = NSAttributedString(
+            string: status,
+            attributes: [
+                .font: Fonts.bold(size: 10) as Any,
+                .foregroundColor: Colors.headerThemeColor,
+            ]
+        )
+        
         let amount = NSAttributedString(
             string: amountWithSign(for: value.amount),
             attributes: [
@@ -71,7 +80,7 @@ struct TransactionViewModel {
             ]
         )
 
-        return amount + currency
+        return dir + amount + currency
     }
 
     func amountWithSign(for amount: String) -> String {
