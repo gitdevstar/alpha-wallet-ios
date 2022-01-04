@@ -7,7 +7,8 @@ class AccountViewCell: UITableViewCell {
     let apprecation24hourLabel = UILabel()
     let balanceLabel = UILabel()
     private let blockieImageView = BlockieImageView(size: .init(width: 40, height: 40))
-
+    let vwImgStatus = UIImageView()
+    
     var viewModel: AccountViewModel?
     var account: Wallet?
     var balanceSubscribtionKey: Subscribable<WalletBalance>.SubscribableKey?
@@ -27,8 +28,7 @@ class AccountViewCell: UITableViewCell {
         let menuButton = UIButton(type: .custom)
         menuButton.setImage(R.image.toolbarMenu(), for: .normal)
         menuButton.tintColor = Colors.appTint
-        
-        let vwImgStatus = UIImageView()
+           
         vwImgStatus.image = R.image.blueTick()
 
         let stackView = [menuButton, blockieImageView, leftStackView, vwImgStatus, .spacerWidth(0)].asStackView(spacing: 12, alignment: .center)
@@ -53,6 +53,8 @@ class AccountViewCell: UITableViewCell {
             stackView.bottomAnchor.constraint(equalTo: vwContainer.bottomAnchor, constant: -10),
             stackView.leadingAnchor.constraint(equalTo: vwContainer.leadingAnchor, constant: 10),
             stackView.trailingAnchor.constraint(equalTo: vwContainer.trailingAnchor, constant: -10),
+            menuButton.widthAnchor.constraint(equalToConstant: 10),
+            vwImgStatus.widthAnchor.constraint(equalToConstant: 20)
 
         ])
     }
@@ -69,6 +71,10 @@ class AccountViewCell: UITableViewCell {
         addressLabel.attributedText = viewModel.addressesAttrinutedString
 
         accessoryType = .none
+        
+        if !viewModel.isSelected {
+            vwImgStatus.isHidden = true
+        }
 
         blockieImageView.subscribable = viewModel.icon
     }
