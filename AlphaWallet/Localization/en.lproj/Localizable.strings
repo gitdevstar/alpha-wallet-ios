@@ -30,6 +30,7 @@
 "transaction.from.label.title" = "From";
 "transaction.gasFee.label.title" = "Gas Fee";
 "transaction.to.label.title" = "To";
+"transaction.blockchain.label.title" = "Network";
 "transaction.time.label.title" = "Transaction time";
 "transaction.id.label.title" = "Transaction #";
 "transaction.blockNumber.label.title" = "Block #";

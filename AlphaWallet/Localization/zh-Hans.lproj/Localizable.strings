@@ -30,6 +30,7 @@
 "transaction.from.label.title" = "来源地址";
 "transaction.gasFee.label.title" = "燃料费用";
 "transaction.to.label.title" = "接收地址";
+"transaction.blockchain.label.title" = "Network";
 "transaction.time.label.title" = "交易时间";
 "transaction.id.label.title" = "交易 #";
 "transaction.blockNumber.label.title" = "区块 #";

@@ -30,6 +30,7 @@
 "transaction.from.label.title" = "送信元";
 "transaction.gasFee.label.title" = "ガス料金";
 "transaction.to.label.title" = "宛先";
+"transaction.blockchain.label.title" = "Network";
 "transaction.time.label.title" = "トランザクション時間";
 "transaction.id.label.title" = "トランザクション番号";
 "transaction.blockNumber.label.title" = "ブロック番号";

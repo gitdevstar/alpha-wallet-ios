@@ -79,6 +79,10 @@ struct TransactionDetailsViewModel {
     var transactionIDLabelTitle: String {
         return R.string.localizable.transactionIdLabelTitle()
     }
+    
+    var blockchainLabelTitle: String {
+        return R.string.localizable.transactionBlockchainLabelTitle()
+    }
 
     var to: String {
         switch transactionRow {

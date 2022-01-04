@@ -29,6 +29,7 @@
 "transaction.confirmation.label.title" = "확인";
 "transaction.from.label.title" = "발신인";
 "transaction.gasFee.label.title" = "가스 수수료";
+"transaction.blockchain.label.title" = "네트워크";
 "transaction.to.label.title" = "수취인";
 "transaction.time.label.title" = "거래 시간";
 "transaction.id.label.title" = "거래 번호";

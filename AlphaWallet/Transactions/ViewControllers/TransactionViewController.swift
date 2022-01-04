@@ -48,6 +48,7 @@ class TransactionViewController: UIViewController {
             .spacer(),
             header,
             item(title: viewModel.transactionIDLabelTitle, value: viewModel.transactionID, icon: R.image.copy()),
+            item(title: viewModel.blockchainLabelTitle, value: session.server.name),
             item(title: viewModel.fromLabelTitle, value: viewModel.from, icon: R.image.copy()),
             item(title: viewModel.toLabelTitle, value: viewModel.to, icon: R.image.copy()),
             [item(title: viewModel.blockNumberLabelTitle, value: viewModel.blockNumber),

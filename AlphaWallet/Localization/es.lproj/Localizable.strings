@@ -31,6 +31,7 @@
 "transaction.gasFee.label.title" = "Tarifa de gas";
 "transaction.to.label.title" = "A";
 "transaction.time.label.title" = "Hora de la transacción";
+"transaction.blockchain.label.title" = "Network";
 "transaction.id.label.title" = "Transacción n.º";
 "transaction.blockNumber.label.title" = "Bloque n.º";
 "transaction.nonce.label.title" = "Nonce";
