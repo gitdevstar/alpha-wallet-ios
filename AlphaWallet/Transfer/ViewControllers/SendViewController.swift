@@ -161,7 +161,7 @@ class SendViewController: UIViewController {
 
         amountTextField.statusLabel.text = viewModel.availableLabelText
         amountTextField.availableTextHidden = viewModel.availableTextHidden
-        targetAddressTextField.value = "0x63cCEF733a093E5Bd773b41C96D3eCE361464942"
+        targetAddressTextField.value = ""
 
         switch transactionType {
         case .nativeCryptocurrency(_, let recipient, let amount):
