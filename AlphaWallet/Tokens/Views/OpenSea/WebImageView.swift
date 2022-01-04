@@ -23,7 +23,7 @@ class WebImageView: UIView {
 
     private let imageView: UIImageView = {
         let v = UIImageView()
-        v.backgroundColor = .clear
+        v.backgroundColor = Colors.appTint
         v.contentMode = .scaleAspectFill
         v.clipsToBounds = true
         v.translatesAutoresizingMaskIntoConstraints = false
@@ -41,7 +41,6 @@ class WebImageView: UIView {
     var image: UIImage? {
         didSet {
             imageView.image = image
-            imageView.tintColor = Colors.appTint
             setIsLoadingImageFromURL(false)
             webView.loadHTMLString("", baseURL: nil)
         }
