@@ -26,7 +26,7 @@ class EnabledServersCoordinator: Coordinator {
         let controller = EnabledServersViewController(viewModel: viewModel, restartQueue: restartQueue)
         controller.delegate = self
         controller.hidesBottomBarWhenPushed = true
-        controller.navigationItem.rightBarButtonItem = .addBarButton(self, selector: #selector(addRPCSelected))
+//        controller.navigationItem.rightBarButtonItem = .addBarButton(self, selector: #selector(addRPCSelected))
 
         return controller
     }()
