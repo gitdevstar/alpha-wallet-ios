@@ -10,9 +10,11 @@ import UIKit
 struct TransactionInProgressViewModel {
     
     private let account: Wallet
+    private let session: WalletSession
     
-    init(account: Wallet) {
-        self.account = account
+    init(session: WalletSession) {
+        self.session = session
+        self.account = session.account
     }
     var titleAttributedText: NSAttributedString {
         let style = NSMutableParagraphStyle()
@@ -26,7 +28,7 @@ struct TransactionInProgressViewModel {
     }
 
     var subtitleAttributedText: NSAttributedString {
-        let x = R.string.localizable.aWalletTokenTransactionInProgressSubtitle()
+        let x = R.string.localizable.aWalletTokenTransactionInProgressSubtitle(session.server.name)
         let style = NSMutableParagraphStyle()
         style.alignment = .center
         style.lineSpacing = ScreenChecker().isNarrowScreen ? 7 : 14

@@ -154,7 +154,7 @@ extension SendCoordinator: TransactionConfirmationCoordinatorDelegate {
 
             strongSelf.transactionConfirmationResult = .confirmationResult(result)
 
-            let coordinator = TransactionInProgressCoordinator(presentingViewController: strongSelf.navigationController, account: strongSelf.session.account)
+            let coordinator = TransactionInProgressCoordinator(presentingViewController: strongSelf.navigationController, session: strongSelf.session)
             coordinator.delegate = strongSelf
             strongSelf.addCoordinator(coordinator)
 

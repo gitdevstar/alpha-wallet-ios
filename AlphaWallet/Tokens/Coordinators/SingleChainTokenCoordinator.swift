@@ -717,7 +717,7 @@ extension SingleChainTokenCoordinator: TransactionConfirmationCoordinatorDelegat
             guard let strongSelf = self else { return }
             strongSelf.removeCoordinator(coordinator)
 
-            let coordinator = TransactionInProgressCoordinator(presentingViewController: coordinator.presentingViewController, account: strongSelf.session.account)
+            let coordinator = TransactionInProgressCoordinator(presentingViewController: coordinator.presentingViewController, session: strongSelf.session)
             coordinator.delegate = strongSelf
             strongSelf.addCoordinator(coordinator)
 

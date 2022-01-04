@@ -310,7 +310,7 @@ extension WalletConnectCoordinator: WalletConnectServerDelegate {
             case .sign:
                 break
             case .signThenSend:
-                TransactionInProgressCoordinator.promise(self.navigationController, coordinator: self, account: session.account).done { _ in
+                TransactionInProgressCoordinator.promise(self.navigationController, coordinator: self, session: session).done { _ in
                     //no op
                 }.cauterize()
             }

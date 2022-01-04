@@ -135,7 +135,7 @@ extension ReplaceTransactionCoordinator: TransactionConfirmationCoordinatorDeleg
             strongSelf.removeCoordinator(coordinator)
             strongSelf.transactionConfirmationResult = .confirmationResult(result)
 
-            let coordinator = TransactionInProgressCoordinator(presentingViewController: strongSelf.presentingViewController, account: strongSelf.session.account)
+            let coordinator = TransactionInProgressCoordinator(presentingViewController: strongSelf.presentingViewController, session: strongSelf.session)
             coordinator.delegate = strongSelf
             strongSelf.addCoordinator(coordinator)
 
