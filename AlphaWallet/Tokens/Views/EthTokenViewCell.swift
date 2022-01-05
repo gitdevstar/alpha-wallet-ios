@@ -106,7 +106,7 @@ class EthTokenViewCell: UITableViewCell {
         fiatValueLabel.setContentHuggingPriority(.required, for: .horizontal)
 
         let col0 = tokenIconImageView
-        let row1 = [networkNameLabel, UIView.spacerWidth(flexible: true), changeValueContainer, blockChainTagLabel].asStackView(spacing: 5, alignment: .center)
+        let row1 = [UIView.spacerWidth(flexible: true), changeValueContainer, blockChainTagLabel].asStackView(spacing: 5, alignment: .center)
         let col1 = [
             [symbolLabel, UIView.spacerWidth(flexible: true), fiatValueLabel].asStackView(spacing: 5),
             UIView.spacer(height: 2),
