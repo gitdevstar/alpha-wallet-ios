@@ -12,7 +12,7 @@ struct AdvancedSettingsViewModel {
     var rows: [AdvancedSettingsRow] = {
         let privateNerworkRow: [AdvancedSettingsRow] = Features.isUsingPrivateNetwork ? [.usePrivateNetwork] : []
         if Features.isLanguageSwitcherDisabled {
-            return [.console, .clearBrowserCache, .tokenScript] + privateNerworkRow
+            return [.clearBrowserCache]
         } else {
             return [.console, .clearBrowserCache, .tokenScript, .changeLanguage] + privateNerworkRow
         }
