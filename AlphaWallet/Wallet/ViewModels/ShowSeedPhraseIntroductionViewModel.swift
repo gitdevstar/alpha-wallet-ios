@@ -31,7 +31,7 @@ struct ShowSeedPhraseIntroductionViewModel {
         attributeString.addAttributes([
             .paragraphStyle: style,
             .font: Screen.Backup.subtitleFont,
-            .foregroundColor: R.color.black()!,
+            .foregroundColor: Colors.appText,
             .kern: 0.0
         ], range: NSRange(location: 0, length: subtitle.count))
 
