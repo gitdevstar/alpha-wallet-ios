@@ -6,14 +6,15 @@ import Kingfisher
 
 class FungibleTokenViewCell: UITableViewCell {
     private let background = UIView()
-    private let titleLabel = UILabel()
+    private let nameLabel = UILabel()
+    private let symbolLabel = UILabel()
     private let networkNameLabel = UILabel()
     private let apprecation24hoursView = ApprecationView()
     private let priceChangeLabel = UILabel()
     private let fiatValueLabel = UILabel()
     private let cryptoValueLabel = UILabel()
     private var viewsWithContent: [UIView] {
-        [titleLabel, apprecation24hoursView, priceChangeLabel]
+        [symbolLabel, apprecation24hoursView, priceChangeLabel]
     }
 
     private lazy var changeValueContainer: UIView = [priceChangeLabel, apprecation24hoursView].asStackView(spacing: 5)
@@ -37,11 +38,12 @@ class FungibleTokenViewCell: UITableViewCell {
         fiatValueLabel.setContentHuggingPriority(.required, for: .horizontal)
 
         let col0 = tokenIconImageView
-        let row1 = [cryptoValueLabel, UIView.spacerWidth(flexible: true), changeValueContainer, blockChainTagLabel].asStackView(spacing: 5, alignment: .center)
+        let row1 = [networkNameLabel, UIView.spacerWidth(flexible: true), changeValueContainer, blockChainTagLabel].asStackView(spacing: 5, alignment: .center)
         let col1 = [
-            [titleLabel, UIView.spacerWidth(flexible: true), fiatValueLabel].asStackView(spacing: 5),
+            [symbolLabel, UIView.spacerWidth(flexible: true), fiatValueLabel].asStackView(spacing: 5),
             UIView.spacer(height: 2),
-            networkNameLabel,
+            [nameLabel, UIView.spacerWidth(flexible: true), cryptoValueLabel].asStackView(alignment: .center),
+            UIView.spacer(height: 4),
             row1
         ].asStackView(axis: .vertical)
         let stackView = [col0, col1].asStackView(spacing: 12, alignment: .center)
@@ -74,8 +76,10 @@ class FungibleTokenViewCell: UITableViewCell {
         background.layer.shadowOffset = .zero
         background.layer.shadowOpacity = 0.6
         
-        titleLabel.attributedText = viewModel.titleAttributedString
-        titleLabel.baselineAdjustment = .alignCenters
+        nameLabel.attributedText = viewModel.nameAttributedString
+        nameLabel.baselineAdjustment = .alignCenters
+        symbolLabel.attributedText = viewModel.symbolAttributedString
+        symbolLabel.baselineAdjustment = .alignCenters
         networkNameLabel.attributedText = viewModel.networkNameAttributedString
         networkNameLabel.baselineAdjustment = .alignCenters
 

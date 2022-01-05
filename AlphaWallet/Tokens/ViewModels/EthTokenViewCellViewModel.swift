@@ -29,7 +29,7 @@ struct EthTokenViewCellViewModel {
         let string = shortFormatter.string(from: BigInt(token.value) ?? BigInt(), decimals: token.decimals)
         if let floatValue = Double(string), let value = EthCurrencyHelper(ticker: ticker).marketPrice {
             let nummber = floatValue * value
-            return NumberFormatter.usd(format: .withTrailingCurrency).string(from: nummber) ?? "_"
+            return NumberFormatter.usd(format: .withLeadingCurrencySymbol(positiveSymbol: "")).string(from: nummber) ?? "_"
         }
         return string
     }
@@ -39,12 +39,12 @@ struct EthTokenViewCellViewModel {
         return string
     }
 
-    private var title: String {
-        if !token.symbol.isEmpty {
-            return "\(token.shortTitleInPluralForm(withAssetDefinitionStore: assetDefinitionStore)) (\(token.symbol))"
-        } else {
+    private var name: String {
+//        if !token.symbol.isEmpty {
+//            return "\(token.shortTitleInPluralForm(withAssetDefinitionStore: assetDefinitionStore)) (\(token.symbol))"
+//        }
             return token.shortTitleInPluralForm(withAssetDefinitionStore: assetDefinitionStore)
-        }
+        
     }
 
     private var networkName: String {
@@ -59,23 +59,30 @@ struct EthTokenViewCellViewModel {
         return Screen.TokenCard.Color.background
     }
 
-    var titleAttributedString: NSAttributedString {
-        let string = NSMutableAttributedString(string: title, attributes: [
-            .foregroundColor: Colors.headerThemeColor,
-            .font: Fonts.bold(size: 14)])
-        return string
+    var nameAttributedString: NSAttributedString {
+        return NSAttributedString(string: name, attributes: [
+            .foregroundColor: Screen.TokenCard.Color.title,
+            .font: Fonts.regular(size: 12)
+        ])
+    }
+    
+    var symbolAttributedString: NSAttributedString {
+        return NSAttributedString(string: token.symbol.isEmpty ? "" : token.symbol, attributes: [
+            .foregroundColor: Screen.TokenCard.Color.title,
+            .font: Fonts.bold(size: 14)
+        ])
     }
     
     var networkNameAttributedString: NSAttributedString {
         return NSAttributedString(string: "(\(networkName))", attributes: [
-            .foregroundColor: Colors.headerThemeColor,
-            .font: Fonts.bold(size: 12)
+            .foregroundColor: Colors.appGrayLabel,
+            .font: Fonts.regular(size: 12)
         ])
     }
     
     private var marketPriceValue: String {
         if let value = EthCurrencyHelper(ticker: ticker).marketPrice {
-            return NumberFormatter.usd.string(from: value) ?? "-"
+            return NumberFormatter.usd(format: .withLeadingCurrencySymbol(positiveSymbol: "")).string(from: value) ?? "-"
         } else {
             return "-"
         }
@@ -84,7 +91,7 @@ struct EthTokenViewCellViewModel {
     var cryptoValueAttributedString: NSAttributedString {
         return NSAttributedString(string: amount_USD, attributes: [
             .foregroundColor: Screen.TokenCard.Color.subtitle,
-            .font: Fonts.regular(size: 9)
+            .font: Fonts.regular(size: 12)
         ])
     }
 
@@ -121,7 +128,7 @@ struct EthTokenViewCellViewModel {
 
         return NSAttributedString(string: valuePercentageChangeValue, attributes: [
             .foregroundColor: valuePercentageChangeColor,
-            .font: Fonts.regular(size: 9)
+            .font: Fonts.regular(size: 12)
         ])
     }
 
@@ -135,8 +142,8 @@ struct EthTokenViewCellViewModel {
 
     var priceChangeUSDValueAttributedString: NSAttributedString {
         return NSAttributedString(string: marketPriceValue, attributes: [
-            .foregroundColor: Colors.priceColor,
-            .font: Fonts.regular(size: 9)
+            .foregroundColor: Colors.appGrayLabel,
+            .font: Fonts.regular(size: 12)
         ])
     }
 
