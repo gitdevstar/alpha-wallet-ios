@@ -64,7 +64,8 @@ extension ImportWalletTab {
         return [
             .mnemonic,
             .keystore,
-            .privateKey
+            .privateKey,
+            .watch
         ]
     }
 
