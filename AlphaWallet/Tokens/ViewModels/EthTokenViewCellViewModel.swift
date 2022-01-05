@@ -74,7 +74,7 @@ struct EthTokenViewCellViewModel {
     }
     
     var networkNameAttributedString: NSAttributedString {
-        return NSAttributedString(string: "(\(networkName))", attributes: [
+        return NSAttributedString(string: "\(networkName)", attributes: [
             .foregroundColor: Colors.appGrayLabel,
             .font: Fonts.regular(size: 12)
         ])
