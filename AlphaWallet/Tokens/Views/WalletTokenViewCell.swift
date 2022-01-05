@@ -47,7 +47,7 @@ class WalletTokenViewCell: UITableViewCell {
 
         let stackView = [
             tokenIconImageView,
-            [cryptoValueLabel, titleLabel, UIView.spacerWidth(flexible: true)].asStackView(spacing: 5), .spacerWidth(flexible: true), switchView
+            [titleLabel, UIView.spacerWidth(flexible: true)].asStackView(spacing: 5), .spacerWidth(flexible: true), switchView
         ].asStackView(axis: .horizontal, spacing: 16, alignment: .center)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         background.addSubview(stackView)
