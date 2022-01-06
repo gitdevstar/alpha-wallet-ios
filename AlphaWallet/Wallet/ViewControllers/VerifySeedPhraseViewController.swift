@@ -36,6 +36,7 @@ class VerifySeedPhraseViewController: UIViewController {
     private let analyticsCoordinator: AnalyticsCoordinator
     private let roundedBackground = RoundedBackground()
     private let subtitleLabel = UILabel()
+    private let seedPhraseTextView = UITextView()
     private let seedPhraseCollectionView: SeedPhraseCollectionView = {
         let collectionView = SeedPhraseCollectionView()
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -261,9 +262,26 @@ class VerifySeedPhraseViewController: UIViewController {
 
         buttonsBar.configure()
         continueButton.setTitle(R.string.localizable.walletsVerifySeedPhraseVerify(), for: .normal)
+        continueButton.addTarget(self, action: #selector(verify), for: .touchUpInside)
+    }
+    
+    @objc func verify() {
+        guard let context = delegate?.contextToVerifySeedPhrase else { return }
+        keystore.verifySeedPhraseOfHdWallet(seedPhraseTextView.text.lowercased().trimmed, forAccount: account, context: context) { result in
+            switch result {
+            case .success(let isMatched):
+                //Safety precaution, we clear the seed phrase. The next screen may be the prompt to elevate security of wallet screen which the user can go back from
+                self.clearChosenSeedPhrases()
+                self.updateStateWithVerificationResult(isMatched)
+            case .failure(let error):
+                self.reflectError(error)
+                self.delegate?.biometricsFailed(for: self.account, inViewController: self)
+            }
+        }
     }
 
     @objc func clearChosenSeedPhrases() {
+        seedPhraseTextView.text = ""
         seedPhraseCollectionView.viewModel.clearSelectedWords()
         clearChooseSeedPhraseButton.isHidden = true
         continueButton.isEnabled = false
@@ -297,6 +315,7 @@ class VerifySeedPhraseViewController: UIViewController {
 extension VerifySeedPhraseViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
+            verify()
             return false
         } else {
             state = .editingSeedPhrase(words: state.words)
@@ -308,6 +327,11 @@ extension VerifySeedPhraseViewController: UITextViewDelegate {
 
 extension VerifySeedPhraseViewController: SeedPhraseCollectionViewDelegate {
     func didTap(word: String, atIndex index: Int, inCollectionView collectionView: SeedPhraseCollectionView) {
+        if seedPhraseTextView.text.isEmpty {
+            seedPhraseTextView.text += word
+        } else {
+            seedPhraseTextView.text += " \(word)"
+        }
         clearError()
         if collectionView.viewModel.isEveryWordSelected {
             //Deliberately hide the Clear button after user has chosen all the words, as they are likely to want to verify now and we don't want them to accidentally hit the Clear button
@@ -318,7 +342,9 @@ extension VerifySeedPhraseViewController: SeedPhraseCollectionViewDelegate {
             continueButton.isEnabled = false
         }
         
-        selectedSeedPhraseCollectionView.viewModel = .init(words: collectionView.viewModel.getSelectedSeedPhraseWord(), isSelectable: false)
+        let selectedWords : [String] = seedPhraseTextView.text.components(separatedBy: " ")
+            
+        selectedSeedPhraseCollectionView.viewModel = .init(words: selectedWords, isSelectable: false)
         selectedSeedPhraseCollectionView.configure()
     }
 }
