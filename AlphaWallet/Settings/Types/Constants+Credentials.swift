@@ -18,9 +18,9 @@ import Foundation
 
 extension Constants {
     enum Credentials {
-        static let infuraKey = "da3717f25f824cc1baa32d812386d93f"
+        static let infuraKey = "0103e4766ee2429a85fe314c503c7d38"
         static let etherscanKey = "1PX7RG8H4HTDY8X55YRMCAKPZK476M23ZR"
-        static let binanceSmartChainExplorerApiKey: String? = nil
+        static let binanceSmartChainExplorerApiKey = "6MRQ6WMY5F9DSR372BCBF9GCN6R6ZY8IWH"
         static let polygonScanExplorerApiKey: String? = nil
         static let analyticsKey = ""
         static let paperTrail = (host: "", port: UInt(0))
