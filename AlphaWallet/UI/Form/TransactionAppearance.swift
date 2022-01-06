@@ -9,7 +9,7 @@ struct TransactionAppearance {
         let titleLabel = UILabel(frame: .zero)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = title
-        titleLabel.font = Fonts.regular(size: 10)
+        titleLabel.font = Fonts.regular(size: 12)
         titleLabel.textAlignment = .left
         titleLabel.textColor = Colors.headerThemeColor
 

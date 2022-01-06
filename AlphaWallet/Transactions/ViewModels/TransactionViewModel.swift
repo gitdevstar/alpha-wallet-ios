@@ -57,7 +57,7 @@ struct TransactionViewModel {
         let status = direction == .incoming ? R.string.localizable.receive() : R.string.localizable.send()
         
         let dir = NSAttributedString(
-            string: status,
+            string: "\(status) ",
             attributes: [
                 .font: Fonts.bold(size: 10) as Any,
                 .foregroundColor: Colors.headerThemeColor,
