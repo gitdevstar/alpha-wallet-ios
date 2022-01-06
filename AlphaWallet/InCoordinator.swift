@@ -137,7 +137,7 @@ class InCoordinator: NSObject, Coordinator {
 
     lazy var tabBarController: UITabBarController = {
         let tabBarController = TabBarController()
-        tabBarController.tabBar.isTranslucent = true
+        tabBarController.tabBar.isTranslucent = false
         tabBarController.delegate = self
 
         return tabBarController
@@ -356,11 +356,11 @@ class InCoordinator: NSObject, Coordinator {
     }
 
     func showTabBar(animated: Bool) {
-        //navigationController.setViewControllers([accountsCoordinator.accountsViewController], animated: false)
-        //navigationController.pushViewController(tabBarController, animated: animated)
+        navigationController.setViewControllers([accountsCoordinator.accountsViewController], animated: false)
+        navigationController.pushViewController(tabBarController, animated: animated)
 
-        //navigationController.setNavigationBarHidden(false, animated: true)
-        AppDelegate.sharedInstance().window?.rootViewController = tabBarController
+        navigationController.setNavigationBarHidden(true, animated: true)
+
         let inCoordinatorViewModel = InCoordinatorViewModel()
         showTab(inCoordinatorViewModel.initialTab)
 
