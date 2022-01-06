@@ -202,7 +202,7 @@ class SendViewController: UIViewController {
 
     private func updateNavigationTitle() {
         networkNameLabel.text = transactionType.tokenObject.name
-        title = "\(R.string.localizable.send()) \(transactionType.tokenObject.name)"
+        title = "\(R.string.localizable.send()) \(transactionType.symbol)"
     }
 
     @objc func allFundsSelected() {
