@@ -191,6 +191,7 @@ class CoinTickersFetcher: CoinTickersFetcherType {
         }).then(on: CoinTickersFetcher.queue, { mapped -> Promise<(tickers: [AddressAndRPCServer: CoinTicker], tickerIds: [String])> in
             let tickerIds: [String] = Set(mapped).map { $0.tickerId }
             let ids: String = tickerIds.joined(separator: ",")
+            print("here: \(ids)")
             if let lastFetchedTickers = cache.lastFetchedTickerIds, let lastFetchingDate = cache.lastFetchedDate, lastFetchedTickers.containsSameElements(as: tickerIds) {
                 if Date().timeIntervalSince(lastFetchingDate) <= pricesCacheLifetime {
                     return .value((tickers: cache.tickers, tickerIds: tickerIds))
@@ -279,6 +280,7 @@ fileprivate struct Ticker: Codable {
         guard isServerSupported(tokenObject.server) else { return false }
         if let (_, contract) = platforms.first(where: { platformMatches($0.key, server: tokenObject.server) }) {
             if contract.sameContract(as: Constants.nullAddress) {
+                
                 return symbol.localizedLowercase == tokenObject.symbol.localizedLowercase
             } else if contract.sameContract(as: tokenObject.contractAddress) {
                 return true
