@@ -442,7 +442,7 @@ class TokensViewController: UIViewController {
     
     private func reloadWalletSummaryView(with balance: WalletBalance?) {
         let summary = balance.map { WalletSummary(balances: [$0]) }
-        title = WalletSummaryViewModel(summary: summary).balanceAttributedString.string
+        self.navigationItem.title = WalletSummaryViewModel(summary: summary).balanceAttributedString.string
     }
     
     public func updateSymbolValue(_ symbol: String) {
