@@ -48,6 +48,8 @@ class TokensViewModel {
             } else {
                 sections = [.addHideToken, .activeWalletSession(count: count), .tokens]
             }
+            
+            sections = [.addHideToken, .tokens]
         }
     }
 
