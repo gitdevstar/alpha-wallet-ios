@@ -31,6 +31,7 @@ class WalletConnectSessionsViewController: UIViewController {
         tableView.dataSource = self
         tableView.tableFooterView = UIView.tableFooterToRemoveEmptyCellSeparators()
         tableView.separatorInset = .zero
+        tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = GroupedTable.Color.background
 

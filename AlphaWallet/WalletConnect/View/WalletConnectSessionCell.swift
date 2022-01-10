@@ -27,6 +27,7 @@ class RoundedImageView: ImageView {
 }
 
 class WalletConnectSessionCell: UITableViewCell {
+    private let background = UIView()
     private let nameLabel = UILabel()
     private let urlLabel = UILabel()
     private let iconImageView: RoundedImageView = {
@@ -41,7 +42,10 @@ class WalletConnectSessionCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
+        
+        contentView.addSubview(background)
+        background.translatesAutoresizingMaskIntoConstraints = false
+        
         let cell0 = [
             nameLabel,
             urlLabel
@@ -53,14 +57,18 @@ class WalletConnectSessionCell: UITableViewCell {
             cell0
         ].asStackView(axis: .horizontal, alignment: .center)
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(stackView)
-        contentView.addSubview(serverIconImageView)
+        background.addSubview(stackView)
+        background.addSubview(serverIconImageView)
 
         NSLayoutConstraint.activate([
             serverIconImageView.centerXAnchor.constraint(equalTo: iconImageView.leadingAnchor, constant: 8),
             serverIconImageView.centerYAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: -8),
             //NOTE: using edge insets to avoid braking constraints
-            stackView.anchorsConstraint(to: contentView, edgeInsets: .init(top: 20, left: StyleLayout.sideMargin, bottom: 20, right: StyleLayout.sideMargin))
+            stackView.anchorsConstraint(to: background, edgeInsets: .init(top: 12, left: 20, bottom: 16, right: 12)),
+            background.topAnchor.constraint(equalTo: contentView.topAnchor),
+            background.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            background.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            background.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
         ])
     }
 
@@ -69,8 +77,16 @@ class WalletConnectSessionCell: UITableViewCell {
     }
 
     func configure(viewModel: WalletConnectSessionCellViewModel) {
-        selectionStyle = .default
-        backgroundColor = viewModel.backgroundColor
+        selectionStyle = .none
+        backgroundColor = .clear
+        
+        background.backgroundColor = viewModel.backgroundColor
+        background.cornerRadius = 8
+        background.layer.shadowColor = Colors.lightGray.cgColor
+        background.layer.shadowRadius = 2
+        background.layer.shadowOffset = .zero
+        background.layer.shadowOpacity = 0.6
+        
         nameLabel.attributedText = viewModel.sessionNameAttributedString
         urlLabel.attributedText = viewModel.sessionURLAttributedString
         iconImageView.setImage(url: viewModel.sessionIconURL, placeholder: R.image.walletConnectIcon())

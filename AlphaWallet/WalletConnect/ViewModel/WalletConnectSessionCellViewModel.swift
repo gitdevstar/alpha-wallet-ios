@@ -7,7 +7,7 @@ struct WalletConnectSessionCellViewModel {
     let server: RPCServer
 
     var backgroundColor: UIColor {
-        Colors.appBackground
+        Colors.appWhite
     }
 
     var serverIconImage: Subscribable<Image> {
@@ -16,8 +16,8 @@ struct WalletConnectSessionCellViewModel {
 
     var sessionNameAttributedString: NSAttributedString {
         return .init(string: "\(session.dAppInfo.peerMeta.name) (\(server.name))", attributes: [
-            .font: Fonts.regular(size: 20),
-            .foregroundColor: Colors.black
+            .font: Fonts.bold(size: 16),
+            .foregroundColor: Colors.appText
         ])
     }
 
