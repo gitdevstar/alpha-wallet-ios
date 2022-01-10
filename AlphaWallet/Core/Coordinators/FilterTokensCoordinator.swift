@@ -170,12 +170,6 @@ extension FilterTokensCoordinator {
     private func singleChainTokenCoordinator(forServer server: RPCServer) -> SingleChainTokenCoordinator? {
         singleChainTokenCoordinators.first { $0.isServer(server) }
     }
-    
-    func didAddAddress(viewController: TokensViewController) {
-        self.address = "0xCA1262E77FB25C0A4112CFC9BAD3FF54F617F2E6"
-        guard let address = AlphaWallet.Address(string: "0xCA1262E77FB25C0A4112CFC9BAD3FF54F617F2E6") else { return }
-        fetchContractData(forServer: viewController.server, address: address, inViewController: viewController)
-    }
 
     private func fetchContractData(forServer server: RPCServer, address: AlphaWallet.Address, inViewController viewController: TokensViewController) {
         guard let coordinator = singleChainTokenCoordinator(forServer: server) else { return }

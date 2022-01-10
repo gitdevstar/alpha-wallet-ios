@@ -353,7 +353,6 @@ class TokensViewController: UIViewController {
     }
 
     func fetch() {
-        viewModel.filterTokensCoordinator.didAddAddress(viewController: self)
         startLoading()
         tokenCollection.fetch()
     }
