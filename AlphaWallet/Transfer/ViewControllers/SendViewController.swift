@@ -309,7 +309,10 @@ class SendViewController: UIViewController {
         case .address(let recipient):
             guard let tokenObject = storage.token(forContract: viewModel.transactionType.contract) else { return }
             let amountAsIntWithDecimals = EtherNumberFormatter.plain.number(from: amountTextField.ethCost, decimals: tokenObject.decimals)
-            configureFor(contract: transactionType.contract, recipient: .address(recipient), amount: amountAsIntWithDecimals)
+//            configureFor(contract: transactionType.contract, recipient: .address(recipient), amount: amountAsIntWithDecimals)
+            targetAddressTextField.value = AddressOrEnsName.address(recipient).stringValue
+            
+
             activateAmountView()
         case .eip681(let protocolName, let address, let functionName, let params):
             checkAndFillEIP681Details(protocolName: protocolName, address: address, functionName: functionName, params: params)
@@ -385,22 +388,20 @@ class SendViewController: UIViewController {
         guard let tokenObject = storage.token(forContract: contract) else { return }
         let amount = amount.flatMap { EtherNumberFormatter.plain.string(from: $0, decimals: tokenObject.decimals) }
         let transactionType: TransactionType
-//        if let amount = amount, amount != "0" {
-//            transactionType = TransactionType(token: tokenObject, recipient: recipient, amount: amount)
-//        } else {
-//            switch viewModel.transactionType {
-//            case .nativeCryptocurrency(_, _, let amount):
-//                transactionType = TransactionType(token: tokenObject, recipient: recipient, amount: amount.flatMap { EtherNumberFormatter().string(from: $0, units: .ether) })
-//            case .erc20Token(_, _, let amount):
-//                transactionType = TransactionType(token: tokenObject, recipient: recipient, amount: amount)
-//            case .erc875Token, .erc875TokenOrder, .erc721Token, .erc721ForTicketToken, .erc1155Token, .dapp, .tokenScript, .claimPaidErc875MagicLink:
-//                transactionType = TransactionType(token: tokenObject, recipient: recipient, amount: nil)
-//            }
-//        }
-        
-        targetAddressTextField.value = recipient!.stringValue
-
-//        configure(viewModel: .init(transactionType: transactionType, session: session, storage: storage), shouldConfigureBalance: shouldConfigureBalance)
+        if let amount = amount, amount != "0" {
+            transactionType = TransactionType(token: tokenObject, recipient: recipient, amount: amount)
+        } else {
+            switch viewModel.transactionType {
+            case .nativeCryptocurrency(_, _, let amount):
+                transactionType = TransactionType(token: tokenObject, recipient: recipient, amount: amount.flatMap { EtherNumberFormatter().string(from: $0, units: .ether) })
+            case .erc20Token(_, _, let amount):
+                transactionType = TransactionType(token: tokenObject, recipient: recipient, amount: amount)
+            case .erc875Token, .erc875TokenOrder, .erc721Token, .erc721ForTicketToken, .erc1155Token, .dapp, .tokenScript, .claimPaidErc875MagicLink:
+                transactionType = TransactionType(token: tokenObject, recipient: recipient, amount: nil)
+            }
+        }
+       
+        configure(viewModel: .init(transactionType: transactionType, session: session, storage: storage), shouldConfigureBalance: shouldConfigureBalance)
     }
 }
 
