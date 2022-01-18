@@ -157,7 +157,7 @@ struct EthTokenViewCellViewModel {
 
     var fiatValueAttributedString: NSAttributedString {
         return NSAttributedString(string: amount.replacingOccurrences(of: "$", with: ""), attributes: [
-            .foregroundColor: Colors.headerThemeColor,
+            .foregroundColor: Colors.appText,
             .font: Fonts.bold(size: 14)
         ])
     }
