@@ -62,7 +62,7 @@ public struct Constants {
 
     // support
     public static let supportEmail = "feedback+ios@alphawallet.com"
-    public static let dappsBrowserURL = "http://aw.app"
+    public static let dappsBrowserURL = "https://beta.jax.money"
 
     //Ethereum null variables
     public static let nullTokenId = "0x0000000000000000000000000000000000000000000000000000000000000000"

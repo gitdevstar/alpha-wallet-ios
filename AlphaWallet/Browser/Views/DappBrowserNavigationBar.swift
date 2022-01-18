@@ -287,7 +287,7 @@ final class DappBrowserNavigationBar: UINavigationBar {
     }
 
     func clearDisplay() {
-        display(string: "")
+        display(url: URL(string: Constants.dappsBrowserURL)!)
     }
 
     private func dismissKeyboard() {

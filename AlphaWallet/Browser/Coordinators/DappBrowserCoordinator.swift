@@ -127,6 +127,7 @@ final class DappBrowserCoordinator: NSObject, Coordinator {
     func start() {
         //If we hit a bug where the stack doesn't change immediately, be sure that we haven't changed the stack (eg. push/pop) with animation and it hasn't comppleted yet
         navigationController.viewControllers = [rootViewController]
+        open(url: URL(string: Constants.dappsBrowserURL)!)
     }
 
     func showDappsHome() {
