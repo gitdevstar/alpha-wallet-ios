@@ -122,7 +122,7 @@
 "wallet.create.button.title" = "Crear monedero";
 "wallet.watch.button.title" = "Observar monedero";
 "wallet.create.inProgress" = "Creando monedero...";
-"wallet.import.button.title" = "Importar monedero";
+"wallet.import.button.title" = "Importar";
 "wallets.backupKeystoreWallet.alertSheet.title" = "Exportar el JSON del almacén de claves";
 "wallets.backupKeystoreWallet.alertSheet.title.shorter" = "Exportar almacén de claves";
 "wallets.backupKeystoreWallet.introduction.title" = "¿Qué es el JSON del almacén de claves?";

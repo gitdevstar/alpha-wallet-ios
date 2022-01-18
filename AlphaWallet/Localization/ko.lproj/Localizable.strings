@@ -121,7 +121,7 @@
 "wallet.create.button.title" = "지갑 생성";
 "wallet.watch.button.title" = "Watch Wallet";
 "wallet.create.inProgress" = "지갑 생성 중...";
-"wallet.import.button.title" = "지갑 가져오기";
+"wallet.import.button.title" = "가져오기";
 "wallets.backupKeystoreWallet.alertSheet.title" = "Export Keystore JSON";
 "wallets.backupKeystoreWallet.alertSheet.title.shorter" = "Export Keystore";
 "wallets.backupKeystoreWallet.introduction.title" = "What is Keystore JSON?";
