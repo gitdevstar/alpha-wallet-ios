@@ -484,13 +484,14 @@ class InCoordinator: NSObject, Coordinator {
             viewControllers.append(transactionCoordinator.navigationController)
         }
 
-        let swapViewController = SwapViewController(nibName: "SwapViewController", bundle: nil)
-        swapViewController.tabBarItem = UITabBarItem(title: R.string.localizable.browserTabbarItemTitle(), image: R.image.tab_browser(), selectedImage: R.image.tab_browser_active())
-
-        let swapNavigationController = UINavigationController(rootViewController: swapViewController)
-        swapNavigationController.navigationBar.isTranslucent = false
-        //let browserCoordinator = createBrowserCoordinator(sessions: walletSessions, browserOnly: false, analyticsCoordinator: analyticsCoordinator)
-        viewControllers.append(swapNavigationController)
+//        let swapViewController = SwapViewController(nibName: "SwapViewController", bundle: nil)
+//        swapViewController.tabBarItem = UITabBarItem(title: R.string.localizable.browserTabbarItemTitle(), image: R.image.tab_browser(), selectedImage: R.image.tab_browser_active())
+//
+//        let swapNavigationController = UINavigationController(rootViewController: swapViewController)
+//        swapNavigationController.navigationBar.isTranslucent = false
+//        viewControllers.append(swapNavigationController)
+        let browserCoordinator = createBrowserCoordinator(sessions: walletSessions, browserOnly: false, analyticsCoordinator: analyticsCoordinator)
+        viewControllers.append(browserCoordinator.navigationController)
 
         let settingsCoordinator = createSettingsCoordinator(keystore: keystore, promptBackupCoordinator: promptBackupCoordinator)
         configureNavigationControllerForLargeTitles(settingsCoordinator.navigationController)
