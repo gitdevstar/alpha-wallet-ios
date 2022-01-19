@@ -109,7 +109,7 @@ struct Colors {
     static let black = UIColor(hex: "313849")
     static let lightBlack = UIColor(hex: "313849")
     static let headerThemeColor = UIColor(hex: "4D5085")
-    static let tabBarTextColorNormal = headerThemeColor
+    static let tabBarTextColorNormal = navigationColor
     static let tabBarTextColorSelected = appHighlightGreen
     static let appBackground = UIColor(hex: "F5F5F5")
     static let appTint = UIColor(red: 21, green: 33, blue: 114)

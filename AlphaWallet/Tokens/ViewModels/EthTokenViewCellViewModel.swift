@@ -90,7 +90,7 @@ struct EthTokenViewCellViewModel {
 
     var cryptoValueAttributedString: NSAttributedString {
         return NSAttributedString(string: amount_USD, attributes: [
-            .foregroundColor: Screen.TokenCard.Color.subtitle,
+            .foregroundColor: Screen.TokenCard.Color.title,
             .font: Fonts.regular(size: 12)
         ])
     }
