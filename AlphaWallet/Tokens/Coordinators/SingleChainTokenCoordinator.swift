@@ -241,11 +241,12 @@ class SingleChainTokenCoordinator: Coordinator {
                     case .erc20:
                         let balanceCoordinator = GetERC20BalanceCoordinator(forServer: server)
                         return balanceCoordinator.getBalance(for: address, contract: each).then { balance -> Promise<BatchObject> in
-                            if balance > 0 {
-                                return strongSelf.fetchBatchObjectFromContractData(for: each, server: server, storage: strongSelf.storage)
-                            } else {
-                                return .value(.none)
-                            }
+//                            if balance > 0 {
+//                                return strongSelf.fetchBatchObjectFromContractData(for: each, server: server, storage: strongSelf.storage)
+//                            } else {
+//                                return .value(.none)
+//                            }
+                            return strongSelf.fetchBatchObjectFromContractData(for: each, server: server, storage: strongSelf.storage)
                         }.recover { _ -> Guarantee<BatchObject> in
                             return .value(.none)
                         }
