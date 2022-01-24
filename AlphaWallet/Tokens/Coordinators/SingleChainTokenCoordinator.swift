@@ -175,26 +175,40 @@ class SingleChainTokenCoordinator: Coordinator {
         guard !session.config.isAutoFetchingDisabled else { return }
         switch server {
         case .main:
-            autoDetectMainnetPartnerTokens()
+//            autoDetectMainnetPartnerTokens()
+            break
+        case .binance_smart_chain:
+            autoDetectBinancePartnerTokens()
         case .xDai:
             autoDetectXDaiPartnerTokens()
         case .rinkeby:
-            autoDetectRinkebyPartnerTokens()
-        case .kovan, .ropsten, .poa, .sokol, .classic, .callisto, .goerli, .artis_sigma1, .binance_smart_chain, .binance_smart_chain_testnet, .artis_tau1, .custom, .heco_testnet, .heco, .fantom, .fantom_testnet, .avalanche, .avalanche_testnet, .polygon, .mumbai_testnet, .optimistic, .optimisticKovan, .cronosTestnet, .arbitrum, .palm, .palmTestnet:
+//            autoDetectRinkebyPartnerTokens()
+            break
+        case .binance_smart_chain_testnet:
+            autoDetectBSCTestPartnerTokens()
+        case .kovan, .ropsten, .poa, .sokol, .classic, .callisto, .goerli, .artis_sigma1, .artis_tau1, .custom, .heco_testnet, .heco, .fantom, .fantom_testnet, .avalanche, .avalanche_testnet, .polygon, .mumbai_testnet, .optimistic, .optimisticKovan, .cronosTestnet, .arbitrum, .palm, .palmTestnet:
             break
         }
     }
 
-    private func autoDetectMainnetPartnerTokens() {
-        autoDetectTokens(withContracts: Constants.partnerContracts)
+//    private func autoDetectMainnetPartnerTokens() {
+//        autoDetectTokens(withContracts: Constants.partnerContracts)
+//    }
+    
+    private func autoDetectBinancePartnerTokens() {
+        autoDetectTokens(withContracts: Constants.bscPartnerContracts)
     }
 
     private func autoDetectXDaiPartnerTokens() {
         autoDetectTokens(withContracts: Constants.ethDenverXDaiPartnerContracts)
     }
 
-    private func autoDetectRinkebyPartnerTokens() {
-        autoDetectTokens(withContracts: Constants.rinkebyPartnerContracts)
+//    private func autoDetectRinkebyPartnerTokens() {
+//        autoDetectTokens(withContracts: Constants.rinkebyPartnerContracts)
+//    }
+    
+    private func autoDetectBSCTestPartnerTokens() {
+        autoDetectTokens(withContracts: Constants.bscTestPartnerContracts)
     }
 
     private func autoDetectTokens(withContracts contractsToDetect: [(name: String, contract: AlphaWallet.Address)]) {
@@ -220,10 +234,11 @@ class SingleChainTokenCoordinator: Coordinator {
 
     private func autoDetectTokensImpl(withContracts contractsToDetect: [(name: String, contract: AlphaWallet.Address)], server: RPCServer) -> Promise<Void> {
         let address = keystore.currentWallet.address
+        
         return contractsToAutodetectTokens(withContracts: contractsToDetect, storage: storage).map(on: queue, { contracts -> [Promise<SingleChainTokenCoordinator.BatchObject>] in
             contracts.map { [weak self] each -> Promise<BatchObject> in
                 guard let strongSelf = self else { return .init(error: PMKError.cancelled) }
-
+                
                 return strongSelf.tokenProvider.getTokenType(for: each).then { tokenType -> Promise<BatchObject> in
                     switch tokenType {
                     case .erc875:
@@ -246,6 +261,7 @@ class SingleChainTokenCoordinator: Coordinator {
 //                            } else {
 //                                return .value(.none)
 //                            }
+                            print("here: balance & fetch token \(address)")
                             return strongSelf.fetchBatchObjectFromContractData(for: each, server: server, storage: strongSelf.storage)
                         }.recover { _ -> Guarantee<BatchObject> in
                             return .value(.none)

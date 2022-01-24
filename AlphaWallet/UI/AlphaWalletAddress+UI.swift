@@ -131,6 +131,8 @@ extension AlphaWallet.Address {
             return R.image.tokenSaud()
         case "0xcA1262e77Fb25c0a4112CFc9bad3ff54F617f2e6".uppercased():
             return R.image.jaxBscToken()
+        case "0xc43860f43daA9448C483C103Af5C851ec5B6aD3e".uppercased():
+            return R.image.jaxBscToken()
         default:
             return nil
         }
