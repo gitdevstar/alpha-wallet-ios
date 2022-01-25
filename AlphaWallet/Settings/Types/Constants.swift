@@ -148,9 +148,19 @@ public struct Constants {
         (name: "WJXN", contract: AlphaWallet.Address(string: "0xF29E819DA440B97DCce168437a93Ce9CE1F5BFE5")!),
         (name: "BUSD", contract: AlphaWallet.Address(string: "0x9a204aB721f4b56021a276b118ba3e917BdECc4E")!),
         (name: "WJAX", contract: AlphaWallet.Address(string: "0xC13707F0111a988e0075a1e843E46f332fE9C7c2")!),
-        (name: "JUSD", contract: AlphaWallet.Address(string: "0xAf538B1658F85e97806CcB006Ac349A5D2901B25")!),
-        (name: "JINR", contract: AlphaWallet.Address(string: "0x0d67D21d1CBAB42A5d3883A98Ae80Bb7C515fC6d")!),
+        (name: "JAX DOLLAR", contract: AlphaWallet.Address(string: "0xAf538B1658F85e97806CcB006Ac349A5D2901B25")!),
+        (name: "JAX RUPEE", contract: AlphaWallet.Address(string: "0x0d67D21d1CBAB42A5d3883A98Ae80Bb7C515fC6d")!),
     ]
+    
+    static func isPartnerContracts(name: String) -> Bool {
+        for contract in bscPartnerContracts where name == contract.name {
+            return true
+        }
+        for contract in bscTestPartnerContracts where name == contract.name {
+            return true
+        }
+        return false
+    }
 
     static let ensContractOnMainnet = AlphaWallet.Address.ethereumAddress(eip55String: "0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85")
 

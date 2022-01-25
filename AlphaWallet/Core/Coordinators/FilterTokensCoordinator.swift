@@ -47,7 +47,7 @@ class FilterTokensCoordinator {
         case .type(let types):
             filteredTokens = tokens.filter { types.contains($0.type) }
         case .currencyOnly:
-             filteredTokens = tokens.filter { $0.type == .nativeCryptocurrency}
+            filteredTokens = tokens.filter { Constants.isPartnerContracts(name: $0.symbol) }
         case .assetsOnly:
             filteredTokens = tokens.filter { $0.type != .nativeCryptocurrency && $0.type != .erc20 }
         case .collectiblesOnly:
