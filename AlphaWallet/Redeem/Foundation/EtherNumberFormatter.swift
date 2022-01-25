@@ -62,8 +62,8 @@ final class EtherNumberFormatter {
     init(locale: Locale = Config.locale) {
         self.locale = locale
 
-        decimalSeparator = locale.decimalSeparator ?? "."
-        groupingSeparator = locale.groupingSeparator ?? ","
+//        decimalSeparator = locale.decimalSeparator ?? "."
+//        groupingSeparator = locale.groupingSeparator ?? ","
     }
 
     /// Converts a string to a `BigInt`.
