@@ -145,11 +145,11 @@ public struct Constants {
 //    ]
     
     static let bscTestPartnerContracts = [
-        (name: "WJXN", contract: AlphaWallet.Address(string: "0x01215d5b86219532B10480875F7384fb37Ee9b29")!),
-        (name: "BUSD", contract: AlphaWallet.Address(string: "0xe37987197309DA313f733130Bcd6cb750c43Fb83")!),
-        (name: "WJAX", contract: AlphaWallet.Address(string: "0xBCA789602aDD7d7eeb749CC507e00F3bA3FCBCc9")!),
-        (name: "JUSD", contract: AlphaWallet.Address(string: "0xffDaE29C05E41EEf9F633054A5bdD2f616dC3BC4")!),
-        (name: "JINR", contract: AlphaWallet.Address(string: "0x5a27eb16B36B6b60CC406f96F9983de94313CCc7")!),
+        (name: "WJXN", contract: AlphaWallet.Address(string: "0xF29E819DA440B97DCce168437a93Ce9CE1F5BFE5")!),
+        (name: "BUSD", contract: AlphaWallet.Address(string: "0x9a204aB721f4b56021a276b118ba3e917BdECc4E")!),
+        (name: "WJAX", contract: AlphaWallet.Address(string: "0xC13707F0111a988e0075a1e843E46f332fE9C7c2")!),
+        (name: "JUSD", contract: AlphaWallet.Address(string: "0xAf538B1658F85e97806CcB006Ac349A5D2901B25")!),
+        (name: "JINR", contract: AlphaWallet.Address(string: "0x0d67D21d1CBAB42A5d3883A98Ae80Bb7C515fC6d")!),
     ]
 
     static let ensContractOnMainnet = AlphaWallet.Address.ethereumAddress(eip55String: "0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85")

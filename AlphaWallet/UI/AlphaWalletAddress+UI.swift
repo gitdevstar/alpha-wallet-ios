@@ -131,8 +131,16 @@ extension AlphaWallet.Address {
             return R.image.tokenSaud()
         case "0xcA1262e77Fb25c0a4112CFc9bad3ff54F617f2e6".uppercased():
             return R.image.jaxBscToken()
-        case "0xc43860f43daA9448C483C103Af5C851ec5B6aD3e".uppercased():
+        case "0xF29E819DA440B97DCce168437a93Ce9CE1F5BFE5".uppercased():
             return R.image.jaxBscToken()
+        case "0xC13707F0111a988e0075a1e843E46f332fE9C7c2".uppercased():
+            return R.image.jax()
+        case "0x9a204aB721f4b56021a276b118ba3e917BdECc4E".uppercased():
+            return R.image.busd()
+        case "0xAf538B1658F85e97806CcB006Ac349A5D2901B25".uppercased():
+            return R.image.jusd()
+        case "0x0d67D21d1CBAB42A5d3883A98Ae80Bb7C515fC6d".uppercased():
+            return R.image.jinr()
         default:
             return nil
         }
