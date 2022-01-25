@@ -15,8 +15,8 @@ struct WalletConnectSessionCellViewModel {
     }
 
     var sessionNameAttributedString: NSAttributedString {
-        return .init(string: "\(session.dAppInfo.peerMeta.name) (\(server.name))", attributes: [
-            .font: Fonts.bold(size: 16),
+        return .init(string: "\(session.dAppInfo.peerMeta.name)", attributes: [
+            .font: Fonts.bold(size: 14),
             .foregroundColor: Colors.appText
         ])
     }

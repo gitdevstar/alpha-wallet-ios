@@ -39,12 +39,30 @@ class WalletConnectSessionCell: UITableViewCell {
         let imageView = RoundedImageView(size: .init(width: 16, height: 16))
         return imageView
     }()
+    
+    lazy var networkContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(hex: "4C79CB")
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.cornerRadius = 3
+        return view
+    }()
+    lazy var networkNameLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = Fonts.regular(size: 8)
+        label.textColor = Colors.appWhite
+        return label
+    }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         contentView.addSubview(background)
         background.translatesAutoresizingMaskIntoConstraints = false
+        
+        networkContainerView.addSubview(networkNameLabel)
+        
         
         let cell0 = [
             nameLabel,
@@ -54,7 +72,9 @@ class WalletConnectSessionCell: UITableViewCell {
             .spacerWidth(Table.Metric.plainLeftMargin),
             iconImageView,
             .spacerWidth(12),
-            cell0
+            cell0,
+            .spacerWidth(12),
+            networkContainerView
         ].asStackView(axis: .horizontal, alignment: .center)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         background.addSubview(stackView)
@@ -68,7 +88,11 @@ class WalletConnectSessionCell: UITableViewCell {
             background.topAnchor.constraint(equalTo: contentView.topAnchor),
             background.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             background.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            background.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
+            background.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            networkNameLabel.topAnchor.constraint(equalTo: networkContainerView.topAnchor, constant: 3),
+            networkNameLabel.bottomAnchor.constraint(equalTo: networkContainerView.bottomAnchor, constant: -3),
+            networkNameLabel.leadingAnchor.constraint(equalTo: networkContainerView.leadingAnchor, constant: 6),
+            networkNameLabel.trailingAnchor.constraint(equalTo: networkContainerView.trailingAnchor, constant: -6),
         ])
     }
 
@@ -91,5 +115,6 @@ class WalletConnectSessionCell: UITableViewCell {
         urlLabel.attributedText = viewModel.sessionURLAttributedString
         iconImageView.setImage(url: viewModel.sessionIconURL, placeholder: R.image.walletConnectIcon())
         serverIconImageView.subscribable = viewModel.serverIconImage
+        networkNameLabel.text = viewModel.server.name
     }
 }
