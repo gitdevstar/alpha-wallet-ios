@@ -54,7 +54,7 @@ enum URLServiceProvider {
         case .discord:
             return URL(string: "https://discord.com/invite/mx23YWRTYf")!
         case .telegramCustomer:
-            return URL(string: "https://t.me/AlphaWalletSupport")!
+            return URL(string: "https://t.me/jax_network")!
         case .twitter:
             return URL(string: "https://twitter.com/\(Constants.twitterUsername)")!
         case .reddit:
@@ -62,7 +62,7 @@ enum URLServiceProvider {
         case .facebook:
             return URL(string: "https://www.facebook.com/\(Constants.facebookUsername)")!
         case .faq:
-            return URL(string: "https://alphawallet.com/faq/")!
+            return URL(string: "https://jaxwallet.io/#two")!
         case .github:
             return URL(string: "https://github.com/AlphaWallet/alpha-wallet-ios/issues/new")!
         }
