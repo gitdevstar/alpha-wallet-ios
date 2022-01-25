@@ -40,9 +40,9 @@ class FungibleTokenViewCell: UITableViewCell {
         let col0 = tokenIconImageView
         let row1 = [networkNameLabel, UIView.spacerWidth(flexible: true), changeValueContainer, blockChainTagLabel].asStackView(spacing: 5, alignment: .center)
         let col1 = [
-            [symbolLabel, UIView.spacerWidth(flexible: true), fiatValueLabel].asStackView(spacing: 5),
+            [symbolLabel, UIView.spacerWidth(flexible: true), cryptoValueLabel].asStackView(spacing: 5),
             UIView.spacer(height: 2),
-            [nameLabel, UIView.spacerWidth(flexible: true), cryptoValueLabel].asStackView(alignment: .center),
+            [nameLabel, UIView.spacerWidth(flexible: true), fiatValueLabel].asStackView(alignment: .center),
             UIView.spacer(height: 4),
             row1
         ].asStackView(axis: .vertical)

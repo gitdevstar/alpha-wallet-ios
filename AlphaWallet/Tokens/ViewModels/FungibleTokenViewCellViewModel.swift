@@ -73,9 +73,9 @@ struct FungibleTokenViewCellViewModel {
     }
 
     var cryptoValueAttributedString: NSAttributedString {
-        return NSAttributedString(string: amount_USD, attributes: [
+        return NSAttributedString(string: amount, attributes: [
             .foregroundColor: Screen.TokenCard.Color.title,
-            .font: Fonts.regular(size: 12)
+            .font: Fonts.regular(size: 14)
         ])
     }
 
@@ -152,9 +152,9 @@ struct FungibleTokenViewCellViewModel {
     }
 
     var fiatValueAttributedString: NSAttributedString {
-        return NSAttributedString(string: amount.replacingOccurrences(of: "$", with: ""), attributes: [
-            .foregroundColor: Screen.TokenCard.Color.title,
-            .font: Fonts.bold(size: 14)
+        return NSAttributedString(string: amount_USD, attributes: [
+            .foregroundColor: Screen.TokenCard.Color.subtitle,
+            .font: Fonts.bold(size: 12)
         ])
     }
 
