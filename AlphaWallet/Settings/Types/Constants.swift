@@ -61,8 +61,8 @@ public struct Constants {
     public static let facebookUsername = "AlphaWallet"
 
     // support
-    public static let supportEmail = "feedback+ios@alphawallet.com"
-    public static let dappsBrowserURL = "https://beta.jax.money/excahnge.php"
+    public static let supportEmail = "feedback+android@jaxwallet.io"
+    public static let dappsBrowserURL = "https://beta.jax.money/exchange.php"
 
     //Ethereum null variables
     public static let nullTokenId = "0x0000000000000000000000000000000000000000000000000000000000000000"
