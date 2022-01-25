@@ -21,7 +21,7 @@ class SwitchChainRequestViewController: ModalViewController {
         let v = UILabel()
         v.numberOfLines = 0
         v.textAlignment = .center
-        v.textColor = R.color.black()
+        v.textColor = Colors.appText
         v.font = Fonts.bold(size: 24)
 
         return v
@@ -31,7 +31,7 @@ class SwitchChainRequestViewController: ModalViewController {
         let v = UILabel()
         v.numberOfLines = 0
         v.textAlignment = .center
-        v.textColor = R.color.mine()
+        v.textColor = Colors.appText
         v.font = Fonts.regular(size: 17)
 
         return v

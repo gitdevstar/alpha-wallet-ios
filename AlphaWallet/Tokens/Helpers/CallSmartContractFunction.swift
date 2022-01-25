@@ -47,7 +47,6 @@ func callSmartContract(withServer server: RPCServer, contract: AlphaWallet.Addre
     let timeout: TimeInterval = 60
     //We must include the ABI string in the key because the order of elements in a dictionary when serialized in the string is not ordered. Parameters (which is ordered) should ensure it's the same function
     let cacheKey = "\(contract).\(functionName) \(parameters) \(server.chainID)"
-    print("here: balance cachekey \(cacheKey)")
     let ttlForCache: TimeInterval = 10
     let now = Date()
     if let (cachedPromise, cacheTimestamp) = smartContractCallsCache[cacheKey] {
