@@ -174,7 +174,7 @@ extension WalletCoordinator: QRCodeResolutionCoordinatorDelegate {
     func coordinator(_ coordinator: QRCodeResolutionCoordinator, didResolveJSON json: String) {
         removeCoordinator(coordinator)
 
-        importWalletViewController?.set(tabSelection: .keystore)
+//        importWalletViewController?.set(tabSelection: .keystore)
         importWalletViewController?.setValueForCurrentField(string: json)
     }
 

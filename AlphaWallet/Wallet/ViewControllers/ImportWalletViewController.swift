@@ -288,8 +288,8 @@ class ImportWalletViewController: UIViewController {
         switch tab {
         case .mnemonic:
             showMnemonicControlsOnly()
-        case .keystore:
-            showKeystoreControlsOnly()
+//        case .keystore:
+//            showKeystoreControlsOnly()
         case .privateKey:
             showPrivateKeyControlsOnly()
         case .watch:
@@ -359,8 +359,8 @@ class ImportWalletViewController: UIViewController {
         switch tab {
         case .mnemonic:
             return validateMnemonic()
-        case .keystore:
-            return validateKeystore()
+//        case .keystore:
+//            return validateKeystore()
         case .privateKey:
             return validatePrivateKey()
         case .watch:
@@ -433,8 +433,8 @@ class ImportWalletViewController: UIViewController {
             switch tab {
             case .mnemonic:
                 return .mnemonic(words: mnemonicInput, password: "")
-            case .keystore:
-                return .keystore(string: keystoreInput, password: password)
+//            case .keystore:
+//                return .keystore(string: keystoreInput, password: password)
             case .privateKey:
                 guard let data = Data(hexString: privateKeyInput) else {
                     hideLoading(animated: false)
@@ -521,8 +521,8 @@ class ImportWalletViewController: UIViewController {
         switch viewModel.convertSegmentedControlSelectionToFilter(tabBar.selection) {
         case .mnemonic:
             mnemonicTextView.value = string
-        case .keystore:
-            keystoreJSONTextView.value = string
+//        case .keystore:
+//            keystoreJSONTextView.value = string
         case .privateKey:
             privateKeyTextView.value = string
         case .watch:

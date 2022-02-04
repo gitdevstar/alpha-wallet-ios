@@ -63,7 +63,7 @@ extension ImportWalletTab {
     static var orderedTabs: [ImportWalletTab] {
         return [
             .mnemonic,
-            .keystore,
+//            .keystore,
             .privateKey,
             .watch
         ]
@@ -77,8 +77,8 @@ extension ImportWalletTab {
         switch self {
         case .mnemonic:
             return R.string.localizable.mnemonicShorter()
-        case .keystore:
-            return ImportSelectionType.keystore.title
+//        case .keystore:
+//            return ImportSelectionType.keystore.title
         case .privateKey:
             return ImportSelectionType.privateKey.title
         case .watch:
