@@ -179,12 +179,12 @@ struct Config {
             if let chainIds = defaults.array(forKey: Keys.enabledServers) as? [Int] {
                 if chainIds.isEmpty {
                     //TODO remote log. Why is this possible? Note it's not nil (which is possible for new installs)
-                    return Constants.defaultEnabledServers
+                    return Constants.defaultEnabledTestnetServers
                 } else {
                     return chainIds.map { .init(chainID: $0) }.filter { $0.conflictedServer == nil }
                 }
             } else {
-                return Constants.defaultEnabledServers
+                return Constants.defaultEnabledTestnetServers
             }
         }
         set {
