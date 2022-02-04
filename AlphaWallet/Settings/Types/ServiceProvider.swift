@@ -37,7 +37,7 @@ enum URLServiceProvider {
         case .discord:
             return URL(string: "https://discord.com/invite/mx23YWRTYf")
         case .telegramCustomer:
-            return URL(string: "https://t.me/AlphaWalletSupport")
+            return URL(string: "https://t.me/jax_chat")
         case .twitter:
             return URL(string: "twitter://user?screen_name=\(Constants.twitterUsername)")
         case .reddit:
