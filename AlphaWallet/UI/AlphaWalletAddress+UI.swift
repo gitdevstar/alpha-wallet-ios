@@ -131,15 +131,15 @@ extension AlphaWallet.Address {
             return R.image.tokenSaud()
         case "0xcA1262e77Fb25c0a4112CFc9bad3ff54F617f2e6".uppercased():
             return R.image.jaxBscToken()
-        case "0xF29E819DA440B97DCce168437a93Ce9CE1F5BFE5".uppercased():
+        case "0x3a171b7c5d671e3c4bb5823b8fd265f4e4e9a399".uppercased():
             return R.image.jaxBscToken()
-        case "0xC13707F0111a988e0075a1e843E46f332fE9C7c2".uppercased():
+        case "0x783f4a2efab4f34d6a0d88b71cf1fac6d9b46ff0".uppercased():
             return R.image.jax()
-        case "0x9a204aB721f4b56021a276b118ba3e917BdECc4E".uppercased():
+        case "0xa51bcdc792285598ba7443c71d557e0b7df6f991".uppercased():
             return R.image.busd()
-        case "0xAf538B1658F85e97806CcB006Ac349A5D2901B25".uppercased():
+        case "0xb8bdd95b52ea5b815aaa214aedb8d01aed787157".uppercased():
             return R.image.jusd()
-        case "0x0d67D21d1CBAB42A5d3883A98Ae80Bb7C515fC6d".uppercased():
+        case "0xec7d5848f88246ca6984b8019d08b8524793b062".uppercased():
             return R.image.jinr()
         default:
             return nil
