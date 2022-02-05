@@ -62,7 +62,7 @@ enum URLServiceProvider {
         case .facebook:
             return URL(string: "https://www.facebook.com/\(Constants.facebookUsername)")!
         case .faq:
-            return URL(string: "https://jaxwallet.io/faq")!
+            return URL(string: "https://jaxwallet.io/faq.html")!
         case .github:
             return URL(string: "https://github.com/AlphaWallet/alpha-wallet-ios/issues/new")!
         }

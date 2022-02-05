@@ -37,7 +37,7 @@ final class DappBrowserNavigationBar: UINavigationBar {
 
     private let homeButton: UIButton = {
         let homeButton = UIButton(type: .system)
-        homeButton.tintColor = Colors.black
+        homeButton.tintColor = Colors.appWhite
         homeButton.adjustsImageWhenHighlighted = true
         homeButton.setImage(R.image.iconsSystemHome(), for: .normal)
 
@@ -55,13 +55,13 @@ final class DappBrowserNavigationBar: UINavigationBar {
         cancelEditingButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         cancelEditingButton.isHidden = true
         cancelEditingButton.clipsToBounds = true
-        cancelEditingButton.backgroundColor = Colors.appWhite
+//        cancelEditingButton.backgroundColor = Colors.appWhite
 
         return cancelEditingButton
     }()
     private let closeButton: UIButton = {
         let closeButton = UIButton(type: .system)
-        closeButton.tintColor = Colors.appWhite
+//        closeButton.tintColor = Colors.appWhite
         closeButton.isHidden = true
         closeButton.setTitle(R.string.localizable.done(), for: .normal)
         closeButton.setTitleColor(Colors.navigationButtonTintColor, for: .normal)
@@ -287,7 +287,8 @@ final class DappBrowserNavigationBar: UINavigationBar {
     }
 
     func clearDisplay() {
-        display(url: URL(string: Constants.dappsBrowserURL)!)
+        display(string: "")
+//        display(url: URL(string: Constants.dappsBrowserURL)!)
     }
 
     private func dismissKeyboard() {

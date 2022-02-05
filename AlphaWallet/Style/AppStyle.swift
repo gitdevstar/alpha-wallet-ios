@@ -109,7 +109,7 @@ struct Colors {
     static let appBackground = UIColor(hex: "F5F5F5")
     static let appTint = UIColor(red: 21, green: 33, blue: 114)
     static let navigationTitleColor = UIColor.black
-    static let navigationButtonTintColor = R.color.mine()!
+    static let navigationButtonTintColor = appWhite
     static let appWhite = UIColor.white
     static let appText = UIColor(red: 21, green: 33, blue: 114)
     static let appSubtitle = UIColor(red: 117, green: 117, blue: 117)
