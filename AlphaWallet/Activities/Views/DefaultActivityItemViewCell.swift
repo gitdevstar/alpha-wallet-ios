@@ -64,7 +64,8 @@ class DefaultActivityItemViewCell: UITableViewCell {
             tokenImageView.heightAnchor.constraint(equalToConstant: 40),
             tokenImageView.widthAnchor.constraint(equalToConstant: 40),
 
-            leftEdgeConstraint,
+//            leftEdgeConstraint,
+            stackView.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: StyleLayout.sideMargin),
             stackView.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -StyleLayout.sideMargin),
             stackView.topAnchor.constraint(equalTo: background.topAnchor, constant: 20),
             stackView.bottomAnchor.constraint(equalTo: background.bottomAnchor, constant: -20),

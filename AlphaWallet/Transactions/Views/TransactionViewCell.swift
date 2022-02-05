@@ -54,14 +54,14 @@ class TransactionViewCell: UITableViewCell {
 
         background.addSubview(stackView)
 
-        leftEdgeConstraint = stackView.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: StyleLayout.sideMargin)
+//        leftEdgeConstraint = stackView.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: StyleLayout.sideMargin)
 
         NSLayoutConstraint.activate([
             blockchainLabel.heightAnchor.constraint(equalToConstant: Screen.TokenCard.Metric.blockChainTagHeight),
 
-            statusImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 26),
-
-            leftEdgeConstraint,
+            statusImageView.widthAnchor.constraint(equalToConstant: 40),
+            stackView.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: StyleLayout.sideMargin),
+//            leftEdgeConstraint,
             stackView.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -StyleLayout.sideMargin),
             stackView.topAnchor.constraint(equalTo: background.topAnchor, constant: 14),
             stackView.bottomAnchor.constraint(equalTo: background.bottomAnchor, constant: -14),
