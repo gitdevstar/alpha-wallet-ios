@@ -20,10 +20,12 @@ class GroupActivityViewCell: UITableViewCell {
         leftEdgeConstraint = titleLabel.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: StyleLayout.sideMargin)
 
         NSLayoutConstraint.activate([
-            leftEdgeConstraint,
-            titleLabel.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -StyleLayout.sideMargin),
-            titleLabel.topAnchor.constraint(equalTo: background.topAnchor, constant: 7),
-            titleLabel.bottomAnchor.constraint(equalTo: background.bottomAnchor, constant: -7),
+//            leftEdgeConstraint,
+//            titleLabel.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -StyleLayout.sideMargin),
+//            titleLabel.topAnchor.constraint(equalTo: background.topAnchor, constant: 7),
+//            titleLabel.bottomAnchor.constraint(equalTo: background.bottomAnchor, constant: -7),
+            titleLabel.centerXAnchor.constraint(equalTo: background.centerXAnchor),
+            titleLabel.centerYAnchor.constraint(equalTo: background.centerYAnchor),
             background.topAnchor.constraint(equalTo: contentView.topAnchor),
             background.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             background.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),

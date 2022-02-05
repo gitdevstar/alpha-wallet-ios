@@ -11,7 +11,7 @@ struct GroupActivityCellViewModel {
     let groupType: GroupType
 
     var contentsBackgroundColor: UIColor {
-        Colors.appWhite
+        .clear
     }
 
     var backgroundColor: UIColor {
@@ -19,7 +19,7 @@ struct GroupActivityCellViewModel {
     }
 
     var titleTextColor: UIColor {
-        R.color.black()!
+        Colors.appText
     }
 
     var title: NSAttributedString {
