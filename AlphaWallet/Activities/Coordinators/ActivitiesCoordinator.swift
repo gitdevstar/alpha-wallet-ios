@@ -55,12 +55,16 @@ class ActivitiesCoordinator: NSObject, Coordinator {
         let viewModel = ActivitiesViewModel()
         let controller = ActivitiesViewController(viewModel: viewModel, sessions: sessions)
         controller.delegate = self
-
+        controller.navigationItem.leftBarButtonItem = .backBarButton(self, selector: #selector(backSelected))
         return controller
     }
 
     @objc func dismiss() {
         navigationController.dismiss(animated: true)
+    }
+    
+    @objc private func backSelected(_ sender: UIBarButtonItem) {
+        navigationController.popViewController(animated: true)
     }
 
     func stop() {
