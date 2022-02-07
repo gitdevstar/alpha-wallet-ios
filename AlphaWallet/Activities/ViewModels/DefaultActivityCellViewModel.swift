@@ -177,7 +177,7 @@ struct DefaultActivityCellViewModel {
     var timestampColor: UIColor {
         R.color.dove()!
     }
-    private static let formatter: DateFormatter = Date.formatter(with: "dd MMM yyyy h:mm:ss a")
+    private static let formatter: DateFormatter = Date.formatter(with: "hh:mm")
     var timestamp: String {
         if let date = cardAttributes.timestampGeneralisedTimeValue?.date {
             let value = Self.formatter.string(from: date)
