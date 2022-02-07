@@ -15,9 +15,10 @@ struct TokenViewControllerViewModel {
 
     var token: TokenObject? {
         switch transactionType {
-        case .nativeCryptocurrency:
+        case .nativeCryptocurrency(let token, _, _):
             //TODO might as well just make .nativeCryptocurrency hold the TokenObject instance too
-            return TokensDataStore.etherToken(forServer: session.server)
+//            return TokensDataStore.etherToken(forServer: session.server)
+            return token
         case .erc20Token(let token, _, _):
             return token
         case .erc875Token, .erc875TokenOrder, .erc721Token, .erc721ForTicketToken, .erc1155Token, .dapp, .tokenScript, .claimPaidErc875MagicLink:
