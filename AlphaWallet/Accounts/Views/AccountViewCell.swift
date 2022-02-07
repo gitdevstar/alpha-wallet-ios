@@ -74,6 +74,8 @@ class AccountViewCell: UITableViewCell {
         
         if !viewModel.isSelected {
             vwImgStatus.isHidden = true
+        } else {
+            vwImgStatus.isHidden = false
         }
 
         blockieImageView.subscribable = viewModel.icon
