@@ -141,14 +141,15 @@ class TransactionConfirmationCoordinator: Coordinator {
         analyticsCoordinator.log(action: Analytics.Action.rectifySendTransactionErrorInActionSheet, properties: [Analytics.Properties.type.rawValue: error.analyticsName])
         switch error {
         case .insufficientFunds:
-            break
-            let ramp = Ramp(account: configurator.session.account)
-            if let url = ramp.url(token: TokenActionsServiceKey(tokenObject: TokensDataStore.etherToken(forServer: server))) {
-                delegate?.didPressOpenWebPage(url, in: confirmationViewController)
-            } else {
-                let fallbackUrl = URL(string: "https://alphawallet.com/browser-item-category/utilities/")!
-                delegate?.didPressOpenWebPage(fallbackUrl, in: confirmationViewController)
-            }
+            UIAlertController.alertController(title: "Alert", message: "Insufficient balance", style: .alert, in: self.presentingViewController)
+//            break
+//            let ramp = Ramp(account: configurator.session.account)
+//            if let url = ramp.url(token: TokenActionsServiceKey(tokenObject: TokensDataStore.etherToken(forServer: server))) {
+//                delegate?.didPressOpenWebPage(url, in: confirmationViewController)
+//            } else {
+//                let fallbackUrl = URL(string: "https://alphawallet.com/browser-item-category/utilities/")!
+//                delegate?.didPressOpenWebPage(fallbackUrl, in: confirmationViewController)
+//            }
         case .nonceTooLow:
             showConfigureTransactionViewController(configurator, recoveryMode: .invalidNonce)
         case .gasPriceTooLow:
