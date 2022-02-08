@@ -37,6 +37,7 @@ extension UIToolbar {
 
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let done = UIBarButtonItem(title: R.string.localizable.done(), style: .done, target: target, action: selector)
+        done.tintColor = Colors.appText
 
         toolbar.items = [flexSpace, done]
         toolbar.sizeToFit()
