@@ -238,7 +238,7 @@ class AmountTextField: UIControl {
             }
         }
         set {
-            set(ethCost: newValue, useFormatting: true)
+            set(ethCost: newValue, useFormatting: false)
         }
     }
 
