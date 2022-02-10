@@ -128,7 +128,7 @@ class AmountTextField: UIControl {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.adjustsFontSizeToFitWidth = true
         textField.delegate = self
-        textField.keyboardType = .numberPad
+        textField.keyboardType = .decimalPad
         textField.leftViewMode = .always
         textField.inputAccessoryView = UIToolbar.doneToolbarButton(#selector(closeKeyboard), self)
         textField.textColor = Colors.headerThemeColor
