@@ -123,6 +123,10 @@ struct LocalizedOperationObjectInstance: Equatable {
         guard operationType.isTransfer else { return false }
         return to.sameContract(as: self.to)
     }
+    
+    func isBack() -> Bool {
+        return self.to == self.from
+    }
 
     static func == (lhs: LocalizedOperationObjectInstance, rhs: LocalizedOperationObjectInstance) -> Bool {
         return lhs.from == rhs.from &&

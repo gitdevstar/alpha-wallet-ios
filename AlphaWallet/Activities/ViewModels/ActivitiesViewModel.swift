@@ -293,16 +293,22 @@ extension ActivitiesViewModel.functional {
         return (token: token, activityName: activityName)
     }
 
-    static func createPseudoActivity(fromTransactionRow transactionRow: TransactionRow, cache: CachedTokenObjectResolverType, wallet: AlphaWallet.Address) -> Activity? {
+    static func createPseudoActivity(fromTransactionRow transactionRow: TransactionRow, cache: CachedTokenObjectResolverType, wallet: AlphaWallet.Address, amount: String = "") -> Activity? {
         guard let (token, activityName) = extractTokenAndActivityName(fromTransactionRow: transactionRow, cache: cache, wallet: wallet) else { return nil }
 
         var cardAttributes = [AttributeId: AssetInternalValue]()
         cardAttributes.setSymbol(string: transactionRow.server.symbol)
-
-        if let operation = transactionRow.operation, operation.symbol != nil, let value = BigUInt(operation.value) {
-            cardAttributes.setAmount(uint: value)
+        
+        if amount == "" {
+            if let operation = transactionRow.operation, operation.symbol != nil, let value = BigUInt(operation.value) {
+                cardAttributes.setAmount(uint: value)
+            } else {
+                if let value = BigUInt(transactionRow.value) {
+                    cardAttributes.setAmount(uint: value)
+                }
+            }
         } else {
-            if let value = BigUInt(transactionRow.value) {
+            if let value = BigUInt(amount) {
                 cardAttributes.setAmount(uint: value)
             }
         }
