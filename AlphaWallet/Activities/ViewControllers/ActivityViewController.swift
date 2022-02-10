@@ -56,6 +56,8 @@ class ActivityViewController: UIViewController {
 
         let viewTransactionButton = UIBarButtonItem(image: R.image.statement(), style: .plain, target: self, action: #selector(showTransaction))
         navigationItem.rightBarButtonItem = viewTransactionButton
+        
+        navigationItem.leftBarButtonItem = .backBarButton(self, selector: #selector(backSelected))
 
         title = viewModel.viewControllerTitle
         view.backgroundColor = viewModel.backgroundColor
@@ -218,6 +220,10 @@ class ActivityViewController: UIViewController {
 
     @objc private func showTransaction() {
         delegate?.goToTransaction(viewController: self)
+    }
+    
+    @objc private func backSelected(_ sender: UIBarButtonItem) {
+        navigationController?.popViewController(animated: true)
     }
 }
 
