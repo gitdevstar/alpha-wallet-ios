@@ -128,7 +128,7 @@ class AmountTextField: UIControl {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.adjustsFontSizeToFitWidth = true
         textField.delegate = self
-        textField.keyboardType = .decimalPad
+        textField.keyboardType = .numberPad
         textField.leftViewMode = .always
         textField.inputAccessoryView = UIToolbar.doneToolbarButton(#selector(closeKeyboard), self)
         textField.textColor = Colors.headerThemeColor
@@ -634,7 +634,7 @@ extension EtherNumberFormatter {
 
     /// returns NSDecimalNumber? value from `value` formatted with `EtherNumberFormatter`s selected locale
     func decimal(from value: String) -> NSDecimalNumber? {
-        let value = NSDecimalNumber(string: value, locale: locale)
+        let value = NSDecimalNumber(string: value)
         if value == .notANumber {
             return .none
         } else {
