@@ -838,15 +838,9 @@
 		8782035F2431FBC300792F12 /* ShowAddHideTokensViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782035E2431FBC300792F12 /* ShowAddHideTokensViewModel.swift */; };
 		87897B9C25EF7C08006E3C75 /* ShowSeedPhraseIntroductionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87897B9B25EF7C08006E3C75 /* ShowSeedPhraseIntroductionViewController.swift */; };
 		87897B9E25EF7C50006E3C75 /* ShowSeedPhraseIntroductionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87897B9D25EF7C50006E3C75 /* ShowSeedPhraseIntroductionViewModel.swift */; };
-		878EE8EE255ADA49000210DE /* ShareContextHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878EE8ED255ADA49000210DE /* ShareContextHandler.swift */; };
-		878EE8F5255ADA49000210DE /* AlphaWalletShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 878EE8EB255ADA49000210DE /* AlphaWalletShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		878EE941255BBF9B000210DE /* ItemProviderValueResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878EE940255BBF9B000210DE /* ItemProviderValueResolver.swift */; };
 		878EE944255BC367000210DE /* ShareContentAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878EE943255BC367000210DE /* ShareContentAction.swift */; };
-		878EE945255BC367000210DE /* ShareContentAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878EE943255BC367000210DE /* ShareContentAction.swift */; };
 		878EE94E255BE1F0000210DE /* UrlSchemeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878EE94D255BE1F0000210DE /* UrlSchemeCoordinator.swift */; };
-		878EE94F255BE1F0000210DE /* UrlSchemeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878EE94D255BE1F0000210DE /* UrlSchemeCoordinator.swift */; };
 		878EE951255BEC20000210DE /* ItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878EE950255BEC20000210DE /* ItemType.swift */; };
-		878EE952255BEC20000210DE /* ItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878EE950255BEC20000210DE /* ItemType.swift */; };
 		878EE954255BFFB9000210DE /* FeedbackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878EE953255BFFB9000210DE /* FeedbackGenerator.swift */; };
 		8795994526049EF8006722B2 /* ActivityStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8795994426049EF8006722B2 /* ActivityStateView.swift */; };
 		8795994726049F0F006722B2 /* ActivityStateViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8795994626049F0F006722B2 /* ActivityStateViewViewModel.swift */; };
@@ -1022,13 +1016,6 @@
 			remoteGlobalIDString = 8703FBFC270366DA0062C416;
 			remoteInfo = AlphaWalletSafariExtension;
 		};
-		878EE8F3255ADA49000210DE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2912CCED1F6A830700C6CBE3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 878EE8EA255ADA49000210DE;
-			remoteInfo = AlphaWalletShare;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -1039,7 +1026,6 @@
 			dstSubfolderSpec = 13;
 			files = (
 				8703FC15270366DA0062C416 /* AlphaWalletSafariExtension.appex in Embed App Extensions */,
-				878EE8F5255ADA49000210DE /* AlphaWalletShare.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1888,7 +1874,6 @@
 		8782035E2431FBC300792F12 /* ShowAddHideTokensViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowAddHideTokensViewModel.swift; sourceTree = "<group>"; };
 		87897B9B25EF7C08006E3C75 /* ShowSeedPhraseIntroductionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSeedPhraseIntroductionViewController.swift; sourceTree = "<group>"; };
 		87897B9D25EF7C50006E3C75 /* ShowSeedPhraseIntroductionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSeedPhraseIntroductionViewModel.swift; sourceTree = "<group>"; };
-		878EE8EB255ADA49000210DE /* AlphaWalletShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AlphaWalletShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		878EE8ED255ADA49000210DE /* ShareContextHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareContextHandler.swift; sourceTree = "<group>"; };
 		878EE8F2255ADA49000210DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		878EE8FA255AE20A000210DE /* AlphaWalletShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AlphaWalletShare.entitlements; sourceTree = "<group>"; };
@@ -2085,13 +2070,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		878EE8E8255ADA49000210DE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -2141,7 +2119,6 @@
 				2912CCF51F6A830700C6CBE3 /* JAXWallet.app */,
 				2912CD0B1F6A830700C6CBE3 /* AlphaWalletTests.xctest */,
 				2912CD161F6A830700C6CBE3 /* AlphaWalletUITests.xctest */,
-				878EE8EB255ADA49000210DE /* AlphaWalletShare.appex */,
 				8703FBFD270366DA0062C416 /* AlphaWalletSafariExtension.appex */,
 			);
 			name = Products;
@@ -4938,7 +4915,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				878EE8F4255ADA49000210DE /* PBXTargetDependency */,
 				8703FC14270366DA0062C416 /* PBXTargetDependency */,
 			);
 			name = JAXWallet;
@@ -5005,23 +4981,6 @@
 			productReference = 8703FBFD270366DA0062C416 /* AlphaWalletSafariExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		878EE8EA255ADA49000210DE /* AlphaWalletShare */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 878EE8F9255ADA49000210DE /* Build configuration list for PBXNativeTarget "AlphaWalletShare" */;
-			buildPhases = (
-				878EE8E7255ADA49000210DE /* Sources */,
-				878EE8E8255ADA49000210DE /* Frameworks */,
-				878EE8E9255ADA49000210DE /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = AlphaWalletShare;
-			productName = AlphaWalletShare;
-			productReference = 878EE8EB255ADA49000210DE /* AlphaWalletShare.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -5063,10 +5022,6 @@
 					8703FBFC270366DA0062C416 = {
 						CreatedOnToolsVersion = 13.0;
 					};
-					878EE8EA255ADA49000210DE = {
-						CreatedOnToolsVersion = 11.7;
-						ProvisioningStyle = Automatic;
-					};
 				};
 			};
 			buildConfigurationList = 2912CCF01F6A830700C6CBE3 /* Build configuration list for PBXProject "JAXWallet" */;
@@ -5099,7 +5054,6 @@
 				2912CCF41F6A830700C6CBE3 /* JAXWallet */,
 				2912CD0A1F6A830700C6CBE3 /* AlphaWalletTests */,
 				2912CD151F6A830700C6CBE3 /* AlphaWalletUITests */,
-				878EE8EA255ADA49000210DE /* AlphaWalletShare */,
 				8703FBFC270366DA0062C416 /* AlphaWalletSafariExtension */,
 			);
 		};
@@ -5188,13 +5142,6 @@
 				8703FC0B270366DA0062C416 /* content.js in Resources */,
 				87AA56DF270F1B6E00A9EE3F /* config.js in Resources */,
 				8703FC11270366DA0062C416 /* popup.js in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		878EE8E9255ADA49000210DE /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6406,18 +6353,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		878EE8E7255ADA49000210DE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				878EE952255BEC20000210DE /* ItemType.swift in Sources */,
-				878EE94F255BE1F0000210DE /* UrlSchemeCoordinator.swift in Sources */,
-				878EE945255BC367000210DE /* ShareContentAction.swift in Sources */,
-				878EE8EE255ADA49000210DE /* ShareContextHandler.swift in Sources */,
-				878EE941255BBF9B000210DE /* ItemProviderValueResolver.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -6435,11 +6370,6 @@
 			isa = PBXTargetDependency;
 			target = 8703FBFC270366DA0062C416 /* AlphaWalletSafariExtension */;
 			targetProxy = 8703FC13270366DA0062C416 /* PBXContainerItemProxy */;
-		};
-		878EE8F4255ADA49000210DE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 878EE8EA255ADA49000210DE /* AlphaWalletShare */;
-			targetProxy = 878EE8F3255ADA49000210DE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -6897,63 +6827,6 @@
 			};
 			name = Release;
 		};
-		878EE8F7255ADA49000210DE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_ENTITLEMENTS = AlphaWalletShare/AlphaWalletShare.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 368;
-				DEVELOPMENT_TEAM = 55LT762C5W;
-				INFOPLIST_FILE = AlphaWalletShare/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 3.12;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jaxwallet.jaxwallet.AlphaWalletShare;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = Debug;
-		};
-		878EE8F8255ADA49000210DE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_ENTITLEMENTS = AlphaWalletShare/AlphaWalletShare.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 368;
-				DEVELOPMENT_TEAM = 55LT762C5W;
-				INFOPLIST_FILE = AlphaWalletShare/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 3.12;
-				MTL_FAST_MATH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jaxwallet.jaxwallet.AlphaWalletShare;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -6998,15 +6871,6 @@
 			buildConfigurations = (
 				8703FC16270366DA0062C416 /* Debug */,
 				8703FC17270366DA0062C416 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		878EE8F9255ADA49000210DE /* Build configuration list for PBXNativeTarget "AlphaWalletShare" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				878EE8F7255ADA49000210DE /* Debug */,
-				878EE8F8255ADA49000210DE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
