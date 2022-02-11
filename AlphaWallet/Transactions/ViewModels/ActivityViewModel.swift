@@ -75,14 +75,12 @@ struct ActivityViewModel {
             } else {
                 return ""
             }
-        case .erc20Received, .erc721Received, .nativeCryptoReceived:
+        case .erc20Received, .erc721Received, .nativeCryptoReceived, .erc20CashBack:
             if let address = cardAttributes.fromAddressValue?.truncateMiddle {
                 return R.string.localizable.activityFrom(address)
             } else {
                 return ""
             }
-        case .erc20CashBack:
-            return ""
         case .erc20OwnerApproved, .erc721OwnerApproved:
             if let address = cardAttributes.senderAddressValue?.truncateMiddle {
                 return R.string.localizable.activityTo(address)

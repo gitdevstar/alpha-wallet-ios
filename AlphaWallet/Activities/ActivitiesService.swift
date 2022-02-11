@@ -513,7 +513,9 @@ class ActivitiesService: NSObject, ActivitiesServiceType {
                     var receiveOperations: [LocalizedOperationObjectInstance] = []
                     for operation in transaction.localizedOperations {
                         if isReceive(operation: operation) {
-                            receiveOperations.append(operation)
+//                            receiveOperations.append(operation)
+                            let activity = ActivitiesViewModel.functional.createPseudoActivity(fromTransactionRow: .item(transaction: transaction, operation: operation), cache: tokenObjectsCache, wallet: wallet.address)
+                            results.append( .childTransaction(transaction: transaction, operation: operation, activity: activity))
                         }
                         if isSend(operation: operation) {
                             if let value = BigUInt(operation.value) {
@@ -527,10 +529,10 @@ class ActivitiesService: NSObject, ActivitiesServiceType {
                         results.append(.standaloneTransaction(transaction: transaction, activity: activity))
                     }
                     
-                    results.append(contentsOf: receiveOperations.map {
-                        let activity = ActivitiesViewModel.functional.createPseudoActivity(fromTransactionRow: .item(transaction: transaction, operation: $0), cache: tokenObjectsCache, wallet: wallet.address)
-                        return .childTransaction(transaction: transaction, operation: $0, activity: activity)
-                    })
+//                    results.append(contentsOf: receiveOperations.map {
+//                        let activity = ActivitiesViewModel.functional.createPseudoActivity(fromTransactionRow: .item(transaction: transaction, operation: $0), cache: tokenObjectsCache, wallet: wallet.address)
+//                        return .childTransaction(transaction: transaction, operation: $0, activity: activity)
+//                    })
                     for each in activities {
                         results.append(.childActivity(transaction: transaction, activity: each))
                     }
@@ -561,7 +563,9 @@ class ActivitiesService: NSObject, ActivitiesServiceType {
                     var receiveOperations: [LocalizedOperationObjectInstance] = []
                     for operation in transaction.localizedOperations {
                         if isReceive(operation: operation) {
-                            receiveOperations.append(operation)
+//                            receiveOperations.append(operation)
+                            let activity = ActivitiesViewModel.functional.createPseudoActivity(fromTransactionRow: .item(transaction: transaction, operation: operation), cache: tokenObjectsCache, wallet: wallet.address)
+                            results.append( .childTransaction(transaction: transaction, operation: operation, activity: activity))
                         }
                         if isSend(operation: operation) {
                             if let value = BigUInt(operation.value) {
@@ -575,10 +579,10 @@ class ActivitiesService: NSObject, ActivitiesServiceType {
                         results.append(.standaloneTransaction(transaction: transaction, activity: activity))
                     }
                     
-                    results.append(contentsOf: receiveOperations.map {
-                        let activity = ActivitiesViewModel.functional.createPseudoActivity(fromTransactionRow: .item(transaction: transaction, operation: $0), cache: tokenObjectsCache, wallet: wallet.address)
-                        return .childTransaction(transaction: transaction, operation: $0, activity: activity)
-                    })
+//                    results.append(contentsOf: receiveOperations.map {
+//                        let activity = ActivitiesViewModel.functional.createPseudoActivity(fromTransactionRow: .item(transaction: transaction, operation: $0), cache: tokenObjectsCache, wallet: wallet.address)
+//                        return .childTransaction(transaction: transaction, operation: $0, activity: activity)
+//                    })
                       
                     return results
                 }

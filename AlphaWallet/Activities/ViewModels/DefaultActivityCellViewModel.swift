@@ -54,10 +54,11 @@ struct DefaultActivityCellViewModel {
             string.addAttribute(.font, value: Fonts.bold(size: 14), range: NSRange(location: string.length - symbol.count, length: symbol.count))
             return string
         case .erc20CashBack:
-            let string = NSMutableAttributedString(string: "\(R.string.localizable.transactionCellCashbackTitle())")
-            string.addAttribute(.foregroundColor, value: Colors.headerThemeColor, range: NSRange(location: 0, length: string.length))
-            string.addAttribute(.font, value: Fonts.regular(size: 12), range: NSRange(location: 0, length: string.length))
-//            string.addAttribute(.font, value: Fonts.bold(size: 12), range: NSRange(location: string.length - symbol.count, length: symbol.count))
+            let string = NSMutableAttributedString(string: "\(R.string.localizable.transactionCellCashbackTitle()) \(symbol)")
+            string.addAttribute(.foregroundColor, value: Colors.appSubtitle, range: NSRange(location: 0, length: string.length))
+            string.addAttribute(.foregroundColor, value: Colors.headerThemeColor, range: NSRange(location: string.length - symbol.count, length: symbol.count))
+            string.addAttribute(.font, value: Fonts.regular(size: 14), range: NSRange(location: 0, length: string.length))
+            string.addAttribute(.font, value: Fonts.bold(size: 14), range: NSRange(location: string.length - symbol.count, length: symbol.count))
             return string
         case .erc20OwnerApproved, .erc721OwnerApproved:
             let string: NSMutableAttributedString
@@ -92,14 +93,12 @@ struct DefaultActivityCellViewModel {
             } else {
                 return ""
             }
-        case .erc20Received, .erc721Received, .nativeCryptoReceived:
+        case .erc20Received, .erc721Received, .nativeCryptoReceived, .erc20CashBack:
             if let address = cardAttributes.fromAddressValue?.truncateMiddle {
                 return R.string.localizable.activityFrom(address)
             } else {
                 return ""
             }
-        case .erc20CashBack:
-            return ""
         case .erc20OwnerApproved, .erc721OwnerApproved:
             if let address = cardAttributes.spenderAddressValue?.truncateMiddle {
                 return R.string.localizable.activityTo(address)
