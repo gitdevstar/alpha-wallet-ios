@@ -236,7 +236,7 @@ extension ActivitiesViewModel {
 
 extension ActivitiesViewModel.functional {
 
-    static func extractTokenAndActivityName(fromTransactionRow transactionRow: TransactionRow, cache: CachedTokenObjectResolverType, wallet: AlphaWallet.Address) -> (token: TokenObject, activityName: String)? {
+    static func extractTokenAndActivityName(fromTransactionRow transactionRow: TransactionRow, cache: CachedTokenObjectResolverType, wallet: AlphaWallet.Address, idx: Int = 0) -> (token: TokenObject, activityName: String)? {
         enum TokenOperation {
             case nativeCryptoTransfer(TokenObject)
             case completedTransfer(TokenObject)
@@ -282,13 +282,20 @@ extension ActivitiesViewModel.functional {
         let activityName: String
         switch erc20TokenOperation {
         case .nativeCryptoTransfer, .completedTransfer, .pendingTransfer, .none:
-            if wallet.sameContract(as: transactionRow.to) &&  wallet.sameContract(as: transactionRow.from){
-                activityName = "cashback"
-            }
-            else if wallet.sameContract(as: transactionRow.to) {
-                activityName = "received"
-            } else {
+            if wallet.sameContract(as: transactionRow.to) && wallet.sameContract(as: transactionRow.from) {
+                switch idx {
+                case 100:
+                    activityName = "sent"
+                case 1:
+                    activityName = "received"
+                default:
+                    activityName = "cashback"
+                }
+                
+            } else if wallet.sameContract(as: transactionRow.from) {
                 activityName = "sent"
+            } else {
+                activityName = "received"
             }
         case .completedErc20Approval, .pendingErc20Approval:
             activityName = "ownerApproved"
@@ -296,8 +303,8 @@ extension ActivitiesViewModel.functional {
         return (token: token, activityName: activityName)
     }
 
-    static func createPseudoActivity(fromTransactionRow transactionRow: TransactionRow, cache: CachedTokenObjectResolverType, wallet: AlphaWallet.Address, amount: String = "") -> Activity? {
-        guard let (token, activityName) = extractTokenAndActivityName(fromTransactionRow: transactionRow, cache: cache, wallet: wallet) else { return nil }
+    static func createPseudoActivity(fromTransactionRow transactionRow: TransactionRow, cache: CachedTokenObjectResolverType, wallet: AlphaWallet.Address, amount: String = "", idx: Int = 0) -> Activity? {
+        guard let (token, activityName) = extractTokenAndActivityName(fromTransactionRow: transactionRow, cache: cache, wallet: wallet, idx: idx) else { return nil }
 
         var cardAttributes = [AttributeId: AssetInternalValue]()
         cardAttributes.setSymbol(string: transactionRow.server.symbol)
