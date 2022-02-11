@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		012DB65EEABAC926D69703F8 /* Pods_JAXWallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B0EBE3D56707F98263AB79D /* Pods_JAXWallet.framework */; };
 		290B2B541F8F50030053C83E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 290B2B561F8F50030053C83E /* Localizable.strings */; };
 		290B2B5F1F9177860053C83E /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290B2B5E1F9177860053C83E /* UIImage.swift */; };
 		290B2B611F9179880053C83E /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290B2B601F9179880053C83E /* AccountViewModel.swift */; };
@@ -210,7 +211,6 @@
 		442FCE0709E29BF233F32CAB /* GetERC875BalanceCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442FC002CDEA792B8ECD3E13 /* GetERC875BalanceCoordinator.swift */; };
 		442FCE0DAE5527A93F54022C /* RedeemTokenCardQuantitySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442FCC17EAB857C58732831E /* RedeemTokenCardQuantitySelectionViewController.swift */; };
 		442FCE2BEE8D475C7DEB39C1 /* RedeemTokenCardQuantitySelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442FC54DA900FA2F9BB73A63 /* RedeemTokenCardQuantitySelectionViewModel.swift */; };
-		4AFC27E214EE9AEAF4DB0986 /* Pods_AlphaWallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF840EDF9DE4E146F5629DC /* Pods_AlphaWallet.framework */; };
 		5E7C700A0B11504AC44718DD /* UIViewController+ensureHasDeviceAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7C74159ED115D14384A1CB /* UIViewController+ensureHasDeviceAuthorization.swift */; };
 		5E7C701BFF4469B35A074EB9 /* RequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7C767497AD8DEE83F384D7 /* RequestViewModel.swift */; };
 		5E7C70275E403AADE88BD17F /* RPCServerOrAny.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7C7BE086F00DE44B4EDCED /* RPCServerOrAny.swift */; };
@@ -1047,13 +1047,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0B0EBE3D56707F98263AB79D /* Pods_JAXWallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JAXWallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		290B2B551F8F50030053C83E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		290B2B5E1F9177860053C83E /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		290B2B601F9179880053C83E /* AccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
 		290B2B691F92C0440053C83E /* ConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigTests.swift; sourceTree = "<group>"; };
 		290B2B6B1F92C35B0053C83E /* RPCServerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPCServerTests.swift; sourceTree = "<group>"; };
 		290B2B6D1F92C3980053C83E /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
-		2912CCF51F6A830700C6CBE3 /* AlphaWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlphaWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2912CCF51F6A830700C6CBE3 /* JAXWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JAXWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2912CCF81F6A830700C6CBE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2912CD011F6A830700C6CBE3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2912CD061F6A830700C6CBE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
@@ -1257,7 +1258,6 @@
 		442FCE526E2089CAE88D5602 /* FakeClaimOrderCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeClaimOrderCoordinator.swift; sourceTree = "<group>"; };
 		442FCEBC98D0A367D258D2C3 /* GetIsERC875ContractCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetIsERC875ContractCoordinator.swift; sourceTree = "<group>"; };
 		442FCFEB2D7443C4E0B889B0 /* TokenHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenHolder.swift; sourceTree = "<group>"; };
-		5AF840EDF9DE4E146F5629DC /* Pods_AlphaWallet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlphaWallet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AF8A74942054F3518E13B69 /* Pods-AlphaWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlphaWallet.debug.xcconfig"; path = "Target Support Files/Pods-AlphaWallet/Pods-AlphaWallet.debug.xcconfig"; sourceTree = "<group>"; };
 		5E7C70021319DD5C92314A8A /* AssetFunctionCall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetFunctionCall.swift; sourceTree = "<group>"; };
 		5E7C70088832B2D161EB4AAB /* SendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendViewController.swift; sourceTree = "<group>"; };
@@ -1715,6 +1715,7 @@
 		61FC5ECE1FCFBAE500CCB12A /* EtherNumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherNumberFormatter.swift; sourceTree = "<group>"; };
 		61FC5ED01FCFBDEB00CCB12A /* EtherNumberFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherNumberFormatterTests.swift; sourceTree = "<group>"; };
 		664D11A02007D59F0041A0B0 /* EstimateGasRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimateGasRequest.swift; sourceTree = "<group>"; };
+		71C2C336CE73E7FE5AD5D2EC /* Pods-JAXWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JAXWallet.debug.xcconfig"; path = "Target Support Files/Pods-JAXWallet/Pods-JAXWallet.debug.xcconfig"; sourceTree = "<group>"; };
 		732086B8201508690047F605 /* SplashCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashCoordinator.swift; sourceTree = "<group>"; };
 		732E0F4F2022716700B39C1F /* LockEnterPasscodeCoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockEnterPasscodeCoordinatorTest.swift; sourceTree = "<group>"; };
 		732E0F512022754600B39C1F /* FakeLockProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeLockProtocol.swift; sourceTree = "<group>"; };
@@ -1732,6 +1733,7 @@
 		73ED85A420349BE400593BF3 /* StringFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringFormatter.swift; sourceTree = "<group>"; };
 		73ED85A62034BFEF00593BF3 /* UITextFieldAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldAdditions.swift; sourceTree = "<group>"; };
 		73ED85A82034C42D00593BF3 /* StringFormatterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringFormatterTest.swift; sourceTree = "<group>"; };
+		74DAEFDD694E7090DDA55752 /* Pods-JAXWallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JAXWallet.release.xcconfig"; path = "Target Support Files/Pods-JAXWallet/Pods-JAXWallet.release.xcconfig"; sourceTree = "<group>"; };
 		76F1D3AB33F1310B03B18E37 /* MyDappsViewControllerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDappsViewControllerViewModel.swift; sourceTree = "<group>"; };
 		76F1D473FF303828D93C95EB /* GetERC721BalanceCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetERC721BalanceCoordinator.swift; sourceTree = "<group>"; };
 		76F1D4E689C3ECFD38CBBC47 /* DappBrowserCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DappBrowserCoordinator.swift; sourceTree = "<group>"; };
@@ -2057,7 +2059,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8630C92268AD9640049B138 /* MailchimpSDK in Frameworks */,
-				4AFC27E214EE9AEAF4DB0986 /* Pods_AlphaWallet.framework in Frameworks */,
+				012DB65EEABAC926D69703F8 /* Pods_JAXWallet.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2136,7 +2138,7 @@
 		2912CCF61F6A830700C6CBE3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2912CCF51F6A830700C6CBE3 /* AlphaWallet.app */,
+				2912CCF51F6A830700C6CBE3 /* JAXWallet.app */,
 				2912CD0B1F6A830700C6CBE3 /* AlphaWalletTests.xctest */,
 				2912CD161F6A830700C6CBE3 /* AlphaWalletUITests.xctest */,
 				878EE8EB255ADA49000210DE /* AlphaWalletShare.appex */,
@@ -4141,8 +4143,8 @@
 			isa = PBXGroup;
 			children = (
 				C846409321B6DFA200031CA2 /* libxslt.tbd */,
-				5AF840EDF9DE4E146F5629DC /* Pods_AlphaWallet.framework */,
 				EDA45532ED59EE8BD22A229C /* Pods_AlphaWalletTests.framework */,
+				0B0EBE3D56707F98263AB79D /* Pods_JAXWallet.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -4814,6 +4816,8 @@
 				C4FADFB7969C541A3AACE1E6 /* Pods-AlphaWallet.release.xcconfig */,
 				D513A661D433865026B560FA /* Pods-AlphaWalletTests.debug.xcconfig */,
 				C2090CC9E4A2BFBCF84C47E4 /* Pods-AlphaWalletTests.release.xcconfig */,
+				71C2C336CE73E7FE5AD5D2EC /* Pods-JAXWallet.debug.xcconfig */,
+				74DAEFDD694E7090DDA55752 /* Pods-JAXWallet.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -4916,9 +4920,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2912CCF41F6A830700C6CBE3 /* AlphaWallet */ = {
+		2912CCF41F6A830700C6CBE3 /* JAXWallet */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2912CD1F1F6A830700C6CBE3 /* Build configuration list for PBXNativeTarget "AlphaWallet" */;
+			buildConfigurationList = 2912CD1F1F6A830700C6CBE3 /* Build configuration list for PBXNativeTarget "JAXWallet" */;
 			buildPhases = (
 				5293A2BBDFB82CCFD5470D90 /* [CP] Check Pods Manifest.lock */,
 				C83F787024A1C1DB00783B67 /* Check correct credentials used for API keys */,
@@ -4937,12 +4941,12 @@
 				878EE8F4255ADA49000210DE /* PBXTargetDependency */,
 				8703FC14270366DA0062C416 /* PBXTargetDependency */,
 			);
-			name = AlphaWallet;
+			name = JAXWallet;
 			packageProductDependencies = (
 				C8630C91268AD9640049B138 /* MailchimpSDK */,
 			);
 			productName = etherwallet;
-			productReference = 2912CCF51F6A830700C6CBE3 /* AlphaWallet.app */;
+			productReference = 2912CCF51F6A830700C6CBE3 /* JAXWallet.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2912CD0A1F6A830700C6CBE3 /* AlphaWalletTests */ = {
@@ -5031,7 +5035,6 @@
 					2912CCF41F6A830700C6CBE3 = {
 						CreatedOnToolsVersion = 9.0;
 						LastSwiftMigration = 1010;
-						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.DataProtection = {
 								enabled = 1;
@@ -5066,7 +5069,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2912CCF01F6A830700C6CBE3 /* Build configuration list for PBXProject "AlphaWallet" */;
+			buildConfigurationList = 2912CCF01F6A830700C6CBE3 /* Build configuration list for PBXProject "JAXWallet" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -5093,7 +5096,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2912CCF41F6A830700C6CBE3 /* AlphaWallet */,
+				2912CCF41F6A830700C6CBE3 /* JAXWallet */,
 				2912CD0A1F6A830700C6CBE3 /* AlphaWalletTests */,
 				2912CD151F6A830700C6CBE3 /* AlphaWalletUITests */,
 				878EE8EA255ADA49000210DE /* AlphaWalletShare */,
@@ -5232,7 +5235,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlphaWallet/Pods-AlphaWallet-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-JAXWallet/Pods-JAXWallet-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/AlphaWalletWeb3Provider/AlphaWalletWeb3Provider.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -5241,7 +5244,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlphaWallet/Pods-AlphaWallet-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-JAXWallet/Pods-JAXWallet-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4A48783535705B618F3FE3FE /* [CP] Embed Pods Frameworks */ = {
@@ -5277,7 +5280,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AlphaWallet-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-JAXWallet-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -5290,7 +5293,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlphaWallet/Pods-AlphaWallet-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-JAXWallet/Pods-JAXWallet-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/APIKit/APIKit.framework",
 				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
 				"${BUILT_PRODUCTS_DIR}/AWSSNS/AWSSNS.framework",
@@ -5391,7 +5394,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlphaWallet/Pods-AlphaWallet-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-JAXWallet/Pods-JAXWallet-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C83F787024A1C1DB00783B67 /* Check correct credentials used for API keys */ = {
@@ -6420,12 +6423,12 @@
 /* Begin PBXTargetDependency section */
 		2912CD0D1F6A830700C6CBE3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2912CCF41F6A830700C6CBE3 /* AlphaWallet */;
+			target = 2912CCF41F6A830700C6CBE3 /* JAXWallet */;
 			targetProxy = 2912CD0C1F6A830700C6CBE3 /* PBXContainerItemProxy */;
 		};
 		2912CD181F6A830700C6CBE3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2912CCF41F6A830700C6CBE3 /* AlphaWallet */;
+			target = 2912CCF41F6A830700C6CBE3 /* JAXWallet */;
 			targetProxy = 2912CD171F6A830700C6CBE3 /* PBXContainerItemProxy */;
 		};
 		8703FC14270366DA0062C416 /* PBXTargetDependency */ = {
@@ -6634,19 +6637,19 @@
 		};
 		2912CD201F6A830700C6CBE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5AF8A74942054F3518E13B69 /* Pods-AlphaWallet.debug.xcconfig */;
+			baseConfigurationReference = 71C2C336CE73E7FE5AD5D2EC /* Pods-JAXWallet.debug.xcconfig */;
 			buildSettings = {
 				ALPHAWALLET_INFO_PLIST_FILE = AlphaWallet/Info.plist;
-				ALPHAWALLET_PRODUCT_BUNDLE_IDENTIFIER = com.stormbird.alphawallet;
+				ALPHAWALLET_PRODUCT_BUNDLE_IDENTIFIER = com.jaxwallet.jaxwallet;
 				ALPHAWALLET_PRODUCT_NAME = "JAX Wallet";
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AlphaWallet/AlphaWallet.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LRAW5PL536;
+				DEVELOPMENT_TEAM = D23C745MMC;
 				ENABLE_BITCODE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6666,7 +6669,7 @@
 				);
 				MARKETING_VERSION = 1;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jaxwallet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jaxwallet.jaxwallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -6680,19 +6683,19 @@
 		};
 		2912CD211F6A830700C6CBE3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C4FADFB7969C541A3AACE1E6 /* Pods-AlphaWallet.release.xcconfig */;
+			baseConfigurationReference = 74DAEFDD694E7090DDA55752 /* Pods-JAXWallet.release.xcconfig */;
 			buildSettings = {
 				ALPHAWALLET_INFO_PLIST_FILE = AlphaWallet/Info.plist;
-				ALPHAWALLET_PRODUCT_BUNDLE_IDENTIFIER = com.stormbird.alphawallet;
+				ALPHAWALLET_PRODUCT_BUNDLE_IDENTIFIER = com.jaxwallet.jaxwallet;
 				ALPHAWALLET_PRODUCT_NAME = "JAX Wallet";
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AlphaWallet/AlphaWallet.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LRAW5PL536;
+				DEVELOPMENT_TEAM = 55LT762C5W;
 				ENABLE_BITCODE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6711,7 +6714,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jaxwallet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jaxwallet.jaxwallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -6729,9 +6732,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Distribution: AJ TECHNOLOGIES LTD (55LT762C5W)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = LRAW5PL536;
+				DEVELOPMENT_TEAM = 55LT762C5W;
 				INFOPLIST_FILE = AlphaWalletTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6755,7 +6759,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = LRAW5PL536;
+				DEVELOPMENT_TEAM = 55LT762C5W;
 				INFOPLIST_FILE = AlphaWalletTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6775,10 +6779,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: StormBird Pte LTD (LRAW5PL536)";
+				CODE_SIGN_IDENTITY = "Apple Distribution: AJ TECHNOLOGIES LTD (55LT762C5W)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = LRAW5PL536;
+				DEVELOPMENT_TEAM = 55LT762C5W;
 				INFOPLIST_FILE = TrustUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6801,7 +6805,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = LRAW5PL536;
+				DEVELOPMENT_TEAM = 55LT762C5W;
 				INFOPLIST_FILE = TrustUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6829,7 +6833,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LRAW5PL536;
+				DEVELOPMENT_TEAM = 55LT762C5W;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AlphaWalletSafariExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AlphaWalletSafariExtension;
@@ -6867,7 +6871,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LRAW5PL536;
+				DEVELOPMENT_TEAM = 55LT762C5W;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AlphaWalletSafariExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AlphaWalletSafariExtension;
@@ -6902,7 +6906,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 368;
-				DEVELOPMENT_TEAM = LRAW5PL536;
+				DEVELOPMENT_TEAM = 55LT762C5W;
 				INFOPLIST_FILE = AlphaWalletShare/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -6931,7 +6935,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 368;
-				DEVELOPMENT_TEAM = LRAW5PL536;
+				DEVELOPMENT_TEAM = 55LT762C5W;
 				INFOPLIST_FILE = AlphaWalletShare/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -6953,7 +6957,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2912CCF01F6A830700C6CBE3 /* Build configuration list for PBXProject "AlphaWallet" */ = {
+		2912CCF01F6A830700C6CBE3 /* Build configuration list for PBXProject "JAXWallet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2912CD1D1F6A830700C6CBE3 /* Debug */,
@@ -6962,7 +6966,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2912CD1F1F6A830700C6CBE3 /* Build configuration list for PBXNativeTarget "AlphaWallet" */ = {
+		2912CD1F1F6A830700C6CBE3 /* Build configuration list for PBXNativeTarget "JAXWallet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2912CD201F6A830700C6CBE3 /* Debug */,

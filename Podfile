@@ -2,7 +2,7 @@ platform :ios, '12.0'
 inhibit_all_warnings!
 source 'https://cdn.cocoapods.org/'
 
-target 'AlphaWallet' do
+target 'JAXWallet' do
   use_frameworks!
   pod 'BigInt', '~> 3.1'
   pod 'R.swift'
