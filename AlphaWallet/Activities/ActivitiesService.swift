@@ -510,11 +510,13 @@ class ActivitiesService: NSObject, ActivitiesServiceType {
                         results.append(.parentTransaction(transaction: transaction, isSwap: isSwap, activities: .init()))
                     }
                     var amount: BigUInt = 0
+                    var idx = 0
                     for operation in transaction.localizedOperations {
                         if isReceive(operation: operation) {
-                            let activity = ActivitiesViewModel.functional.createPseudoActivity(fromTransactionRow: .item(transaction: transaction, operation: operation), cache: tokenObjectsCache, wallet: wallet.address)
+                            let activity = ActivitiesViewModel.functional.createPseudoActivity(fromTransactionRow: .item(transaction: transaction, operation: operation), cache: tokenObjectsCache, wallet: wallet.address, idx: idx)
                             results.append( .childTransaction(transaction: transaction, operation: operation, activity: activity))
                         }
+                        idx += 1
                         if isSend(operation: operation) {
                             if let value = BigUInt(operation.value) {
                                 amount += value
@@ -523,7 +525,7 @@ class ActivitiesService: NSObject, ActivitiesServiceType {
                     }
                     
                     if amount > 0 {
-                        let activity = ActivitiesViewModel.functional.createPseudoActivity(fromTransactionRow: .standalone(transaction), cache: tokenObjectsCache, wallet: wallet.address, amount: "\(amount)")
+                        let activity = ActivitiesViewModel.functional.createPseudoActivity(fromTransactionRow: .standalone(transaction), cache: tokenObjectsCache, wallet: wallet.address, amount: "\(amount)", idx: 100)
                         results.append(.standaloneTransaction(transaction: transaction, activity: activity))
                     }
                     
@@ -557,7 +559,6 @@ class ActivitiesService: NSObject, ActivitiesServiceType {
                     var idx = 0
                     for operation in transaction.localizedOperations {
                         if isReceive(operation: operation) {
-                            
                             let activity = ActivitiesViewModel.functional.createPseudoActivity(fromTransactionRow: .item(transaction: transaction, operation: operation), cache: tokenObjectsCache, wallet: wallet.address, idx: idx)
                             results.append( .childTransaction(transaction: transaction, operation: operation, activity: activity))
                         }
