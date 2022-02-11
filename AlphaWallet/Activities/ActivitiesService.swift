@@ -507,11 +507,11 @@ class ActivitiesService: NSObject, ActivitiesServiceType {
                     let isSwap = self.isSwap(activities: activities, operations: transaction.localizedOperations)
                     print("here1 swap \(isSwap)")
                     var results: [ActivityRowModel] = .init()
-                    if isSwap {
+//                    if isSwap {
                         results.append(.parentTransaction(transaction: transaction, isSwap: isSwap, activities: .init()))
-                    }
+//                    }
                     
-                    let isSend = self.isSend(activities: activities, operations: transaction.localizedOperations)
+                    let isSend = self.hasSend(activities: activities, operations: transaction.localizedOperations)
                     if isSend {
                         var amount: BigUInt = 0
                         for operation in transaction.localizedOperations {
@@ -557,42 +557,35 @@ class ActivitiesService: NSObject, ActivitiesServiceType {
                     return [.standaloneTransaction(transaction: transaction, activity: activity)]
                 } else if transaction.localizedOperations.count == 1 {
                     return [.standaloneTransaction(transaction: transaction, activity: activity)]
-                } else {
+                } else { /// swap or sending group
                     let isSwap = self.isSwap(activities: activities, operations: transaction.localizedOperations)
                     
                     var results: [ActivityRowModel] = .init()
-                    if isSwap {
+//                    if isSwap {
                         results.append(.parentTransaction(transaction: transaction, isSwap: isSwap, activities: .init()))
-                    }
-                    
-                    let isSend = self.isSend(activities: activities, operations: transaction.localizedOperations)
-                    if isSend {
-                        var amount: BigUInt = 0
-                        for operation in transaction.localizedOperations {
+//                    }
+                    var amount: BigUInt = 0
+                    var receiveOperations: [LocalizedOperationObjectInstance] = []
+                    for operation in transaction.localizedOperations {
+                        if isReceive(operation: operation) {
+                            receiveOperations.append(operation)
+                        }
+                        if isSend(operation: operation) {
                             if let value = BigUInt(operation.value) {
                                 amount += value
                             }
                         }
-                        
+                    }
+                    
+                    if amount > 0 {
                         let activity = ActivitiesViewModel.functional.createPseudoActivity(fromTransactionRow: .standalone(transaction), cache: tokenObjectsCache, wallet: wallet.address, amount: "\(amount)")
                         results.append(.standaloneTransaction(transaction: transaction, activity: activity))
                     }
-                        
-                    if isSwap {
-                        for operation in transaction.localizedOperations {
-                            if isReceive(operation: operation) {
-                                let activity = ActivitiesViewModel.functional.createPseudoActivity(fromTransactionRow: .item(transaction: transaction, operation: operation), cache: tokenObjectsCache, wallet: wallet.address)
-                                results.append(.childTransaction(transaction: transaction, operation: operation, activity: activity))
-                            }
-                        }
-                        
-                    } else {
-                        if !isSend {
-                            let activity = ActivitiesViewModel.functional.createPseudoActivity(fromTransactionRow: .standalone(transaction), cache: tokenObjectsCache, wallet: wallet.address)
-                            results.append(.standaloneTransaction(transaction: transaction, activity: activity))
-                        }
-                        
-                    }
+                    
+                    results.append(contentsOf: receiveOperations.map {
+                        let activity = ActivitiesViewModel.functional.createPseudoActivity(fromTransactionRow: .item(transaction: transaction, operation: $0), cache: tokenObjectsCache, wallet: wallet.address)
+                        return .childTransaction(transaction: transaction, operation: $0, activity: activity)
+                    })
                       
                     return results
                 }
@@ -610,7 +603,7 @@ class ActivitiesService: NSObject, ActivitiesServiceType {
         return hasSend && hasReceive && !hasBack
     }
     
-    private func isSend(activities: [Activity], operations: [LocalizedOperationObjectInstance]) -> Bool {
+    private func hasSend(activities: [Activity], operations: [LocalizedOperationObjectInstance]) -> Bool {
         //Might have other transactions like approved embedded, so we can't check for all send and receives.
         let hasSend = activities.contains { $0.isSend } || operations.contains { $0.isSend(from: wallet.address) }
         return hasSend
@@ -618,6 +611,10 @@ class ActivitiesService: NSObject, ActivitiesServiceType {
     
     private func isReceive(operation: LocalizedOperationObjectInstance) -> Bool {
         return operation.isReceived(by: wallet.address)
+    }
+    
+    private func isSend(operation: LocalizedOperationObjectInstance) -> Bool {
+        return operation.isSend(from: wallet.address)
     }
 
     //Important to pass in the `TokenHolder` instance and not re-create so that we don't override the subscribable values for the token with ones that are not resolved yet
