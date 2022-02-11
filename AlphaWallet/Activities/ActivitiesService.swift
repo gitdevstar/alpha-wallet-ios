@@ -561,9 +561,7 @@ class ActivitiesService: NSObject, ActivitiesServiceType {
                     let isSwap = self.isSwap(activities: activities, operations: transaction.localizedOperations)
                     
                     var results: [ActivityRowModel] = .init()
-//                    if isSwap {
-                        results.append(.parentTransaction(transaction: transaction, isSwap: isSwap, activities: .init()))
-//                    }
+                    results.append(.parentTransaction(transaction: transaction, isSwap: isSwap, activities: .init()))
                     var amount: BigUInt = 0
                     var receiveOperations: [LocalizedOperationObjectInstance] = []
                     for operation in transaction.localizedOperations {
