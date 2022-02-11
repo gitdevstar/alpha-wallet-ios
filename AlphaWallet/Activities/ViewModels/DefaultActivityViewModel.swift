@@ -27,7 +27,7 @@ struct DefaultActivityViewModel {
         switch activity.nativeViewType {
         case .erc20Sent, .nativeCryptoSent:
             sign = "- "
-        case .erc20Received, .nativeCryptoReceived:
+        case .erc20Received, .nativeCryptoReceived, .erc20CashBack:
             sign = "+ "
         case .erc20OwnerApproved, .erc20ApprovalObtained, .erc721OwnerApproved, .erc721ApprovalObtained, .erc721Sent, .erc721Received:
             sign = ""
@@ -37,7 +37,7 @@ struct DefaultActivityViewModel {
 
         let string: String
         switch activity.nativeViewType {
-        case .erc20Sent, .erc20Received, .nativeCryptoSent, .nativeCryptoReceived:
+        case .erc20Sent, .erc20Received, .nativeCryptoSent, .nativeCryptoReceived, .erc20CashBack:
             if let value = cardAttributes.amountUIntValue {
                 string = stringFromFungibleAmount(sign: sign, amount: value)
             } else {

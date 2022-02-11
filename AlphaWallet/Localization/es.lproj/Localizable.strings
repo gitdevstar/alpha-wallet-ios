@@ -205,6 +205,7 @@
 "transaction.cell.error.title" = "Error";
 "transaction.cell.received.title" = "Recibido";
 "transaction.cell.sent.title" = "Enviado";
+"transaction.cell.cashback.title" = "Cashback";
 "transaction.cell.tokenTransfer.title" = "Transferir %@";
 "transaction.cell.tokenApprove.title" = "Approve %@";
 "Yesterday" = "Ayer";

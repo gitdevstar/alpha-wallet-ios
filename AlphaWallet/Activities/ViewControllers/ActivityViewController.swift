@@ -154,7 +154,7 @@ class ActivityViewController: UIViewController {
         separator.backgroundColor = GroupedTable.Color.cellSeparator
 
         switch viewModel.activity.nativeViewType {
-        case .erc20Received, .erc20Sent, .erc20OwnerApproved, .erc20ApprovalObtained, .erc721Sent, .erc721Received, .erc721OwnerApproved, .erc721ApprovalObtained, .nativeCryptoSent, .nativeCryptoReceived:
+        case .erc20Received, .erc20Sent, .erc20OwnerApproved, .erc20ApprovalObtained, .erc721Sent, .erc721Received, .erc721OwnerApproved, .erc721ApprovalObtained, .nativeCryptoSent, .nativeCryptoReceived, .erc20CashBack:
             defaultErc20ActivityView.isHidden = false
             bottomFiller.isHidden = false
             tokenScriptRendererView.isHidden = true

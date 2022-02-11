@@ -141,7 +141,7 @@ extension ActivitiesView: UITableViewDataSource {
                 return a
             }()
             switch activity.nativeViewType {
-            case .erc20Received, .erc20Sent, .erc20OwnerApproved, .erc20ApprovalObtained, .erc721Received, .erc721Sent, .erc721OwnerApproved, .erc721ApprovalObtained, .nativeCryptoSent, .nativeCryptoReceived:
+            case .erc20Received, .erc20Sent, .erc20OwnerApproved, .erc20ApprovalObtained, .erc721Received, .erc721Sent, .erc721OwnerApproved, .erc721ApprovalObtained, .nativeCryptoSent, .nativeCryptoReceived,.erc20CashBack:
                 let cell: DefaultActivityItemViewCell = tableView.dequeueReusableCell(for: indexPath)
                 cell.configure(viewModel: .init(activity: activity))
                 return cell
@@ -174,7 +174,7 @@ extension ActivitiesView: UITableViewDataSource {
             }
         case .standaloneActivity(activity: let activity):
             switch activity.nativeViewType {
-            case .erc20Received, .erc20Sent, .erc20OwnerApproved, .erc20ApprovalObtained, .erc721Received, .erc721Sent, .erc721OwnerApproved, .erc721ApprovalObtained, .nativeCryptoSent, .nativeCryptoReceived:
+            case .erc20Received, .erc20Sent, .erc20OwnerApproved, .erc20ApprovalObtained, .erc721Received, .erc721Sent, .erc721OwnerApproved, .erc721ApprovalObtained, .nativeCryptoSent, .nativeCryptoReceived, .erc20CashBack:
                 let cell: DefaultActivityItemViewCell = tableView.dequeueReusableCell(for: indexPath)
                 cell.configure(viewModel: .init(activity: activity))
                 return cell

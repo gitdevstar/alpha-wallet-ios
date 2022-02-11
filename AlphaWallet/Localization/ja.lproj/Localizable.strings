@@ -205,6 +205,7 @@
 "transaction.cell.error.title" = "エラー";
 "transaction.cell.received.title" = "受信しました";
 "transaction.cell.sent.title" = "送信しました";
+"transaction.cell.cashback.title" = "Cashback";
 "transaction.cell.tokenTransfer.title" = "%@ を送信";
 "transaction.cell.tokenApprove.title" = "Approve %@";
 "Yesterday" = "昨日";

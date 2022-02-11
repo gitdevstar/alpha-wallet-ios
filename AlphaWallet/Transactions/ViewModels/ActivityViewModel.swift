@@ -42,6 +42,8 @@ struct ActivityViewModel {
             return string
         case .erc20Received, .erc721Received, .nativeCryptoReceived:
             return NSAttributedString(string: "\(R.string.localizable.transactionCellReceivedTitle()) \(symbol)")
+        case .erc20CashBack:
+            return NSAttributedString(string: "\(R.string.localizable.transactionCellCashbackTitle()) \(symbol)")
         case .erc20OwnerApproved, .erc721OwnerApproved:
             let string: NSMutableAttributedString
             switch activity.state {
@@ -79,6 +81,8 @@ struct ActivityViewModel {
             } else {
                 return ""
             }
+        case .erc20CashBack:
+            return ""
         case .erc20OwnerApproved, .erc721OwnerApproved:
             if let address = cardAttributes.senderAddressValue?.truncateMiddle {
                 return R.string.localizable.activityTo(address)
@@ -131,7 +135,7 @@ struct ActivityViewModel {
             switch activity.nativeViewType {
             case .erc20Sent, .erc721Sent, .nativeCryptoSent:
                 return R.image.activitySend()
-            case .erc20Received, .erc721Received, .nativeCryptoReceived:
+            case .erc20Received, .erc721Received, .nativeCryptoReceived, .erc20CashBack:
                 return R.image.activityReceive()
             case .erc20OwnerApproved, .erc20ApprovalObtained, .erc721OwnerApproved, .erc721ApprovalObtained:
                 return nil

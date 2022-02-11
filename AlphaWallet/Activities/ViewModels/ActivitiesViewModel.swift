@@ -282,7 +282,10 @@ extension ActivitiesViewModel.functional {
         let activityName: String
         switch erc20TokenOperation {
         case .nativeCryptoTransfer, .completedTransfer, .pendingTransfer, .none:
-            if wallet.sameContract(as: transactionRow.to) {
+            if wallet.sameContract(as: transactionRow.to) &&  wallet.sameContract(as: transactionRow.from){
+                activityName = "cashback"
+            }
+            else if wallet.sameContract(as: transactionRow.to) {
                 activityName = "received"
             } else {
                 activityName = "sent"

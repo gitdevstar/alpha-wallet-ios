@@ -9,6 +9,7 @@ struct Activity {
         case nativeCryptoReceived
         case erc20Sent
         case erc20Received
+        case erc20CashBack
         case erc20OwnerApproved
         case erc20ApprovalObtained
         case erc721Sent
@@ -90,6 +91,8 @@ struct Activity {
                     return .erc20Sent
                 case "received":
                     return .erc20Received
+                case "cashback":
+                    return .erc20CashBack
                 case "ownerApproved":
                     return .erc20OwnerApproved
                 case "approvalObtained":

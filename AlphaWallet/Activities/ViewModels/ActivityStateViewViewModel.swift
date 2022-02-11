@@ -14,7 +14,7 @@ struct ActivityStateViewViewModel {
             switch nativeViewType {
             case .erc20Sent, .erc721Sent, .nativeCryptoSent:
                 return R.image.activitySend()
-            case .erc20Received, .erc721Received, .nativeCryptoReceived:
+            case .erc20Received, .erc721Received, .nativeCryptoReceived, .erc20CashBack:
                 return R.image.activityReceive()
             case .erc20OwnerApproved, .erc20ApprovalObtained, .erc721OwnerApproved, .erc721ApprovalObtained:
                 return nil

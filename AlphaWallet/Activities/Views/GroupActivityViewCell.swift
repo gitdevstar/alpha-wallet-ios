@@ -30,7 +30,7 @@ class GroupActivityViewCell: UITableViewCell {
             background.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             background.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             background.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
-            contentView.heightAnchor.constraint(equalToConstant: 80)
+            contentView.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
 

@@ -53,6 +53,12 @@ struct DefaultActivityCellViewModel {
             string.addAttribute(.font, value: Fonts.regular(size: 14), range: NSRange(location: 0, length: string.length))
             string.addAttribute(.font, value: Fonts.bold(size: 14), range: NSRange(location: string.length - symbol.count, length: symbol.count))
             return string
+        case .erc20CashBack:
+            let string = NSMutableAttributedString(string: "\(R.string.localizable.transactionCellCashbackTitle())")
+            string.addAttribute(.foregroundColor, value: Colors.headerThemeColor, range: NSRange(location: 0, length: string.length))
+            string.addAttribute(.font, value: Fonts.regular(size: 12), range: NSRange(location: 0, length: string.length))
+//            string.addAttribute(.font, value: Fonts.bold(size: 12), range: NSRange(location: string.length - symbol.count, length: symbol.count))
+            return string
         case .erc20OwnerApproved, .erc721OwnerApproved:
             let string: NSMutableAttributedString
             switch activity.state {
@@ -92,6 +98,8 @@ struct DefaultActivityCellViewModel {
             } else {
                 return ""
             }
+        case .erc20CashBack:
+            return ""
         case .erc20OwnerApproved, .erc721OwnerApproved:
             if let address = cardAttributes.spenderAddressValue?.truncateMiddle {
                 return R.string.localizable.activityTo(address)
@@ -122,7 +130,7 @@ struct DefaultActivityCellViewModel {
         switch activity.nativeViewType {
         case .erc20Sent, .nativeCryptoSent:
             sign = "- "
-        case .erc20Received, .nativeCryptoReceived:
+        case .erc20Received, .nativeCryptoReceived, .erc20CashBack:
             sign = "+ "
         case .erc20OwnerApproved, .erc20ApprovalObtained:
             sign = ""
@@ -134,7 +142,7 @@ struct DefaultActivityCellViewModel {
 
         let string: String
         switch activity.nativeViewType {
-        case .erc20Sent, .erc20Received, .nativeCryptoSent, .nativeCryptoReceived:
+        case .erc20Sent, .erc20Received, .nativeCryptoSent, .nativeCryptoReceived, .erc20CashBack:
             if let value = cardAttributes.amountUIntValue {
                 string = stringFromFungibleAmount(sign: sign, amount: value)
             } else {

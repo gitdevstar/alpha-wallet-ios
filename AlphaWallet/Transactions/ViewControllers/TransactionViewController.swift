@@ -31,6 +31,8 @@ class TransactionViewController: UIViewController {
         self.session = session
         self.transactionRow = transactionRow
         self.delegate = delegate
+        
+        print("here transaction row: \(transactionRow)")
 
         super.init(nibName: nil, bundle: nil)
 
