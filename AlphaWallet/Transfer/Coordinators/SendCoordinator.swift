@@ -11,6 +11,7 @@ protocol SendCoordinatorDelegate: class, CanOpenURL {
 }
 
 class SendCoordinator: Coordinator {
+    
     private let transactionType: TransactionType
     private let session: WalletSession
     private let keystore: Keystore
@@ -137,6 +138,14 @@ extension SendCoordinator: SendViewControllerDelegate {
 }
 
 extension SendCoordinator: TransactionConfirmationCoordinatorDelegate {
+    func didPress(for type: PaymentFlow, server: RPCServer, inViewController viewController: UIViewController?, in coordinator: TransactionConfirmationCoordinator) {
+
+        let coordinator = RequestCoordinator(navigationController: self.navigationController, account: session.account)
+        coordinator.delegate = self
+        coordinator.start()
+        addCoordinator(coordinator)
+    }
+    
     func coordinator(_ coordinator: TransactionConfirmationCoordinator, didFailTransaction error: AnyError) {
         //TODO improve error message. Several of this delegate func
         coordinator.navigationController.displayError(message: error.prettyError)
@@ -164,6 +173,13 @@ extension SendCoordinator: TransactionConfirmationCoordinatorDelegate {
 
     func didClose(in coordinator: TransactionConfirmationCoordinator) {
         removeCoordinator(coordinator)
+    }
+}
+
+extension SendCoordinator: RequestCoordinatorDelegate {
+    func didCancel(in coordinator: RequestCoordinator) {
+        removeCoordinator(coordinator)
+        delegate?.didCancel(in: self)
     }
 }
 

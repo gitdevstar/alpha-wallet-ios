@@ -52,6 +52,10 @@ class TransferNFTCoordinator: Coordinator {
 }
 
 extension TransferNFTCoordinator: TransactionConfirmationCoordinatorDelegate {
+    func didPress(for type: PaymentFlow, server: RPCServer, inViewController viewController: UIViewController?, in coordinator: TransactionConfirmationCoordinator) {
+        
+    }
+    
     func coordinator(_ coordinator: TransactionConfirmationCoordinator, didFailTransaction error: AnyError) {
         //TODO improve error message. Several of this delegate func
         coordinator.navigationController.displayError(message: error.localizedDescription)

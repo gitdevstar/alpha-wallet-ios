@@ -417,6 +417,10 @@ final class DappBrowserCoordinator: NSObject, Coordinator {
 }
 
 extension DappBrowserCoordinator: TransactionConfirmationCoordinatorDelegate {
+    func didPress(for type: PaymentFlow, server: RPCServer, inViewController viewController: UIViewController?, in coordinator: TransactionConfirmationCoordinator) {
+        
+    }
+    
 
     func coordinator(_ coordinator: TransactionConfirmationCoordinator, didFailTransaction error: AnyError) {
         coordinator.close { [weak self] in

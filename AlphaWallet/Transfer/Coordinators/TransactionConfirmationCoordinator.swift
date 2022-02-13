@@ -65,6 +65,7 @@ protocol TransactionConfirmationCoordinatorDelegate: class, CanOpenURL {
     func didFinish(_ result: ConfirmResult, in coordinator: TransactionConfirmationCoordinator)
     func coordinator(_ coordinator: TransactionConfirmationCoordinator, didFailTransaction error: AnyError)
     func didClose(in coordinator: TransactionConfirmationCoordinator)
+    func didPress(for type: PaymentFlow, server: RPCServer, inViewController viewController: UIViewController?, in coordinator: TransactionConfirmationCoordinator)
 }
 
 class TransactionConfirmationCoordinator: Coordinator {
@@ -141,8 +142,10 @@ class TransactionConfirmationCoordinator: Coordinator {
         analyticsCoordinator.log(action: Analytics.Action.rectifySendTransactionErrorInActionSheet, properties: [Analytics.Properties.type.rawValue: error.analyticsName])
         switch error {
         case .insufficientFunds:
-            UIAlertController.alertController(title: "Alert", message: "Insufficient balance", style: .alert, in: self.presentingViewController)
-//            break
+            delegate?.didPress(for: .request, server: server, inViewController: .none, in: self)
+            confirmationViewController.dismiss(animated: false)
+            
+            
 //            let ramp = Ramp(account: configurator.session.account)
 //            if let url = ramp.url(token: TokenActionsServiceKey(tokenObject: TokensDataStore.etherToken(forServer: server))) {
 //                delegate?.didPressOpenWebPage(url, in: confirmationViewController)

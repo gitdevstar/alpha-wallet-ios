@@ -49,6 +49,10 @@ private class TransactionConfirmationCoordinatorBridgeToPromise {
 }
 
 extension TransactionConfirmationCoordinatorBridgeToPromise: TransactionConfirmationCoordinatorDelegate {
+    func didPress(for type: PaymentFlow, server: RPCServer, inViewController viewController: UIViewController?, in coordinator: TransactionConfirmationCoordinator) {
+        
+    }
+    
     func didSendTransaction(_ transaction: SentTransaction, inCoordinator coordinator: TransactionConfirmationCoordinator) {
         didSendTransactionClosure?(transaction)
         didSendTransactionClosure = .none
