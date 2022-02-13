@@ -128,4 +128,8 @@ extension AlphaWallet.Address {
         let back = address.suffix(4)
         return "\(front)...\(back)"
     }
+    
+    public var address: String {
+        return eip55String
+    }
 }

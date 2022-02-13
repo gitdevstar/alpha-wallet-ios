@@ -1,15 +1,17 @@
 // Copyright © 2021 Stormbird PTE. LTD.
 import Foundation
+import BigInt
 
 enum TransactionRow {
     case standalone(TransactionInstance)
     //TODO this seems to overlap with the `ActivityRowModel.parentTransaction`
     case group(TransactionInstance)
     case item(transaction: TransactionInstance, operation: LocalizedOperationObjectInstance)
+    case activity(transaction: TransactionInstance, activity: Activity)
 
     var transaction: TransactionInstance {
         switch self {
-        case .standalone(let transaction), .group(let transaction), .item(transaction: let transaction, _):
+        case .standalone(let transaction), .group(let transaction), .item(transaction: let transaction, _), .activity(transaction: let transaction, _):
             return transaction
         }
     }
@@ -31,6 +33,12 @@ enum TransactionRow {
             return transaction.from
         case .item(_, operation: let operation):
             return operation.from
+        case .activity(_, activity: let activity):
+            if let address = activity.values.card.fromAddressValue?.address {
+                return address
+            } else {
+                return ""
+            }
         }
     }
     var to: String {
@@ -41,6 +49,12 @@ enum TransactionRow {
             return transaction.to
         case .item(_, operation: let operation):
             return operation.to
+        case .activity(_, activity: let activity):
+            if let address = activity.values.card.toAddressValue?.address {
+                return address
+            } else {
+                return ""
+            }
         }
     }
     var value: String {
@@ -51,6 +65,14 @@ enum TransactionRow {
             return transaction.value
         case .item(_, operation: let operation):
             return operation.value
+        case .activity(_, activity: let activity):
+            if let amount = activity.values.card.amountUIntValue {
+                let formatter = EtherNumberFormatter.short
+                let value = formatter.string(from: BigInt(amount), decimals: activity.tokenObject.decimals)
+                return value
+            } else {
+                return ""
+            }
         }
     }
     var gas: String {
@@ -83,6 +105,8 @@ enum TransactionRow {
             return nil
         case .item(_, operation: let operation):
             return operation
+        case .activity(let transaction, _):
+            return transaction.operation
         }
     }
 }

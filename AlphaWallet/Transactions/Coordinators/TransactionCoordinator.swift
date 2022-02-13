@@ -93,14 +93,14 @@ class TransactionCoordinator: NSObject, Coordinator {
         }
     }
     
-//    func showTransaction(withActivity activity: Activity, server: RPCServer, inViewController viewController: UIViewController) {
-//        guard let transaction = transactionsCollection.transaction(withTransactionId: activity.transactionId, server: server) else { return }
-//        if transaction.localizedOperations.count > 1 {
-//            showTransaction(.item(transaction: transaction, operation: activity.), inViewController: viewController)
-//        } else {
-//            showTransaction(.standalone(transaction), inViewController: viewController)
-//        }
-//    }
+    func showTransaction(withActivity activity: Activity, server: RPCServer, inViewController viewController: UIViewController) {
+        guard let transaction = transactionsCollection.transaction(withTransactionId: activity.transactionId, server: server) else { return }
+        if transaction.localizedOperations.count > 1 {
+            showTransaction(.activity(transaction: transaction, activity: activity), inViewController: viewController)
+        } else {
+            showTransaction(.standalone(transaction), inViewController: viewController)
+        }
+    }
 
     @objc func didEnterForeground() {
         rootViewController.fetch()

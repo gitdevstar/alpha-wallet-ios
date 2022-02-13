@@ -912,7 +912,8 @@ extension InCoordinator: ActivityViewControllerDelegate {
     }
 
     func goToTransaction(viewController: ActivityViewController) {
-        transactionCoordinator?.showTransaction(withId: viewController.viewModel.activity.transactionId, server: viewController.viewModel.activity.server, inViewController: viewController)
+//        transactionCoordinator?.showTransaction(withId: viewController.viewModel.activity.transactionId, server: viewController.viewModel.activity.server, inViewController: viewController)
+        transactionCoordinator?.showTransaction(withActivity: viewController.viewModel.activity, server: viewController.viewModel.activity.server, inViewController: viewController)
     }
 
     func didPressViewContractWebPage(_ contract: AlphaWallet.Address, server: RPCServer, viewController: ActivityViewController) {

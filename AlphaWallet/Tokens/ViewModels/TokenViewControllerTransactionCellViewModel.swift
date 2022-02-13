@@ -51,6 +51,8 @@ struct TokenViewControllerTransactionCellViewModel {
                 return R.string.localizable.transactionCellReceivedTitle()
             case .outgoing:
                 return R.string.localizable.transactionCellSentTitle()
+            case .cashback:
+                return R.string.localizable.transactionCellCashbackTitle()
             }
         }
     }
@@ -60,7 +62,7 @@ struct TokenViewControllerTransactionCellViewModel {
             return R.image.pending()
         } else {
             switch transactionViewModel.direction {
-            case .incoming:
+            case .incoming, .cashback:
                 return R.image.received()
             case .outgoing:
                 return R.image.sent()

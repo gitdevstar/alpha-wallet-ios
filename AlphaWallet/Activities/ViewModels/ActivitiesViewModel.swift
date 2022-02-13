@@ -356,7 +356,7 @@ extension ActivitiesViewModel.functional {
             rowType = .standalone
         case .group:
             rowType = .group
-        case .item:
+        case .item, .activity:
             rowType = .item
         }
         return .init(

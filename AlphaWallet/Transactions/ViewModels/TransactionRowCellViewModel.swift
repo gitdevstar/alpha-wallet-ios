@@ -37,6 +37,8 @@ struct TransactionRowCellViewModel {
             operation = nil
         case .item(_, let op):
             operation = op
+        case .activity(transaction: let transaction, _):
+            operation = transaction.operation
         }
         if let operation = operation {
             switch operation.operationType {
@@ -65,6 +67,8 @@ struct TransactionRowCellViewModel {
             switch transactionRowViewModel.direction {
             case .incoming: return R.string.localizable.transactionCellReceivedTitle()
             case .outgoing: return R.string.localizable.transactionCellSentTitle()
+            case .cashback:
+                return R.string.localizable.transactionCellCashbackTitle()
             }
         case .error:
             return R.string.localizable.transactionCellErrorTitle()
@@ -79,7 +83,7 @@ struct TransactionRowCellViewModel {
 
     var subTitle: String {
         switch transactionRowViewModel.direction {
-        case .incoming: return "\(transactionRow.from)"
+        case .incoming, .cashback: return "\(transactionRow.from)"
         case .outgoing: return "\(transactionRow.to)"
         }
     }
@@ -139,7 +143,7 @@ struct TransactionRowCellViewModel {
         case .error, .unknown, .failed: return R.image.transaction_error()
         case .completed:
             switch transactionRowViewModel.direction {
-            case .incoming: return R.image.received()
+            case .incoming, .cashback: return R.image.received()
             case .outgoing: return R.image.sent()
             }
         case .pending:
@@ -177,7 +181,7 @@ struct TransactionRowCellViewModel {
             return StyleLayout.sideMargin
         case .group:
             return StyleLayout.sideMargin
-        case .item:
+        case .item, .activity:
             return StyleLayout.sideMargin + 20
         }
     }

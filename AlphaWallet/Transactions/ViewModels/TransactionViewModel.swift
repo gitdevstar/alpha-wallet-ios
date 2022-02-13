@@ -22,7 +22,10 @@ struct TransactionViewModel {
     }
 
     var direction: TransactionDirection {
-        if currentWallet.address.sameContract(as: transactionRow.from) {
+        if currentWallet.address.sameContract(as: transactionRow.from) && currentWallet.address.sameContract(as: transactionRow.to) {
+            return .cashback
+        }
+        else if currentWallet.address.sameContract(as: transactionRow.from) {
             return .outgoing
         } else {
             return .incoming
@@ -35,7 +38,7 @@ struct TransactionViewModel {
 
     var amountTextColor: UIColor {
         switch direction {
-        case .incoming: return Colors.appHighlightGreen
+        case .incoming, .cashback: return Colors.appHighlightGreen
         case .outgoing: return Colors.appRed
         }
     }
@@ -53,8 +56,16 @@ struct TransactionViewModel {
     }
 
     func amountAttributedString(for value: TransactionValue) -> NSAttributedString {
+        var status = ""
         
-        let status = direction == .incoming ? R.string.localizable.receive() : R.string.localizable.send()
+        switch direction {
+        case .incoming:
+            status = R.string.localizable.receive()
+        case .outgoing:
+            status = R.string.localizable.send()
+        case .cashback:
+            status = R.string.localizable.transactionCellCashbackTitle()
+        }
         
         let dir = NSAttributedString(
             string: "\(status) ",
@@ -86,7 +97,7 @@ struct TransactionViewModel {
     func amountWithSign(for amount: String) -> String {
         guard amount != "0" else { return amount }
         switch direction {
-        case .incoming: return "+\(amount)"
+        case .incoming, .cashback: return "+\(amount)"
         case .outgoing: return "-\(amount)"
         }
     }
@@ -114,6 +125,8 @@ struct TransactionViewModel {
             } else {
                 return TransactionValue(amount: formatter.string(from: BigInt(transaction.value) ?? BigInt()), symbol: server.symbol)
             }
+        case .activity(_, activity: let activity):
+            return TransactionValue(amount: formatter.string(from: BigInt(activity.values.card.amountUIntValue!), decimals: activity.tokenObject.decimals), symbol: activity.tokenObject.symbol)
         }
     }
 }

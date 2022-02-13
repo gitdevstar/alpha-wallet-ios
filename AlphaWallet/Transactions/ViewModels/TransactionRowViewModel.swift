@@ -39,7 +39,7 @@ struct TransactionRowViewModel {
 
     var amountTextColor: UIColor {
         switch direction {
-        case .incoming: return Colors.appHighlightGreen
+        case .incoming, .cashback: return Colors.appHighlightGreen
         case .outgoing: return Colors.appRed
         }
     }
@@ -78,7 +78,7 @@ struct TransactionRowViewModel {
     func amountWithSign(for amount: String) -> String {
         guard amount != "0" else { return amount }
         switch direction {
-        case .incoming: return "+\(amount)"
+        case .incoming, .cashback: return "+\(amount)"
         case .outgoing: return "-\(amount)"
         }
     }

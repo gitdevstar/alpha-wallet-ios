@@ -85,18 +85,7 @@ struct TransactionDetailsViewModel {
     }
 
     var to: String {
-        switch transactionRow {
-        case .standalone(let transaction):
-            if let to = transaction.operation?.to {
-                return to
-            } else {
-                return transaction.to
-            }
-        case .group(let transaction):
-            return transaction.to
-        case .item(_, operation: let operation):
-            return operation.to
-        }
+        return transactionRow.to
     }
 
     var toLabelTitle: String {

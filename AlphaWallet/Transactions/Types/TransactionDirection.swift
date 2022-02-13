@@ -5,4 +5,5 @@ import Foundation
 enum TransactionDirection {
     case incoming
     case outgoing
+    case cashback
 }

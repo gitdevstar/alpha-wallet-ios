@@ -77,6 +77,8 @@ class ActivityViewController: UIViewController {
             .spacer(height: 17),
             titleLabel,
             .spacer(height: 25),
+            subTitleLabel,
+            .spacer(height: 25),
             defaultErc20ActivityView,
             tokenScriptRendererView,
             bottomFiller,
